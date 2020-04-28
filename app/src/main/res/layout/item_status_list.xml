@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="status"
+            type="com.tarmsbd.coronavirus.prediction.app.data.models.RecentStatus" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_marginBottom="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/text_view_background"
+            android:gravity="center"
+            android:hint="@string/time"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:text="@{status.time}" />
+
+        <Space
+            android:layout_width="4dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/text_view_background"
+            android:gravity="center"
+            android:hint="@string/gender"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:text="@{status.gender}" />
+
+        <Space
+            android:layout_width="4dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/text_view_background"
+            android:gravity="center"
+            android:hint="@string/age"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:text="@{status.age}" />
+
+        <Space
+            android:layout_width="4dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/text_view_background"
+            android:gravity="center"
+            android:hint="@string/area"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:text="@{status.area}" />
+    </LinearLayout>
+</layout>
