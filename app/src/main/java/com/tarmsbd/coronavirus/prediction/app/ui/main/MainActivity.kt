@@ -1,7 +1,8 @@
-package com.tarmsbd.coronavirus.prediction.app
+package com.tarmsbd.coronavirus.prediction.app.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.tarmsbd.coronavirus.prediction.app.R
 
 class MainActivity : AppCompatActivity() {
 
