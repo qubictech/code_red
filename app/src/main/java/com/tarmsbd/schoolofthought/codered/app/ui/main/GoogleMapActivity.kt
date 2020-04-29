@@ -42,6 +42,12 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        finish()
+        startActivity(getIntent())
+    }
+
     override fun onMapReady(googleMap: GoogleMap) {
 
 
