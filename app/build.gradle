@@ -59,4 +59,7 @@ dependencies {
     kapt "androidx.lifecycle:lifecycle-compiler:$arch_version"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+
+    //google Map
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
 }

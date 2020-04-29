@@ -1,5 +1,6 @@
 package com.tarmsbd.schoolofthought.codered.app.ui.main
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -18,6 +19,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+
         mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
         activityMainBinding.apply {
