@@ -5,7 +5,7 @@
 
         <variable
             name="status"
-            type="com.tarmsbd.coronavirus.prediction.app.data.models.RecentStatus" />
+            type="com.tarmsbd.schoolofthought.codered.app.data.models.RecentStatus" />
 
     </data>
 

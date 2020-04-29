@@ -1,4 +1,4 @@
-package com.tarmsbd.coronavirus.prediction.app
+package com.tarmsbd.schoolofthought.codered.app
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

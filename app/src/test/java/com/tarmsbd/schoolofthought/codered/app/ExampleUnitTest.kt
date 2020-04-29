@@ -1,4 +1,4 @@
-package com.tarmsbd.coronavirus.prediction.app
+package com.tarmsbd.schoolofthought.codered.app
 
 import org.junit.Test
 

@@ -1,4 +1,4 @@
-package com.tarmsbd.coronavirus.prediction.app.ui.main
+package com.tarmsbd.schoolofthought.codered.app.ui.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -6,10 +6,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.tarmsbd.coronavirus.prediction.app.R
-import com.tarmsbd.coronavirus.prediction.app.adapter.RecentStatusAdapter
-import com.tarmsbd.coronavirus.prediction.app.data.viewmodel.MainViewModel
-import com.tarmsbd.coronavirus.prediction.app.databinding.ActivityMainBinding
+import com.tarmsbd.schoolofthought.codered.app.R
+import com.tarmsbd.schoolofthought.codered.app.adapter.RecentStatusAdapter
+import com.tarmsbd.schoolofthought.codered.app.data.viewmodel.MainViewModel
+import com.tarmsbd.schoolofthought.codered.app.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var activityMainBinding: ActivityMainBinding

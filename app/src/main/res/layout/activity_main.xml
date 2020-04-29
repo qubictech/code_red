@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.tarmsbd.coronavirus.prediction.app.data.viewmodel.MainViewModel" />
+            type="com.tarmsbd.schoolofthought.codered.app.data.viewmodel.MainViewModel" />
 
     </data>
 

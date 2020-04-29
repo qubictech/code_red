@@ -1,12 +1,12 @@
-package com.tarmsbd.coronavirus.prediction.app.adapter
+package com.tarmsbd.schoolofthought.codered.app.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.tarmsbd.coronavirus.prediction.app.data.models.RecentStatus
-import com.tarmsbd.coronavirus.prediction.app.databinding.ItemStatusListBinding
+import com.tarmsbd.schoolofthought.codered.app.data.models.RecentStatus
+import com.tarmsbd.schoolofthought.codered.app.databinding.ItemStatusListBinding
 
 class RecentStatusAdapter() :
     ListAdapter<RecentStatus, RecentStatusAdapter.StatusHolder>(DiffCallback()) {

@@ -1,7 +1,7 @@
-package com.tarmsbd.coronavirus.prediction.app.data.repository
+package com.tarmsbd.schoolofthought.codered.app.data.repository
 
 import androidx.lifecycle.MutableLiveData
-import com.tarmsbd.coronavirus.prediction.app.data.models.RecentStatus
+import com.tarmsbd.schoolofthought.codered.app.data.models.RecentStatus
 
 object MainRepository {
     private val dummyData = mutableListOf(

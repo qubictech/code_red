@@ -9,7 +9,7 @@ android {
     buildToolsVersion "29.0.3"
 
     defaultConfig {
-        applicationId "com.tarmsbd.coronavirus.prediction.app"
+        applicationId "com.tarmsbd.schoolofthought.codered.app"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
