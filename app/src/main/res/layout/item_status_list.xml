@@ -27,7 +27,7 @@
             android:text="@{status.time}" />
 
         <Space
-            android:layout_width="4dp"
+            android:layout_width="2dp"
             android:layout_height="wrap_content" />
 
         <TextView
@@ -42,7 +42,7 @@
             android:text="@{status.gender}" />
 
         <Space
-            android:layout_width="4dp"
+            android:layout_width="2dp"
             android:layout_height="wrap_content" />
 
         <TextView
@@ -57,7 +57,7 @@
             android:text="@{status.age}" />
 
         <Space
-            android:layout_width="4dp"
+            android:layout_width="2dp"
             android:layout_height="wrap_content" />
 
         <TextView
