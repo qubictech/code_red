@@ -1,14 +1,21 @@
 package com.tarmsbd.schoolofthought.codered.app.ui.main
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptor
+import com.google.android.gms.maps.model.BitmapDescriptorFactory.fromBitmap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.tarmsbd.schoolofthought.codered.app.R
+
 
 class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap:GoogleMap
@@ -25,8 +32,35 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap = googleMap
 
         val latLng = LatLng(23.7536267,90.376229)
-        mMap.addMarker(MarkerOptions().position(latLng).title("Marker in Location"))
+        mMap.addMarker(MarkerOptions()
+            .position(latLng)
+            .title("Red Zone")
+            .icon(bitmapDescriptorFromVector(applicationContext,R.drawable.red_signal))
+
+        )
+
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,18f))
+    }
+
+    private fun bitmapDescriptorFromVector(
+        context: Context,
+        vectorResId: Int
+    ): BitmapDescriptor? {
+        val vectorDrawable = ContextCompat.getDrawable(context, vectorResId)
+        vectorDrawable!!.setBounds(
+            0,
+            0,
+            vectorDrawable.intrinsicWidth,
+            vectorDrawable.intrinsicHeight
+        )
+        val bitmap = Bitmap.createBitmap(
+            vectorDrawable.intrinsicWidth,
+            vectorDrawable.intrinsicHeight,
+            Bitmap.Config.ARGB_8888
+        )
+        val canvas = Canvas(bitmap)
+        vectorDrawable.draw(canvas)
+        return fromBitmap(bitmap)
     }
 
 }

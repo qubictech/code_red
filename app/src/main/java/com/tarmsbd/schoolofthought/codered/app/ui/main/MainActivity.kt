@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
+        startActivity(Intent(this,GoogleMapActivity::class.java))
 
         mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
