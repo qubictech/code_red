@@ -44,17 +44,18 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
                     android:layout_marginBottom="12dp"
-                    android:hint="@string/mobile_number"
                     app:boxCornerRadiusBottomEnd="32dp"
                     app:boxCornerRadiusBottomStart="32dp"
                     app:boxCornerRadiusTopEnd="32dp"
                     app:boxCornerRadiusTopStart="32dp"
+                    app:hintEnabled="false"
                     app:hintTextColor="@color/black">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/edit_text_background"
+                        android:hint="@string/mobile_number"
                         android:paddingStart="32dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -63,17 +64,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
-                    android:hint="@string/full_name"
                     app:boxCornerRadiusBottomEnd="32dp"
                     app:boxCornerRadiusBottomStart="32dp"
                     app:boxCornerRadiusTopEnd="32dp"
                     app:boxCornerRadiusTopStart="32dp"
+                    app:hintEnabled="false"
                     app:hintTextColor="@color/black">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/edit_text_background"
+                        android:hint="@string/full_name"
                         android:paddingStart="32dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -82,17 +84,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
-                    android:hint="@string/gender"
                     app:boxCornerRadiusBottomEnd="32dp"
                     app:boxCornerRadiusBottomStart="32dp"
                     app:boxCornerRadiusTopEnd="32dp"
                     app:boxCornerRadiusTopStart="32dp"
+                    app:hintEnabled="false"
                     app:hintTextColor="@color/black">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/edit_text_background"
+                        android:hint="@string/gender"
                         android:paddingStart="32dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -101,17 +104,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
-                    android:hint="@string/date_of_birth"
                     app:boxCornerRadiusBottomEnd="32dp"
                     app:boxCornerRadiusBottomStart="32dp"
                     app:boxCornerRadiusTopEnd="32dp"
                     app:boxCornerRadiusTopStart="32dp"
+                    app:hintEnabled="false"
                     app:hintTextColor="@color/black">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/edit_text_background"
+                        android:hint="@string/date_of_birth"
                         android:paddingStart="32dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
