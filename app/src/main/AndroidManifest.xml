@@ -10,6 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.help.HelpForOtherActivity" />
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
@@ -22,9 +23,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="com.tarmsbd.schoolofthought.codered.app.ui.main.RegistrationActivity"
+            android:name=".ui.help.HelpForSelfActivity"
             android:windowSoftInputMode="adjustPan" />
     </application>
 
