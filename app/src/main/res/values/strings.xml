@@ -10,4 +10,12 @@
     <string name="time">Time</string>
     <string name="age">Age</string>
     <string name="area">Area</string>
+    <string name="need_assistance_about_covid_19_for">Need assistance about\nCOVID-19 for</string>
+    <string name="registration_for_others">Registration For Others</string>
+
+    <string-array name="gender_array">
+        <item>Gender</item>
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
 </resources>

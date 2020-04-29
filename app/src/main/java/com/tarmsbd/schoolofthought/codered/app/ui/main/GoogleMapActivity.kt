@@ -1,21 +1,16 @@
 package com.tarmsbd.schoolofthought.codered.app.ui.main
 
-import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.os.Bundle
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
+import android.os.Bundle
+import android.view.View
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptor
-import com.google.android.gms.maps.model.BitmapDescriptorFactory.fromBitmap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.tarmsbd.schoolofthought.codered.app.R
-
 
 class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap:GoogleMap
@@ -40,6 +35,15 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
         )
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,18f))
+    }
+
+
+    fun gotoSelfRegPage(view: View) {
+        startActivity(Intent(this, HelpForSelfActivity::class.java))
+    }
+
+    fun gotoOtherHelpPage(view: View) {
+        startActivity(Intent(this, HelpForOtherActivity::class.java))
     }
 
     private fun bitmapDescriptorFromVector(
