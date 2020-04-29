@@ -11,13 +11,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.tarmsbd.schoolofthought.codered.app.R
 import com.tarmsbd.schoolofthought.codered.app.adapter.RecentStatusAdapter
 import com.tarmsbd.schoolofthought.codered.app.data.models.RecentStatus
-import com.tarmsbd.schoolofthought.codered.app.data.viewmodel.HelpForOtherViewModel
 import com.tarmsbd.schoolofthought.codered.app.data.viewmodel.HelpForSelfViewModel
+import com.tarmsbd.schoolofthought.codered.app.data.viewmodel.MainViewModel
 import com.tarmsbd.schoolofthought.codered.app.databinding.ActivityHelpForSelfBinding
+import java.util.logging.Logger
 
 class HelpForSelfActivity : AppCompatActivity() {
     private lateinit var activityHelpForSelfBinding: ActivityHelpForSelfBinding
     private lateinit var helpForSelfViewModel: HelpForSelfViewModel
+    private lateinit var mainViewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,11 +28,23 @@ class HelpForSelfActivity : AppCompatActivity() {
 
         helpForSelfViewModel =
             ViewModelProvider(this)[HelpForSelfViewModel::class.java]
+        mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
         activityHelpForSelfBinding.apply {
             lifecycleOwner = this@HelpForSelfActivity
             viewModel = helpForSelfViewModel
         }
+
+        val map = hashMapOf<String, String>()
+        map["Question1_answer"] = "No"
+        map["Question2_answer"] = "No"
+        map["Question3_answer"] = "Yes"
+        map["Question4_answer"] = "No"
+        map["Question5_answer"] = "No"
+
+        mainViewModel.getResponse(map).observe(this, Observer {
+            Logger.getLogger("Response").warning(it.toString())
+        })
 
         activityHelpForSelfBinding.genderSpinner.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {

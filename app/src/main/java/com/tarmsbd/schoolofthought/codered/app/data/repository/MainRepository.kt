@@ -1,5 +1,6 @@
 package com.tarmsbd.schoolofthought.codered.app.data.repository
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.tarmsbd.schoolofthought.codered.app.data.api.RetrofitBuilder
 import com.tarmsbd.schoolofthought.codered.app.data.models.RecentStatus
@@ -23,5 +24,5 @@ object MainRepository {
 
     suspend fun locations() = RetrofitBuilder.apiService.getLocations()
 
-    suspend fun response() = RetrofitBuilder.apiService.getResponse()
+    suspend fun response(body: HashMap<String, String>):String = RetrofitBuilder.apiService.getResponse(body)
 }
