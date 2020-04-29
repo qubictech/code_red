@@ -10,4 +10,10 @@
     <string name="time">Time</string>
     <string name="age">Age</string>
     <string name="area">Area</string>
+
+    <string-array name="gender_array">
+        <item>Gender</item>
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
 </resources>

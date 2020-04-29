@@ -18,6 +18,4 @@ object MainRepository {
     }
 
     val recentStatus = mRecentStatus
-
-
 }

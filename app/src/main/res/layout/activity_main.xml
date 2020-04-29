@@ -16,8 +16,10 @@
         android:layout_height="match_parent"
         tools:context=".ui.main.MainActivity">
 
+        <!-- custom appbar/toolbar widget -->
         <include layout="@layout/appbar_layout" />
 
+        <!--main ui-->
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -31,13 +33,16 @@
                 android:orientation="vertical"
                 android:padding="20dp">
 
+                <!--registration for help button-->
                 <com.google.android.material.button.MaterialButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="@{(v)->viewModel.createUser(v)}"
                     android:text="@string/registration_for_self"
                     android:textAllCaps="false"
                     android:textColor="@color/colorPrimaryDark" />
 
+                <!--mobile number-->
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
@@ -56,9 +61,13 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/edit_text_background"
                         android:hint="@string/mobile_number"
-                        android:paddingStart="32dp" />
+                        android:imeOptions="actionNext"
+                        android:inputType="number"
+                        android:paddingStart="32dp"
+                        android:text="@={viewModel.mobile}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <!--full name-->
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
@@ -76,49 +85,50 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/edit_text_background"
                         android:hint="@string/full_name"
-                        android:paddingStart="32dp" />
+                        android:imeOptions="actionNext"
+                        android:paddingStart="32dp"
+                        android:text="@={viewModel.fullName}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                <!--gender-->
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
-                    app:boxCornerRadiusBottomEnd="32dp"
-                    app:boxCornerRadiusBottomStart="32dp"
-                    app:boxCornerRadiusTopEnd="32dp"
-                    app:boxCornerRadiusTopStart="32dp"
-                    app:hintEnabled="false"
-                    app:hintTextColor="@color/black">
+                    android:background="@drawable/edit_text_background"
+                    android:minHeight="45dp">
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    <Spinner
+                        android:id="@+id/gender_spinner"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/edit_text_background"
-                        android:hint="@string/gender"
-                        android:paddingStart="32dp" />
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="24dp"
+                        android:entries="@array/gender_array"
+                        android:minHeight="45dp"
+                        android:paddingStart="28dp" />
+                </RelativeLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
-                    app:boxCornerRadiusBottomEnd="32dp"
-                    app:boxCornerRadiusBottomStart="32dp"
-                    app:boxCornerRadiusTopEnd="32dp"
-                    app:boxCornerRadiusTopStart="32dp"
-                    app:hintEnabled="false"
-                    app:hintTextColor="@color/black">
+                    android:background="@drawable/edit_text_background"
+                    android:minHeight="45dp">
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:background="@drawable/edit_text_background"
+                        android:gravity="center_vertical"
                         android:hint="@string/date_of_birth"
-                        android:paddingStart="32dp" />
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:minHeight="45dp"
+                        android:onClick="@{(v)->viewModel.showDatePicker(v)}"
+                        android:paddingStart="32dp"
+                        android:text="@{viewModel.getUser.dateOfBirth}"
+                        android:textSize="16sp" />
+                </RelativeLayout>
 
+                <!--task help button-->
                 <com.google.android.material.button.MaterialButton
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
@@ -142,6 +152,7 @@
                     android:paddingBottom="8dp"
                     android:text="@string/recent_status_of_covid_19_confirmed_patient" />
 
+                <!--recent status list-->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recent_status_recycler_view"
                     android:layout_width="match_parent"

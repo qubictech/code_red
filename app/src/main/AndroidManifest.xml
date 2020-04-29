@@ -10,7 +10,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.tarmsbd.schoolofthought.codered.app.ui.main.MainActivity" android:theme="@style/MainTheme">
+        <activity android:name="com.tarmsbd.schoolofthought.codered.app.ui.main.MainActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:theme="@style/MainTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
