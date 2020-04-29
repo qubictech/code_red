@@ -12,6 +12,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.tarmsbd.schoolofthought.codered.app.data.models.RecentStatus
 import com.tarmsbd.schoolofthought.codered.app.data.models.User
+import com.tarmsbd.schoolofthought.codered.app.data.repository.FirebaseRepo
 import com.tarmsbd.schoolofthought.codered.app.data.repository.MainRepository
 import java.util.*
 import java.util.logging.Logger
@@ -114,12 +115,7 @@ class MainViewModel : ViewModel() {
             return
         }
 
-        register(user)
-
-    }
-
-    private fun register(user: User) {
-
+        FirebaseRepo.registerForSelf(user = user, context = view.context)
     }
 
     val getRecentStatus: LiveData<List<RecentStatus>> = MainRepository.recentStatus
