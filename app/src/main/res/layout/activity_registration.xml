@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.tarmsbd.schoolofthought.codered.app.data.viewmodel.MainViewModel" />
+            type="com.tarmsbd.schoolofthought.codered.app.data.viewmodel.RegistrationForSelfViewModel" />
 
     </data>
 
@@ -141,7 +141,7 @@
                     android:text="@string/take_help"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
-                    app:cornerRadius="4dp"
+                    app:cornerRadius="24dp"
                     app:strokeColor="@color/black"
                     app:strokeWidth="1dp" />
 

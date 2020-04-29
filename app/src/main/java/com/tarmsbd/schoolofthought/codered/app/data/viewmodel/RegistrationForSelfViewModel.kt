@@ -17,9 +17,9 @@ import com.tarmsbd.schoolofthought.codered.app.data.repository.MainRepository
 import java.util.*
 import java.util.logging.Logger
 
-const val TAG = "MainViewModel"
+const val TAG = "RegViewModel"
 
-class MainViewModel : ViewModel() {
+class RegistrationForSelfViewModel : ViewModel() {
     private val c = Calendar.getInstance()
     private val year = c.get(Calendar.YEAR)
     private val month = c.get(Calendar.MONTH)

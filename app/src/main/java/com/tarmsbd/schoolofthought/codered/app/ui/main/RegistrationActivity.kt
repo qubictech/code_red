@@ -1,6 +1,5 @@
 package com.tarmsbd.schoolofthought.codered.app.ui.main
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -12,26 +11,28 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.tarmsbd.schoolofthought.codered.app.R
 import com.tarmsbd.schoolofthought.codered.app.adapter.RecentStatusAdapter
 import com.tarmsbd.schoolofthought.codered.app.data.models.RecentStatus
-import com.tarmsbd.schoolofthought.codered.app.data.viewmodel.MainViewModel
-import com.tarmsbd.schoolofthought.codered.app.databinding.ActivityMainBinding
+import com.tarmsbd.schoolofthought.codered.app.data.viewmodel.RegistrationForSelfViewModel
+import com.tarmsbd.schoolofthought.codered.app.databinding.ActivityRegistrationBinding
 
-class MainActivity : AppCompatActivity() {
-    private lateinit var activityMainBinding: ActivityMainBinding
-    private lateinit var mainViewModel: MainViewModel
+class RegistrationActivity : AppCompatActivity() {
+    private lateinit var activityRegistrationBinding: ActivityRegistrationBinding
+    private lateinit var registrationForSelfViewModel: RegistrationForSelfViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        activityRegistrationBinding =
+            DataBindingUtil.setContentView(this, R.layout.activity_registration)
 
 
-        mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
+        registrationForSelfViewModel =
+            ViewModelProvider(this)[RegistrationForSelfViewModel::class.java]
 
-        activityMainBinding.apply {
-            lifecycleOwner = this@MainActivity
-            viewModel = mainViewModel
+        activityRegistrationBinding.apply {
+            lifecycleOwner = this@RegistrationActivity
+            viewModel = registrationForSelfViewModel
         }
 
-        activityMainBinding.genderSpinner.onItemSelectedListener =
+        activityRegistrationBinding.genderSpinner.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onNothingSelected(p0: AdapterView<*>?) {
 
@@ -39,15 +40,17 @@ class MainActivity : AppCompatActivity() {
 
                 override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                     when (p2) {
-                        0 -> mainViewModel.setGender("NONE")
-                        1 -> mainViewModel.setGender("M")
-                        2 -> mainViewModel.setGender("F")
+                        0 -> registrationForSelfViewModel.setGender("NONE")
+                        1 -> registrationForSelfViewModel.setGender("M")
+                        2 -> registrationForSelfViewModel.setGender("F")
                     }
                 }
 
             }
 
-        mainViewModel.getRecentStatus.observe(this, Observer { showRecentStatus(it) })
+        registrationForSelfViewModel.getRecentStatus.observe(
+            this,
+            Observer { showRecentStatus(it) })
     }
 
     private fun showRecentStatus(data: List<RecentStatus>) {
@@ -58,9 +61,9 @@ class MainActivity : AppCompatActivity() {
         recentStatusAdapter.submitList(data)
 
         // recyclerview
-        activityMainBinding.recentStatusRecyclerView.apply {
+        activityRegistrationBinding.recentStatusRecyclerView.apply {
             adapter = recentStatusAdapter
-            layoutManager = LinearLayoutManager(this@MainActivity)
+            layoutManager = LinearLayoutManager(this@RegistrationActivity)
             hasFixedSize()
         }
     }
