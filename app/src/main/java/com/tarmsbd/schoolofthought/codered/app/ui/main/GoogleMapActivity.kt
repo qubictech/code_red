@@ -8,6 +8,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
@@ -15,6 +16,8 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -29,11 +32,13 @@ import com.tarmsbd.schoolofthought.codered.app.ui.help.HelpForSelfActivity
 
 
 class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
-    private lateinit var mMap:GoogleMap
+    private lateinit var mMap: GoogleMap
+
     companion object {
         val PERMISSION_ID = 42
     }
 
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_google_map)
@@ -45,36 +50,60 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onRestart() {
         super.onRestart()
         finish()
-        startActivity(getIntent())
+        startActivity(intent)
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
 
 
-        if (checkPermissions()){
-            if (isLocationEnabled()){
+        if (checkPermissions()) {
+            if (isLocationEnabled()) {
+
+
+
                 mMap = googleMap
 
-                val latLng = LatLng(23.7536267,90.376229)
-                mMap.addMarker(MarkerOptions()
-                    .position(latLng)
-                    .title("Red Zone")
-                    .icon(bitmapDescriptorFromVector(applicationContext,R.drawable.red_signal))
+                fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-                )
+                fusedLocationClient.lastLocation
+                    .addOnSuccessListener { location: Location? ->
 
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,18f))
+                        // Got last known location. In some rare situations this can be null.
+                       val mylatlong=LatLng(location!!.latitude ,location.longitude)
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mylatlong, 16f))
+                        mMap.addMarker(
+                            MarkerOptions()
+                                .position(mylatlong)
+                                .title("My Location")
+                        )
 
-            }else{
+
+                    }
+
+                //Multiple marker add
+                multipleMurker(23.7536267, 90.376229,"Rez Zone")
+
+
+            } else {
                 //location enable
 
                 buildAlertMessageNoGps()
             }
-        }else{
+        } else {
             requestPermissions()
         }
     }
 
+    fun multipleMurker(lat: Double,long: Double,title: String ){
+        val latLng = LatLng(lat, long)
+        mMap.addMarker(
+            MarkerOptions()
+                .position(latLng)
+                .title(title)
+                .icon(bitmapDescriptorFromVector(applicationContext, R.drawable.red_signal))
+
+        )
+    }
 
 
     fun gotoSelfRegPage(view: View) {
@@ -107,9 +136,9 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
 
-
     private fun isLocationEnabled(): Boolean {
-        var locationManager: LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        var locationManager: LocationManager =
+            getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
             LocationManager.NETWORK_PROVIDER
         )
@@ -128,8 +157,15 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun checkPermissions(): Boolean {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-            ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
             return true
         }
         return false
@@ -138,13 +174,20 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun requestPermissions() {
         ActivityCompat.requestPermissions(
             this,
-            arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION),
+            arrayOf(
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ),
             PERMISSION_ID
         )
     }
 
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
         if (requestCode == PERMISSION_ID) {
             if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                 // Granted. Start getting the location information
