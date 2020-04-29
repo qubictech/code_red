@@ -1,12 +1,19 @@
 package com.tarmsbd.schoolofthought.codered.app.ui.main
 
+import android.Manifest
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import androidx.appcompat.app.AppCompatActivity
+import android.location.LocationManager
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -20,8 +27,12 @@ import com.tarmsbd.schoolofthought.codered.app.R
 import com.tarmsbd.schoolofthought.codered.app.ui.help.HelpForOtherActivity
 import com.tarmsbd.schoolofthought.codered.app.ui.help.HelpForSelfActivity
 
+
 class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap:GoogleMap
+    companion object {
+        val PERMISSION_ID = 42
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,18 +43,32 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-        mMap = googleMap
 
-        val latLng = LatLng(23.7536267,90.376229)
-        mMap.addMarker(MarkerOptions()
-            .position(latLng)
-            .title("Red Zone")
-            .icon(bitmapDescriptorFromVector(applicationContext,R.drawable.red_signal))
 
-        )
+        if (checkPermissions()){
+            if (isLocationEnabled()){
+                mMap = googleMap
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,18f))
+                val latLng = LatLng(23.7536267,90.376229)
+                mMap.addMarker(MarkerOptions()
+                    .position(latLng)
+                    .title("Red Zone")
+                    .icon(bitmapDescriptorFromVector(applicationContext,R.drawable.red_signal))
+
+                )
+
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,18f))
+
+            }else{
+                //location enable
+
+                buildAlertMessageNoGps()
+            }
+        }else{
+            requestPermissions()
+        }
     }
+
 
 
     fun gotoSelfRegPage(view: View) {
@@ -73,6 +98,52 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
         val canvas = Canvas(bitmap)
         vectorDrawable.draw(canvas)
         return fromBitmap(bitmap)
+    }
+
+
+
+    private fun isLocationEnabled(): Boolean {
+        var locationManager: LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
+            LocationManager.NETWORK_PROVIDER
+        )
+    }
+
+    private fun buildAlertMessageNoGps() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        builder.setMessage("Your GPS seems to be disabled, do you want to enable it?")
+            .setCancelable(false)
+            .setPositiveButton("Yes",
+                DialogInterface.OnClickListener { dialog, id -> startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)) })
+            .setNegativeButton("No",
+                DialogInterface.OnClickListener { dialog, id -> dialog.cancel() })
+        val alert: AlertDialog = builder.create()
+        alert.show()
+    }
+
+    private fun checkPermissions(): Boolean {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+            return true
+        }
+        return false
+    }
+
+    private fun requestPermissions() {
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION),
+            PERMISSION_ID
+        )
+    }
+
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        if (requestCode == PERMISSION_ID) {
+            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                // Granted. Start getting the location information
+            }
+        }
     }
 
 }
