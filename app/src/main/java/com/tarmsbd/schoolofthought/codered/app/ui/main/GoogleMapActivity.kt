@@ -1,16 +1,24 @@
 package com.tarmsbd.schoolofthought.codered.app.ui.main
 
+import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptor
+import com.google.android.gms.maps.model.BitmapDescriptorFactory.fromBitmap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.tarmsbd.schoolofthought.codered.app.R
+import com.tarmsbd.schoolofthought.codered.app.ui.help.HelpForOtherActivity
+import com.tarmsbd.schoolofthought.codered.app.ui.help.HelpForSelfActivity
 
 class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap:GoogleMap
