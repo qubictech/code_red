@@ -14,4 +14,12 @@ class MainViewModel : ViewModel() {
             emit("error: " + e.localizedMessage)
         }
     }
+
+    fun getResponse() = liveData(Dispatchers.IO) {
+        try {
+            emit(repo.response())
+        } catch (e: Exception) {
+            emit("error: " + e.localizedMessage)
+        }
+    }
 }
