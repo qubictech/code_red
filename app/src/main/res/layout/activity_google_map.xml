@@ -4,11 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <include layout="@layout/appbar_layout" />
+
     <fragment
         android:id="@+id/map"
         class="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -62,6 +65,7 @@
             android:gravity="center"
             android:minWidth="70dp"
             android:minHeight="35dp"
+            android:onClick="gotoOtherHelpPage"
             android:text="Others"
             android:textAllCaps="false"
             android:textColor="@color/black"

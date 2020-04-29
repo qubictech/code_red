@@ -11,6 +11,8 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.tarmsbd.schoolofthought.codered.app.R
+import com.tarmsbd.schoolofthought.codered.app.ui.help.HelpForOtherActivity
+import com.tarmsbd.schoolofthought.codered.app.ui.help.HelpForSelfActivity
 
 class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
@@ -32,7 +34,11 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     fun gotoSelfRegPage(view: View) {
-        startActivity(Intent(this, RegistrationActivity::class.java))
+        startActivity(Intent(this, HelpForSelfActivity::class.java))
+    }
+
+    fun gotoOtherHelpPage(view: View) {
+        startActivity(Intent(this, HelpForOtherActivity::class.java))
     }
 
 }

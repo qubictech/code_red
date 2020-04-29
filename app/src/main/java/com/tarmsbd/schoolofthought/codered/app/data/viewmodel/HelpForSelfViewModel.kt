@@ -4,14 +4,11 @@ import android.app.DatePickerDialog
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import com.tarmsbd.schoolofthought.codered.app.data.models.RecentStatus
-import com.tarmsbd.schoolofthought.codered.app.data.models.User
+import com.tarmsbd.schoolofthought.codered.app.data.models.RegistrationForSelf
 import com.tarmsbd.schoolofthought.codered.app.data.repository.FirebaseRepo
 import com.tarmsbd.schoolofthought.codered.app.data.repository.MainRepository
 import java.util.*
@@ -19,14 +16,14 @@ import java.util.logging.Logger
 
 const val TAG = "RegViewModel"
 
-class RegistrationForSelfViewModel : ViewModel() {
+class HelpForSelfViewModel : ViewModel() {
     private val c = Calendar.getInstance()
     private val year = c.get(Calendar.YEAR)
     private val month = c.get(Calendar.MONTH)
     private val day = c.get(Calendar.DAY_OF_MONTH)
 
-    private var mUser = MutableLiveData<User>()
-    private var user = User()
+    private var mUser = MutableLiveData<RegistrationForSelf>()
+    private var user = RegistrationForSelf()
 
     var nameError = MutableLiveData<String>()
     var numberError = MutableLiveData<String>()
@@ -119,23 +116,5 @@ class RegistrationForSelfViewModel : ViewModel() {
     }
 
     val getRecentStatus: LiveData<List<RecentStatus>> = MainRepository.recentStatus
-
-    companion object {
-        @BindingAdapter("android:validateName")
-        @JvmStatic
-        fun validate(textInputLayout: TextInputLayout, data: String) {
-            if (data.isEmpty()) textInputLayout.error =
-                "Name can not be empty!" else textInputLayout.error = null
-        }
-
-        @BindingAdapter("android:validateMobileNumber")
-        @JvmStatic
-        fun validateMobile(textInputLayout: TextInputEditText, data: String) {
-            if (data.isEmpty()) textInputLayout.error = "Mobile Number Required!"
-            else if (data.isNotEmpty() && data.length != 11) textInputLayout.error =
-                "Please enter valid mobile number"
-            else textInputLayout.error = null
-        }
-    }
 
 }
