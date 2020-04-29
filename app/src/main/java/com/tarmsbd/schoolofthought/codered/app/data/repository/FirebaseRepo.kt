@@ -44,7 +44,7 @@ object FirebaseRepo {
                 } else Toast.makeText(context, "Failed to Registration", Toast.LENGTH_LONG).show()
             }
         } else {
-            val reg = firebaseUser.uid.let { ref.child("self_registration").child(it) }
+            val reg = firebaseUser.uid.let { ref.child("other_registration").child(it).push() }
             reg.setValue(user)
 
             Toast.makeText(context, "Registration Complete", Toast.LENGTH_LONG).show()
