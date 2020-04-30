@@ -13,6 +13,7 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -71,15 +72,24 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
                     .addOnSuccessListener { location: Location? ->
 
                         // Got last known location. In some rare situations this can be null.
-                        val mylatlong = LatLng(location!!.latitude, location.longitude)
-                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mylatlong, 16f))
-                        mMap.addMarker(
-                            MarkerOptions()
-                                .position(mylatlong)
-                                .title("My Location")
-                        )
+                        if (location == null) {
+                            val mylatlong = LatLng(23.7536267, 90.376229)
+                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mylatlong, 16f))
+                            mMap.addMarker(
+                                MarkerOptions()
+                                    .position(mylatlong)
+                                    .title("Dhaka")
+                            )
+                        } else {
 
-
+                            val mylatlong = LatLng(location!!.latitude, location.longitude)
+                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mylatlong, 16f))
+                            mMap.addMarker(
+                                MarkerOptions()
+                                    .position(mylatlong)
+                                    .title("My Location")
+                            )
+                        }
                     }
 
                 //Multiple marker add
