@@ -45,6 +45,10 @@ object QuesRepository {
 
     var getQuestion: LiveData<Question> = mQuestion
 
+    fun setPreviousQues(position: Int) {
+        mQuestion.value = questionList[position - 2]
+    }
+
     fun updateQuesAns(position: Int, ans: String) {
         // update the answered ques ans
         val question = questionList[position - 1]

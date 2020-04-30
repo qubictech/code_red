@@ -13,4 +13,8 @@ class QuesViewModel : ViewModel() {
     fun btnNoClick(position: Int) {
         QuesRepository.updateQuesAns(position, "No")
     }
+
+    fun setPreviousQues(position: Int) {
+        QuesRepository.setPreviousQues(position)
+    }
 }
