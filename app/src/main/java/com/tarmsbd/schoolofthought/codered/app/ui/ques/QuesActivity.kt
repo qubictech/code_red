@@ -1,5 +1,6 @@
 package com.tarmsbd.schoolofthought.codered.app.ui.ques
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +11,7 @@ import com.tarmsbd.schoolofthought.codered.app.R
 import com.tarmsbd.schoolofthought.codered.app.data.viewmodel.MainViewModel
 import com.tarmsbd.schoolofthought.codered.app.data.viewmodel.QuesViewModel
 import com.tarmsbd.schoolofthought.codered.app.databinding.ActivityQuesBinding
+import com.tarmsbd.schoolofthought.codered.app.ui.sos.SOSActivity
 import java.util.logging.Logger
 
 class QuesActivity : AppCompatActivity() {
@@ -58,6 +60,9 @@ class QuesActivity : AppCompatActivity() {
                     Logger.getLogger("QuesActivity: Result: ").warning(it.response)
                     quesViewModel.clearAnswerData
                     Toast.makeText(this, it.response, Toast.LENGTH_LONG).show()
+
+                    startActivity(Intent(this, SOSActivity::class.java))
+                    finish()
                 })
             }
 

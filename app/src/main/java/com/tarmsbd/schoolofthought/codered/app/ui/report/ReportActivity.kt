@@ -31,6 +31,7 @@ class ReportActivity : AppCompatActivity() {
                 activityReportBinding.submitReport.setOnClickListener {
                     reportViewModel.submitReportData(report)
                     showDialog()
+                    // todo: latlng for user location
                 }
             } else {
                 activityReportBinding.submitReport.isEnabled = false
