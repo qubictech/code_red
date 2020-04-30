@@ -60,7 +60,6 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
             if (isLocationEnabled()) {
 
 
-
                 mMap = googleMap
 
                 fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
@@ -69,19 +68,28 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
                     .addOnSuccessListener { location: Location? ->
 
                         // Got last known location. In some rare situations this can be null.
-                       val mylatlong=LatLng(location!!.latitude ,location.longitude)
-                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mylatlong, 16f))
-                        mMap.addMarker(
-                            MarkerOptions()
-                                .position(mylatlong)
-                                .title("My Location")
-                        )
+                        if (location == null) {
+                            val mylatlong = LatLng(23.7536267, 90.376229)
+                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mylatlong, 16f))
+                            mMap.addMarker(
+                                MarkerOptions()
+                                    .position(mylatlong)
+                                    .title("Dhaka")
+                            )
+                        } else {
 
-
+                            val mylatlong = LatLng(location!!.latitude, location.longitude)
+                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mylatlong, 16f))
+                            mMap.addMarker(
+                                MarkerOptions()
+                                    .position(mylatlong)
+                                    .title("My Location")
+                            )
+                        }
                     }
 
                 //Multiple marker add
-                multipleMurker(23.7536267, 90.376229,"Rez Zone")
+                multipleMurker(23.7536267, 90.376229, "Rez Zone")
 
 
             } else {
@@ -94,7 +102,7 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    fun multipleMurker(lat: Double,long: Double,title: String ){
+    fun multipleMurker(lat: Double, long: Double, title: String) {
         val latLng = LatLng(lat, long)
         mMap.addMarker(
             MarkerOptions()
