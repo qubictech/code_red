@@ -26,8 +26,10 @@ import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory.fromBitmap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.firebase.auth.FirebaseAuth
 import com.tarmsbd.schoolofthought.codered.app.R
 import com.tarmsbd.schoolofthought.codered.app.ui.auth.AuthActivity
+import com.tarmsbd.schoolofthought.codered.app.ui.ques.QuesActivity
 
 
 class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -36,6 +38,8 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
     companion object {
         val PERMISSION_ID = 42
     }
+
+    private val user = FirebaseAuth.getInstance().currentUser
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,7 +63,6 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
             if (isLocationEnabled()) {
 
 
-
                 mMap = googleMap
 
                 fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
@@ -68,7 +71,7 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
                     .addOnSuccessListener { location: Location? ->
 
                         // Got last known location. In some rare situations this can be null.
-                       val mylatlong=LatLng(location!!.latitude ,location.longitude)
+                        val mylatlong = LatLng(location!!.latitude, location.longitude)
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mylatlong, 16f))
                         mMap.addMarker(
                             MarkerOptions()
@@ -80,7 +83,7 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
                     }
 
                 //Multiple marker add
-                multipleMurker(23.7536267, 90.376229,"Rez Zone")
+                multipleMurker(23.7536267, 90.376229, "Rez Zone")
 
 
             } else {
@@ -93,7 +96,7 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    fun multipleMurker(lat: Double,long: Double,title: String ){
+    fun multipleMurker(lat: Double, long: Double, title: String) {
         val latLng = LatLng(lat, long)
         mMap.addMarker(
             MarkerOptions()
@@ -104,13 +107,14 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
         )
     }
 
-
     fun gotoSelfRegPage(view: View) {
-        startActivity(Intent(this, AuthActivity::class.java))
+        if (user == null) {
+            startActivity(Intent(this, AuthActivity::class.java))
+        } else startActivity(Intent(this, QuesActivity::class.java))
     }
 
     fun gotoOtherHelpPage(view: View) {
-        startActivity(Intent(this, AuthActivity::class.java))
+        startActivity(Intent(this, QuesActivity::class.java))
     }
 
     private fun bitmapDescriptorFromVector(

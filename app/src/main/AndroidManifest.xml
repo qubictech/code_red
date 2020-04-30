@@ -30,6 +30,8 @@
         <activity
             android:name=".ui.auth.AuthActivity"
             android:windowSoftInputMode="adjustPan" />
+
+        <activity android:name=".ui.ques.QuesActivity"/>
     </application>
 
 </manifest>
