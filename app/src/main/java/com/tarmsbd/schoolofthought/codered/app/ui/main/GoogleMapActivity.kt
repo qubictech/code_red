@@ -119,13 +119,17 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     fun gotoSelfRegPage(view: View) {
         if (user == null) {
-            startActivity(Intent(this, AuthActivity::class.java))
+            val intent = Intent(this, AuthActivity::class.java)
+            intent.putExtra(AuthActivity.EXTRA_TEXT, "QuesActivity")
+            startActivity(intent)
         } else startActivity(Intent(this, QuesActivity::class.java))
     }
 
     fun gotoOtherHelpPage(view: View) {
         if (user == null) {
-            startActivity(Intent(this, AuthActivity::class.java))
+            val intent = Intent(this, AuthActivity::class.java)
+            intent.putExtra(AuthActivity.EXTRA_TEXT, "ReportActivity")
+            startActivity(intent)
         } else startActivity(Intent(this, ReportActivity::class.java))
     }
 

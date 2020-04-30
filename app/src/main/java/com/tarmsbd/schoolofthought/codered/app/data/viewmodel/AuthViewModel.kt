@@ -1,5 +1,6 @@
 package com.tarmsbd.schoolofthought.codered.app.data.viewmodel
 
+import android.content.Context
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.LiveData
@@ -9,7 +10,6 @@ import com.tarmsbd.schoolofthought.codered.app.data.models.LoginUser
 import com.tarmsbd.schoolofthought.codered.app.data.models.RecentStatus
 import com.tarmsbd.schoolofthought.codered.app.data.repository.FirebaseRepo
 import com.tarmsbd.schoolofthought.codered.app.data.repository.MainRepository
-import com.tarmsbd.schoolofthought.codered.app.ui.auth.AuthActivity
 import java.util.logging.Logger
 
 const val TAG = "RegViewModel"
@@ -20,6 +20,7 @@ class AuthViewModel : ViewModel() {
 
     var nameError = MutableLiveData<String>()
     var numberError = MutableLiveData<String>()
+    var setIntentName = ""
 
     init {
         nameError.value = " "
@@ -82,6 +83,10 @@ class AuthViewModel : ViewModel() {
         }
 
         FirebaseRepo.loginUser(user = user, context = view.context)
+    }
+
+    private fun toast(msg: String, context: Context) {
+        Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
     }
 
     val getRecentStatus: LiveData<List<RecentStatus>> = MainRepository.recentStatus

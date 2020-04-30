@@ -32,24 +32,13 @@ class LoginFragment : Fragment() {
             viewModel = authViewModel
         }
 
+        val intentExtraText = activity!!.intent.getStringExtra(AuthActivity.EXTRA_TEXT)
+        intentExtraText?.let { authViewModel.setIntentName = it }
+
         fragmentLoginBinding.register.setOnClickListener {
             val authActivity: AuthActivity = activity as AuthActivity
             authActivity.switchFragment(RegistrationFragment())
         }
         return fragmentLoginBinding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val map = hashMapOf<String, String>()
-        map["Question1_answer"] = "No"
-        map["Question2_answer"] = "No"
-        map["Question3_answer"] = "Yes"
-        map["Question4_answer"] = "No"
-        map["Question5_answer"] = "No"
-
-        mainViewModel.getResponse(map).observe(viewLifecycleOwner, Observer {
-            Logger.getLogger("Response").warning(it.toString())
-        })
     }
 }

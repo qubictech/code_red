@@ -57,7 +57,7 @@
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="@{()->viewModel.btnYesClick(viewModel.getQuestions.id)}"
+                    android:onClick="@{()->viewModel.btnNoClick(viewModel.getQuestions.id)}"
                     android:text="No"
                     android:textColor="@color/black"
                     app:cornerRadius="18dp"

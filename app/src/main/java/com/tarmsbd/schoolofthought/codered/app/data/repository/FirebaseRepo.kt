@@ -13,6 +13,9 @@ import java.util.logging.Logger
 
 /*all firebase database data will be handled from this object*/
 object FirebaseRepo {
+    const val REPORT_ACTIVITY = "ReportActivity"
+    const val QUES_ACTIVITY = "QuesActivity"
+
     val ref = FirebaseDatabase.getInstance().reference
     val firebaseUser = FirebaseAuth.getInstance().currentUser
 
@@ -27,7 +30,9 @@ object FirebaseRepo {
             .signInWithEmailAndPassword("u${user.mobile}@red.com", user.password)
             .addOnCompleteListener { task ->
                 when {
-                    task.isSuccessful -> toast("Login Successful", context)
+                    task.isSuccessful -> {
+                        toast("Login Successful", context)
+                    }
                     task.isCanceled -> toast(
                         "Login Error: " + task.exception?.message,
                         context
