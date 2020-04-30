@@ -32,4 +32,6 @@
     <string name="location">Location</string>
     <string name="report_description">Report Description</string>
     <string name="press_and_hold_the_sos_button_for_3_seconds">Press and Hold the SOS button for 3 seconds!</string>
+    <string name="return_to_home">Return to Home</string>
+    <string name="emergency_contact">Emergency Contact</string>
 </resources>

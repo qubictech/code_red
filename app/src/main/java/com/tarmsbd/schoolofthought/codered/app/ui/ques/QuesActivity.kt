@@ -60,7 +60,9 @@ class QuesActivity : AppCompatActivity() {
                     Logger.getLogger("QuesActivity: Result: ").warning(it.response)
                     Toast.makeText(this, it.response, Toast.LENGTH_LONG).show()
 
-                    startActivity(Intent(this, SOSActivity::class.java))
+                    val intent = Intent(this, SOSActivity::class.java)
+                    intent.putExtra(SOSActivity.EXTRA_RESULT, it.response)
+                    startActivity(intent)
                     finish()
                 })
             }
