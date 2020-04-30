@@ -13,7 +13,6 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
