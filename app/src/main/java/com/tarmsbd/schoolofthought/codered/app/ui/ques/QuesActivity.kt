@@ -52,13 +52,12 @@ class QuesActivity : AppCompatActivity() {
                 map["Question4_answer"] = answers[3].ans
                 map["Question5_answer"] = answers[4].ans
 
-                Logger.getLogger("QuesActivity: Requesting").warning("................")
+                Logger.getLogger("QuesActivity:").warning("Requesting................")
 
                 mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
                 mainViewModel.getResponse(map).observe(this, Observer {
                     Logger.getLogger("QuesActivity: Result: ").warning(it.response)
-                    quesViewModel.clearAnswerData
                     Toast.makeText(this, it.response, Toast.LENGTH_LONG).show()
 
                     startActivity(Intent(this, SOSActivity::class.java))
