@@ -1,21 +1,23 @@
 package com.tarmsbd.schoolofthought.codered.app.ui.sos
 
+import android.animation.ArgbEvaluator
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
+import android.graphics.Color
 import android.os.Bundle
 import android.view.MotionEvent
+import android.view.animation.Animation
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.tarmsbd.schoolofthought.codered.app.R
 import kotlinx.android.synthetic.main.activity_s_o_s.*
-import java.util.logging.Logger
+
 
 class SOSActivity : AppCompatActivity() {
     private var down: Long = 0
     private var up: Long = 0
     private lateinit var background: RelativeLayout
-
-    private val colors = arrayOf(R.color.colorPrimary, R.color.colorPrimaryDark)
-    private var temp = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,18 +47,13 @@ class SOSActivity : AppCompatActivity() {
     }
 
     private fun blink() {
-        val start = System.currentTimeMillis()
-        var loop = System.currentTimeMillis()
+        val anim: ObjectAnimator = ObjectAnimator
+            .ofInt(background, "backgroundColor", Color.RED, Color.GREEN)
 
-        while ((loop - start) < 3000) {
-            loop = System.currentTimeMillis()
-
-            if (temp % 2 == 0) {
-                background.setBackgroundColor(colors[0])
-            } else if (temp % 2 == 1) background.setBackgroundColor(colors[1])
-            else Logger.getLogger("SOS").warning("${temp % 2}")
-
-            temp++
-        }
+        anim.duration = 1500
+        anim.setEvaluator(ArgbEvaluator())
+        anim.repeatMode = ValueAnimator.REVERSE
+        anim.repeatCount = Animation.INFINITE
+        anim.start()
     }
 }
