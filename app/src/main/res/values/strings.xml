@@ -27,4 +27,8 @@
     <string name="password">Password</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="login">Login</string>
+    <string name="report_for_covid_19_case">Report for COVID-19 Case</string>
+    <string name="patient_name">Patient Name</string>
+    <string name="location">Location</string>
+    <string name="report_description">Report Description</string>
 </resources>
