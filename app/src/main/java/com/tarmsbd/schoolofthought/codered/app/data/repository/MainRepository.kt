@@ -1,9 +1,12 @@
 package com.tarmsbd.schoolofthought.codered.app.data.repository
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.tarmsbd.schoolofthought.codered.app.data.api.RetrofitBuilder
 import com.tarmsbd.schoolofthought.codered.app.data.models.RecentStatus
 
 object MainRepository {
+
     private val dummyData = mutableListOf(
         RecentStatus("Time", "Gender", "Age", "Area"),
         RecentStatus("Today", "M", "43", "Dhaka"),
@@ -18,4 +21,8 @@ object MainRepository {
     }
 
     val recentStatus = mRecentStatus
+
+    suspend fun locations() = RetrofitBuilder.apiService.getLocations()
+
+    suspend fun response(body: HashMap<String, String>):String = RetrofitBuilder.apiService.getResponse(body)
 }

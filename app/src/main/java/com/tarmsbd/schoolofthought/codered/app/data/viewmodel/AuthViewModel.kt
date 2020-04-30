@@ -1,29 +1,22 @@
 package com.tarmsbd.schoolofthought.codered.app.data.viewmodel
 
-import android.app.DatePickerDialog
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.tarmsbd.schoolofthought.codered.app.data.models.LoginUser
 import com.tarmsbd.schoolofthought.codered.app.data.models.RecentStatus
-import com.tarmsbd.schoolofthought.codered.app.data.models.RegistrationForSelf
 import com.tarmsbd.schoolofthought.codered.app.data.repository.FirebaseRepo
 import com.tarmsbd.schoolofthought.codered.app.data.repository.MainRepository
-import java.util.*
+import com.tarmsbd.schoolofthought.codered.app.ui.auth.AuthActivity
 import java.util.logging.Logger
 
 const val TAG = "RegViewModel"
 
-class HelpForSelfViewModel : ViewModel() {
-    private val c = Calendar.getInstance()
-    private val year = c.get(Calendar.YEAR)
-    private val month = c.get(Calendar.MONTH)
-    private val day = c.get(Calendar.DAY_OF_MONTH)
-
-    private var mUser = MutableLiveData<RegistrationForSelf>()
-    private var user = RegistrationForSelf()
+class AuthViewModel : ViewModel() {
+    private var mUser = MutableLiveData<LoginUser>()
+    private var user = LoginUser()
 
     var nameError = MutableLiveData<String>()
     var numberError = MutableLiveData<String>()
@@ -43,57 +36,33 @@ class HelpForSelfViewModel : ViewModel() {
             mUser.value = user
         }
 
-    var fullName = ""
+    var password = ""
         set(value) {
             field = value
-            user.fullName = value
+            user.password = value
             nameError.value = value
             mUser.value = user
         }
 
-    fun setGender(gender: String) {
-        user.gender = gender
-        mUser.value = user
-    }
 
-    fun showDatePicker(view: View) {
-        DatePickerDialog(
-            view.context,
-            DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-                // do stuff
-                Log.d(TAG, "DatePickerDialog: $year/$monthOfYear/$dayOfMonth")
-
-                user.dateOfBirth = "$year/$monthOfYear/$dayOfMonth"
-                mUser.value = user
-            },
-            year,
-            month,
-            day
-        ).show()
-    }
-
-    fun createUser(view: View) {
+    fun loginUser(view: View) {
         Logger.getLogger(TAG).warning(user.toString())
         val error = mutableListOf<String>()
 
         var valid = true
-        if (user.gender == "NONE") {
-            error.add("Gender")
+
+        if (user.password.isEmpty()) {
+            error.add("Password can't be empty")
             valid = false
         }
 
-        if (user.dateOfBirth.isEmpty()) {
-            error.add("Birth Date")
-            valid = false
-        }
-
-        if (user.fullName.isEmpty()) {
-            error.add("Name")
+        if (user.password.isNotEmpty() && user.password.length < 6) {
+            error.add("Password should at least 6+ chars")
             valid = false
         }
 
         if (user.mobile.isEmpty()) {
-            error.add("Mobile Number")
+            error.add("Mobile Number is required")
             valid = false
         }
 
@@ -106,13 +75,13 @@ class HelpForSelfViewModel : ViewModel() {
 
                 message = message.substring(0, message.length - 1)
             } else message = error[0]
-            Toast.makeText(view.context, "Please enter your $message", Toast.LENGTH_LONG)
+            Toast.makeText(view.context, message, Toast.LENGTH_LONG)
                 .show()
 
             return
         }
 
-        FirebaseRepo.registerForSelf(user = user, context = view.context)
+        FirebaseRepo.loginUser(user = user, context = view.context)
     }
 
     val getRecentStatus: LiveData<List<RecentStatus>> = MainRepository.recentStatus
