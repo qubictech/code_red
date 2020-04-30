@@ -74,7 +74,7 @@ class RegistrationViewModel : ViewModel() {
                 // do stuff
                 Log.d(TAG, "DatePickerDialog: $year/${monthOfYear + 1}/$dayOfMonth")
 
-                user.dateOfBirth = "$year/$monthOfYear/$dayOfMonth"
+                user.dateOfBirth = "$year/${monthOfYear + 1}/$dayOfMonth"
                 mUser.value = user
             },
             year,
