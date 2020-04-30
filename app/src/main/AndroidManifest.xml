@@ -4,17 +4,18 @@
     package="com.tarmsbd.schoolofthought.codered.app">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
         tools:targetApi="m">
+        <activity android:name=".ui.report.ReportActivity"></activity>
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
@@ -30,8 +31,7 @@
         <activity
             android:name=".ui.auth.AuthActivity"
             android:windowSoftInputMode="adjustPan" />
-
-        <activity android:name=".ui.ques.QuesActivity"/>
+        <activity android:name=".ui.ques.QuesActivity" />
     </application>
 
 </manifest>

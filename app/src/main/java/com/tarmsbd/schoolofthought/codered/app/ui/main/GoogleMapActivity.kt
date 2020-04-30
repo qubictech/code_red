@@ -30,6 +30,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.tarmsbd.schoolofthought.codered.app.R
 import com.tarmsbd.schoolofthought.codered.app.ui.auth.AuthActivity
 import com.tarmsbd.schoolofthought.codered.app.ui.ques.QuesActivity
+import com.tarmsbd.schoolofthought.codered.app.ui.report.ReportActivity
 
 
 class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -123,7 +124,9 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     fun gotoOtherHelpPage(view: View) {
-        startActivity(Intent(this, QuesActivity::class.java))
+        if (user == null) {
+            startActivity(Intent(this, AuthActivity::class.java))
+        } else startActivity(Intent(this, ReportActivity::class.java))
     }
 
     private fun bitmapDescriptorFromVector(
