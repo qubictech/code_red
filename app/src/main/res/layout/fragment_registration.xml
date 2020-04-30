@@ -7,23 +7,19 @@
 
         <variable
             name="viewModel"
-            type="com.tarmsbd.schoolofthought.codered.app.data.viewmodel.HelpForOtherViewModel" />
+            type="com.tarmsbd.schoolofthought.codered.app.data.viewmodel.RegistrationViewModel" />
 
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.help.HelpForOtherActivity">
-
-        <!-- custom appbar/toolbar widget -->
-        <include layout="@layout/appbar_layout" />
+        tools:context=".ui.auth.AuthActivity">
 
         <!--main ui-->
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/backgroundColor"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
             <LinearLayout
@@ -34,22 +30,44 @@
                 android:padding="20dp">
 
                 <!--registration for help button-->
-                <com.google.android.material.button.MaterialButton
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/registration_for_others"
-                    android:textAllCaps="false"
-                    android:textColor="@color/black"
-                    app:strokeColor="@color/black"
-                    app:strokeWidth="1dp" />
+                    android:gravity="center"
+                    android:text="@string/reg_string"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="24sp" />
+
+                <!--mobile number-->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginBottom="12dp"
+                    app:boxCornerRadiusBottomEnd="32dp"
+                    app:boxCornerRadiusBottomStart="32dp"
+                    app:boxCornerRadiusTopEnd="32dp"
+                    app:boxCornerRadiusTopStart="32dp"
+                    app:hintEnabled="false"
+                    app:hintTextColor="@color/black">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edit_text_background"
+                        android:hint="@string/mobile_number"
+                        android:imeOptions="actionNext"
+                        android:inputType="number"
+                        android:paddingStart="32dp"
+                        android:text="@={viewModel.mobile}" />
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <!--full name-->
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
                     android:layout_marginBottom="12dp"
                     app:boxCornerRadiusBottomEnd="32dp"
                     app:boxCornerRadiusBottomStart="32dp"
@@ -86,8 +104,28 @@
                         android:paddingStart="28dp" />
                 </RelativeLayout>
 
+                <!--date of birth-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:background="@drawable/edit_text_background"
+                    android:minHeight="45dp">
 
-                <!--age-->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/edit_text_background"
+                        android:gravity="center_vertical"
+                        android:hint="@string/date_of_birth"
+                        android:minHeight="45dp"
+                        android:onClick="@{(v)->viewModel.showDatePicker(v)}"
+                        android:paddingStart="32dp"
+                        android:text="@{viewModel.getUser.dateOfBirth}"
+                        android:textSize="16sp" />
+                </RelativeLayout>
+
+                <!--password-->
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
@@ -98,52 +136,78 @@
                     app:boxCornerRadiusTopEnd="32dp"
                     app:boxCornerRadiusTopStart="32dp"
                     app:hintEnabled="false"
-                    app:hintTextColor="@color/black">
+                    app:hintTextColor="@color/black"
+                    app:passwordToggleEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/edit_text_background"
-                        android:hint="@string/age"
+                        android:hint="@string/password"
                         android:imeOptions="actionNext"
-                        android:inputType="number"
+                        android:inputType="textPassword"
                         android:paddingStart="32dp"
-                        android:text="@={viewModel.age}" />
+                        android:text="@={viewModel.password}" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <!--confirm password-->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    app:boxCornerRadiusBottomEnd="32dp"
+                    app:boxCornerRadiusBottomStart="32dp"
+                    app:boxCornerRadiusTopEnd="32dp"
+                    app:boxCornerRadiusTopStart="32dp"
+                    app:hintEnabled="false"
+                    app:hintTextColor="@color/black"
+                    app:passwordToggleEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edit_text_background"
+                        android:hint="@string/confirm_password"
+                        android:imeOptions="actionNext"
+                        android:inputType="textPassword"
+                        android:paddingStart="32dp"
+                        android:text="@={viewModel.confirmPassword}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
 
                 <!--task help button-->
                 <com.google.android.material.button.MaterialButton
-                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
+                    android:minWidth="200dp"
                     android:onClick="@{(v)->viewModel.createUser(v)}"
-                    android:text="@string/take_help"
+                    android:text="Continue"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
-                    app:cornerRadius="24dp"
-                    app:strokeColor="@color/black"
-                    app:strokeWidth="1dp" />
+                    app:cornerRadius="18dp" />
 
+                <!--confirmation string-->
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="44dp"
                     android:layout_marginBottom="8dp"
-                    android:background="@drawable/text_view_background"
                     android:gravity="center"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
-                    android:text="@string/recent_status_of_covid_19_confirmed_patient" />
+                    android:text="@string/permission_for_reg" />
 
-                <!--recent status list-->
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recent_status_recycler_view"
-                    android:layout_width="match_parent"
+                <!--reset password-->
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/text_view_background"
-                    tools:listitem="@layout/item_status_list" />
+                    android:text="@string/forget_password"
+                    android:textAllCaps="false" />
+
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>

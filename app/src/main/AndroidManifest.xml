@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.tarmsbd.schoolofthought.codered.app">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -9,10 +10,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity
-            android:name=".ui.help.HelpForOtherActivity"
-            android:windowSoftInputMode="adjustPan" />
+        android:usesCleartextTraffic="true"
+        android:theme="@style/AppTheme"
+        tools:targetApi="m">
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
@@ -26,7 +26,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.help.HelpForSelfActivity"
+            android:name=".ui.auth.AuthActivity"
             android:windowSoftInputMode="adjustPan" />
     </application>
 

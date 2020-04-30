@@ -17,8 +17,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory.fromBitmap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.tarmsbd.schoolofthought.codered.app.R
-import com.tarmsbd.schoolofthought.codered.app.ui.help.HelpForOtherActivity
-import com.tarmsbd.schoolofthought.codered.app.ui.help.HelpForSelfActivity
+import com.tarmsbd.schoolofthought.codered.app.ui.auth.AuthActivity
 
 
 class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -69,11 +68,11 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     fun gotoSelfRegPage(view: View) {
-        startActivity(Intent(this, HelpForSelfActivity::class.java))
+        startActivity(Intent(this, AuthActivity::class.java))
     }
 
     fun gotoOtherHelpPage(view: View) {
-        startActivity(Intent(this, HelpForOtherActivity::class.java))
+//        startActivity(Intent(this, HelpForOtherActivity::class.java))
     }
 
 }
