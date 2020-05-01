@@ -45,7 +45,7 @@ class SOSActivity : AppCompatActivity() {
                     progress.progress = 0
                     up = System.currentTimeMillis()
                     if (up - down > 3000) {
-//                        blink()
+                        blink()
                         showFragment()
                     } else {
                         timer.cancel()

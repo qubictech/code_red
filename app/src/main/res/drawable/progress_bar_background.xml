@@ -20,9 +20,12 @@
                 android:shape="ring"
                 android:thicknessRatio="10.0"
                 android:useLevel="true">
-                <solid android:color="@color/colorAccent" />
+                <gradient
+                    android:centerX="0.3"
+                    android:endColor="@color/colorPrimaryDark"
+                    android:startColor="@color/colorPrimary"
+                    android:type="sweep" />
             </shape>
         </rotate>
     </item>
-
 </layer-list>

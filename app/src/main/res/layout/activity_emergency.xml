@@ -5,7 +5,23 @@
     android:layout_height="match_parent"
     tools:context=".ui.emergency.EmergencyActivity">
 
+    <TextView
+        android:id="@+id/topText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Call for Emergency"
+        android:textColor="@color/darkGreen"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        />
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvAnimals"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_below="@+id/topText"
+        android:layout_marginTop="10dp"
+        />
+
 </RelativeLayout>
