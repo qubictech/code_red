@@ -29,6 +29,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.tarmsbd.schoolofthought.codered.app.R
 import com.tarmsbd.schoolofthought.codered.app.ui.auth.AuthActivity
+import com.tarmsbd.schoolofthought.codered.app.ui.emergency.EmergencyActivity
 import com.tarmsbd.schoolofthought.codered.app.ui.ques.QuesActivity
 import com.tarmsbd.schoolofthought.codered.app.ui.report.ReportActivity
 
@@ -93,7 +94,7 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
                     }
 
                 //Multiple marker add
-                multipleMurker(23.7536267, 90.376229, "Rez Zone")
+                multipleMurker(23.7536267, 90.376229, "Red Zone")
 
 
             } else {
@@ -132,6 +133,11 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
             startActivity(intent)
         } else startActivity(Intent(this, ReportActivity::class.java))
     }
+
+    fun gotoEmergencyPage(view: View) {
+        startActivity(Intent(this, EmergencyActivity::class.java))
+    }
+
 
     private fun bitmapDescriptorFromVector(
         context: Context,

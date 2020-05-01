@@ -91,6 +91,7 @@
             android:background="@drawable/alpha_rounded_corner"
             android:padding="8dp"
             android:text="Emergency Contacts"
+            android:onClick="gotoEmergencyPage"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="22sp"
             android:textStyle="bold"
