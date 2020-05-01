@@ -15,7 +15,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".ui.sos.SOSActivity"></activity>
+        <activity android:name=".ui.emergency.EmergencyActivity"></activity>
+        <activity android:name=".ui.sos.SOSActivity" />
         <activity android:name=".ui.report.ReportActivity" />
 
         <meta-data
