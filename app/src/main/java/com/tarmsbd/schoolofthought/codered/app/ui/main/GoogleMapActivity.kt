@@ -74,20 +74,21 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
             .findFragmentById(R.id.map) as? SupportMapFragment
         mapFragment?.getMapAsync(this)
 
+        // list of report result.
         FirebaseRepo.getReportResults { error, list ->
             Logger.getLogger("MapActivity")
                 .warning("Response: Error: $error \nResult Count: ${list.size}")
 
             if (!error) {
                 for (result in list) {
-                    if (result.result == "Ref") {
-                        multipleMurkerOrange(
+                    if (result.result == "Red") {
+                        multipleMarkerRed(
                             result.location.latitude,
                             result.location.longitude,
                             result.result
                         )
                     } else if (result.result == "Orange") {
-                        multipleMurkerRed(
+                        multipleMarkerOrange(
                             result.location.latitude,
                             result.location.longitude,
                             result.result
@@ -101,7 +102,7 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onRestart() {
         super.onRestart()
         finish()
-        recreate()
+        startActivity(intent)
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -129,7 +130,7 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
                             )
                         } else {
 
-                            val mylatlong = LatLng(location!!.latitude, location.longitude)
+                            val mylatlong = LatLng(location.latitude, location.longitude)
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mylatlong, 16f))
                             mMap.addMarker(
                                 MarkerOptions()
@@ -138,12 +139,6 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
                             )
                         }
                     }
-
-                //Multiple marker add
-                multipleMurkerRed(24.323830, 90.172589, "Red Zone")
-                multipleMurkerOrange(24.315745, 90.173242, "Orange Zone")
-
-
             } else {
                 //location enable
 
@@ -154,7 +149,7 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    fun multipleMurkerRed(lat: Double, long: Double, title: String) {
+    private fun multipleMarkerRed(lat: Double, long: Double, title: String) {
         val latLng = LatLng(lat, long)
         mMap.addMarker(
             MarkerOptions()
@@ -167,7 +162,7 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     }
 
-    fun multipleMurkerOrange(lat: Double, long: Double, title: String) {
+    private fun multipleMarkerOrange(lat: Double, long: Double, title: String) {
         val latLng = LatLng(lat, long)
         mMap.addMarker(
             MarkerOptions()

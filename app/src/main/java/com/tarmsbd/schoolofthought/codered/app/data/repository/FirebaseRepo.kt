@@ -44,10 +44,15 @@ object FirebaseRepo {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.hasChildren()) {
                     Logger.getLogger("Snapshot").warning("${snapshot.childrenCount}")
+                    resultList.clear()
 
                     snapshot.children.forEach { dataSnapshot ->
                         dataSnapshot.getValue(SelfResult::class.java)?.let { result ->
-                            Logger.getLogger("SnapshotResult").warning("latlng: ${result.location}")
+                            Logger.getLogger("SnapshotResult")
+                                .warning(
+                                    "Result: ${result.result} " +
+                                            "\nlatlng: ${result.location}"
+                                )
                             resultList.add(result)
                         }
                     }
