@@ -172,7 +172,7 @@ class RegistrationFragment : Fragment() {
 
     private fun showDialog(msg: String) {
         val dialog = AlertDialog.Builder(requireContext())
-            .setTitle("Failed to login")
+            .setTitle("Registration Failed!")
             .setMessage(msg)
             .setCancelable(false)
             .setPositiveButton("Retry!") { dialogInterface, i ->
