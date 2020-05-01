@@ -24,6 +24,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory.fromBitmap
+import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.auth.FirebaseAuth
@@ -93,7 +94,8 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
                     }
 
                 //Multiple marker add
-                multipleMurker(23.7536267, 90.376229, "Rez Zone")
+                multipleMurkerRed(24.323830, 90.172589, "Red Zone")
+                multipleMurkerOrange(24.315745, 90.173242, "Orange Zone")
 
 
             } else {
@@ -106,7 +108,7 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    fun multipleMurker(lat: Double, long: Double, title: String) {
+    fun multipleMurkerRed(lat: Double, long: Double, title: String) {
         val latLng = LatLng(lat, long)
         mMap.addMarker(
             MarkerOptions()
@@ -115,6 +117,20 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
                 .icon(bitmapDescriptorFromVector(applicationContext, R.drawable.red_signal))
 
         )
+
+
+    }
+fun multipleMurkerOrange(lat: Double, long: Double, title: String) {
+        val latLng = LatLng(lat, long)
+        mMap.addMarker(
+            MarkerOptions()
+                .position(latLng)
+                .title(title)
+                .icon(bitmapDescriptorFromVector(applicationContext, R.drawable.orange))
+
+        )
+
+
     }
 
     fun gotoSelfRegPage(view: View) {
