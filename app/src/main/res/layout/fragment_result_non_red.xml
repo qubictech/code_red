@@ -49,7 +49,8 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="30dp"
         android:text="@string/emergency_contact"
-        app:cornerRadius="18dp" />
+        app:cornerRadius="18dp"
+        tools:ignore="OnClick" />
 
 
 </RelativeLayout>
