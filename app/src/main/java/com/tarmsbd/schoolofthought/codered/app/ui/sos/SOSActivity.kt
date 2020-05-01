@@ -13,6 +13,7 @@ import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.tarmsbd.schoolofthought.codered.app.R
 import kotlinx.android.synthetic.main.activity_s_o_s.*
 import java.util.*
@@ -28,6 +29,7 @@ class SOSActivity : AppCompatActivity() {
     private var down: Long = 0
     private var up: Long = 0
     private lateinit var background: RelativeLayout
+    private lateinit var btnWrapper: CoordinatorLayout
     private lateinit var progress: ProgressBar
     private lateinit var timer: Timer
 
@@ -35,7 +37,7 @@ class SOSActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_s_o_s)
         background = findViewById(R.id.background)
-
+        btnWrapper = findViewById(R.id.sos_btn_layout)
         progress = findViewById(R.id.progress_circular)
         progress.progress = 0
 
@@ -46,7 +48,7 @@ class SOSActivity : AppCompatActivity() {
                     up = System.currentTimeMillis()
                     if (up - down > 3000) {
                         blink()
-                        showFragment()
+//                        showFragment()
                     } else {
                         timer.cancel()
                         Toast.makeText(
@@ -95,10 +97,11 @@ class SOSActivity : AppCompatActivity() {
     }
 
     private fun blink() {
+        btnWrapper.visibility = View.GONE
         val anim: ObjectAnimator = ObjectAnimator
             .ofInt(background, "backgroundColor", Color.RED, Color.GREEN)
 
-        anim.duration = 1500
+        anim.duration = 650
         anim.setEvaluator(ArgbEvaluator())
         anim.repeatMode = ValueAnimator.REVERSE
         anim.repeatCount = Animation.INFINITE
@@ -106,7 +109,7 @@ class SOSActivity : AppCompatActivity() {
 
         Handler().postDelayed({
             showFragment()
-        }, 3000)
+        }, 2000)
     }
 
     private fun showFragment() {

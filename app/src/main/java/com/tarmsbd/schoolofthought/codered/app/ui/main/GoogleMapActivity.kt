@@ -31,17 +31,19 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.tarmsbd.schoolofthought.codered.app.R
+import com.tarmsbd.schoolofthought.codered.app.data.repository.FirebaseRepo
 import com.tarmsbd.schoolofthought.codered.app.ui.auth.AuthActivity
 import com.tarmsbd.schoolofthought.codered.app.ui.emergency.EmergencyActivity
 import com.tarmsbd.schoolofthought.codered.app.ui.ques.QuesActivity
 import com.tarmsbd.schoolofthought.codered.app.ui.report.ReportActivity
+import java.util.logging.Logger
 
 
 class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
 
     companion object {
-        val PERMISSION_ID = 42
+        const val PERMISSION_ID = 42
     }
 
     private val user = FirebaseAuth.getInstance().currentUser
@@ -71,12 +73,35 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as? SupportMapFragment
         mapFragment?.getMapAsync(this)
+
+        FirebaseRepo.getReportResults { error, list ->
+            Logger.getLogger("MapActivity")
+                .warning("Response: Error: $error \nResult Count: ${list.size}")
+
+            if (!error) {
+                for (result in list) {
+                    if (result.result == "Ref") {
+                        multipleMurkerOrange(
+                            result.location.latitude,
+                            result.location.longitude,
+                            result.result
+                        )
+                    } else if (result.result == "Orange") {
+                        multipleMurkerRed(
+                            result.location.latitude,
+                            result.location.longitude,
+                            result.result
+                        )
+                    }
+                }
+            }
+        }
     }
 
     override fun onRestart() {
         super.onRestart()
         finish()
-        startActivity(intent)
+        recreate()
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -141,6 +166,7 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
     }
+
     fun multipleMurkerOrange(lat: Double, long: Double, title: String) {
         val latLng = LatLng(lat, long)
         mMap.addMarker(
@@ -212,8 +238,10 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
             .setPositiveButton("Yes",
                 DialogInterface.OnClickListener { dialog, id -> startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)) })
             .setNegativeButton("No",
-                DialogInterface.OnClickListener { dialog, id -> dialog.cancel()
-                finish()})
+                DialogInterface.OnClickListener { dialog, id ->
+                    dialog.cancel()
+                    finish()
+                })
         val alert: AlertDialog = builder.create()
         alert.show()
     }

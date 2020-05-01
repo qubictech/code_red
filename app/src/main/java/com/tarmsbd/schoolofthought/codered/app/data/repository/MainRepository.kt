@@ -1,27 +1,8 @@
 package com.tarmsbd.schoolofthought.codered.app.data.repository
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.tarmsbd.schoolofthought.codered.app.data.api.RetrofitBuilder
 import com.tarmsbd.schoolofthought.codered.app.data.models.CodeRedResponse
-import com.tarmsbd.schoolofthought.codered.app.data.models.RecentStatus
 
 object MainRepository {
-
-    private val dummyData = mutableListOf(
-        RecentStatus("Time", "Gender", "Age", "Area"),
-        RecentStatus("Today", "M", "43", "Dhaka"),
-        RecentStatus("Today", "M", "26", "Dhaka"),
-        RecentStatus("Today", "F", "33", "Dhaka")
-    )
-
-    private var mRecentStatus = MutableLiveData<List<RecentStatus>>()
-
-    init {
-        mRecentStatus.value = dummyData
-    }
-
-    val recentStatus = mRecentStatus
-
-    suspend fun response(body: HashMap<String, String>):CodeRedResponse = RetrofitBuilder.apiService.getResponse(body)
+    suspend fun response(body: HashMap<String, String>): CodeRedResponse = RetrofitBuilder.apiService.getResponse(body)
 }

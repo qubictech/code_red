@@ -79,27 +79,34 @@ class QuesActivity : AppCompatActivity() {
 
                 Logger.getLogger("QuesActivity:").warning("Requesting................")
 
-                showProgressDialog().show()
+                val dialog = showProgressDialog()
+                dialog.show()
 
                 mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
                 mainViewModel.getResponse(map).observe(this, Observer {
 
-                    FirebaseRepo.submitResultData(
-                        SelfResult(
-                            user.email?.substring(1, 12).toString(),
-                            mLocation,
-                            it.response,
-                            map
+                    if (it.response != "Failed") {
+                        FirebaseRepo.submitResultData(
+                            SelfResult(
+                                user.email?.substring(1, 12).toString(),
+                                com.tarmsbd.schoolofthought.codered.app.data.models.Location(
+                                    mLocation.latitude,
+                                    mLocation.longitude
+                                ),
+                                it.response, 0, map
+                            )
                         )
-                    )
 
-                    showProgressDialog().cancel()
+                        val intent = Intent(this, SOSActivity::class.java)
+                        intent.putExtra(SOSActivity.EXTRA_RESULT, it.response)
+                        startActivity(intent)
+                        finish()
+                    } else {
+                        showFailedDialog()
+                    }
 
-                    val intent = Intent(this, SOSActivity::class.java)
-                    intent.putExtra(SOSActivity.EXTRA_RESULT, it.response)
-                    startActivity(intent)
-                    finish()
+                    dialog.cancel()
                 })
             }
 
@@ -128,6 +135,17 @@ class QuesActivity : AppCompatActivity() {
             }.setNeutralButton("Exit!") { dialogInterface, i ->
                 dialogInterface.dismiss()
                 finish()
+            }.create()
+
+        dialog.show()
+    }
+
+    private fun showFailedDialog() {
+        val dialog = AlertDialog.Builder(this)
+            .setMessage("Failed to get result! Try again later.")
+            .setCancelable(false)
+            .setPositiveButton("Okay!") { dialogInterface, i ->
+                dialogInterface.dismiss()
             }.create()
 
         dialog.show()
@@ -190,7 +208,6 @@ class QuesActivity : AppCompatActivity() {
             GoogleMapActivity.PERMISSION_ID
         )
     }
-
 
     override fun onRequestPermissionsResult(
         requestCode: Int,

@@ -88,7 +88,4 @@ class AuthViewModel : ViewModel() {
     private fun toast(msg: String, context: Context) {
         Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
     }
-
-    val getRecentStatus: LiveData<List<RecentStatus>> = MainRepository.recentStatus
-
 }

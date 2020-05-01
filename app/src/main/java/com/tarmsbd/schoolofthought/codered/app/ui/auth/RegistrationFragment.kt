@@ -169,7 +169,6 @@ class RegistrationFragment : Fragment() {
         return valid
     }
 
-
     private fun showDialog(msg: String) {
         val dialog = AlertDialog.Builder(requireContext())
             .setTitle("Registration Failed!")
