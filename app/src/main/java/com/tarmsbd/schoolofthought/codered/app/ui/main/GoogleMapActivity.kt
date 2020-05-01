@@ -27,12 +27,12 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory.fromBitmap
-import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.tarmsbd.schoolofthought.codered.app.R
 import com.tarmsbd.schoolofthought.codered.app.ui.auth.AuthActivity
+import com.tarmsbd.schoolofthought.codered.app.ui.emergency.EmergencyActivity
 import com.tarmsbd.schoolofthought.codered.app.ui.ques.QuesActivity
 import com.tarmsbd.schoolofthought.codered.app.ui.report.ReportActivity
 
@@ -63,13 +63,14 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_google_map)
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
         val mapFragment = supportFragmentManager
-            .findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment.getMapAsync(this)
+            .findFragmentById(R.id.map) as? SupportMapFragment
+        mapFragment?.getMapAsync(this)
     }
 
     override fun onRestart() {
@@ -140,7 +141,7 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
     }
-fun multipleMurkerOrange(lat: Double, long: Double, title: String) {
+    fun multipleMurkerOrange(lat: Double, long: Double, title: String) {
         val latLng = LatLng(lat, long)
         mMap.addMarker(
             MarkerOptions()
@@ -211,7 +212,8 @@ fun multipleMurkerOrange(lat: Double, long: Double, title: String) {
             .setPositiveButton("Yes",
                 DialogInterface.OnClickListener { dialog, id -> startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)) })
             .setNegativeButton("No",
-                DialogInterface.OnClickListener { dialog, id -> dialog.cancel() })
+                DialogInterface.OnClickListener { dialog, id -> dialog.cancel()
+                finish()})
         val alert: AlertDialog = builder.create()
         alert.show()
     }
