@@ -5,11 +5,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.emergency.EmergencyActivity">
 
-<<<<<<< .merge_file_a03352
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-=======
     <TextView
         android:id="@+id/topText"
         android:layout_width="wrap_content"
@@ -29,5 +24,4 @@
         android:layout_marginTop="10dp"
         />
 
->>>>>>> .merge_file_a09732
 </RelativeLayout>
