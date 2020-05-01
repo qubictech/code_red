@@ -10,19 +10,12 @@ import kotlinx.coroutines.Dispatchers
 class MainViewModel : ViewModel() {
     val repo = MainRepository
 
-    fun getLocations() = liveData(Dispatchers.IO) {
-        try {
-            emit(repo.locations())
-        } catch (e: Exception) {
-            e.printStackTrace()
+    fun getResponse(body: HashMap<String, String>): LiveData<CodeRedResponse> =
+        liveData(Dispatchers.IO) {
+            try {
+                emit(repo.response(body))
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
-    }
-
-    fun getResponse(body: HashMap<String, String>): LiveData<String> = liveData(Dispatchers.IO) {
-        try {
-            emit(repo.response(body))
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
 }

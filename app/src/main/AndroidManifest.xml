@@ -15,7 +15,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".ui.report.ReportActivity"></activity>
+        <activity android:name=".ui.sos.SOSActivity"></activity>
+        <activity android:name=".ui.report.ReportActivity" />
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"

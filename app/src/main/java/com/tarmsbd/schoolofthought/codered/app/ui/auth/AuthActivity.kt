@@ -11,6 +11,10 @@ import com.tarmsbd.schoolofthought.codered.app.databinding.ActivityAuthBinding
 
 class AuthActivity : AppCompatActivity() {
 
+    companion object{
+        const val EXTRA_TEXT = "com.tarmsbd.schoolofthought.codered.app.ui.auth.EXTRA_TEXT"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val authBinding: ActivityAuthBinding =
