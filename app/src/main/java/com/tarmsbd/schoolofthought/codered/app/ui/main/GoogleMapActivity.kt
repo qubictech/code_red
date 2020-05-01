@@ -37,7 +37,7 @@ import com.tarmsbd.schoolofthought.codered.app.ui.ques.QuesActivity
 import com.tarmsbd.schoolofthought.codered.app.ui.report.ReportActivity
 
 
-class GoogleMapActivity : AppCompatActivity(R.layout.activity_google_map), OnMapReadyCallback {
+class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
 
     companion object {
@@ -63,13 +63,14 @@ class GoogleMapActivity : AppCompatActivity(R.layout.activity_google_map), OnMap
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_google_map)
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
         val mapFragment = supportFragmentManager
-            .findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment.getMapAsync(this)
+            .findFragmentById(R.id.map) as? SupportMapFragment
+        mapFragment?.getMapAsync(this)
     }
 
     override fun onRestart() {
@@ -79,8 +80,12 @@ class GoogleMapActivity : AppCompatActivity(R.layout.activity_google_map), OnMap
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
+
+
         if (checkPermissions()) {
             if (isLocationEnabled()) {
+
+
                 mMap = googleMap
 
                 fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
@@ -98,7 +103,8 @@ class GoogleMapActivity : AppCompatActivity(R.layout.activity_google_map), OnMap
                                     .title("Dhaka")
                             )
                         } else {
-                            val mylatlong = LatLng(location.latitude, location.longitude)
+
+                            val mylatlong = LatLng(location!!.latitude, location.longitude)
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mylatlong, 16f))
                             mMap.addMarker(
                                 MarkerOptions()
@@ -109,7 +115,8 @@ class GoogleMapActivity : AppCompatActivity(R.layout.activity_google_map), OnMap
                     }
 
                 //Multiple marker add
-                multipleMurker(23.7536267, 90.376229, "Red Zone")
+                multipleMurkerRed(24.323830, 90.172589, "Red Zone")
+                multipleMurkerOrange(24.315745, 90.173242, "Orange Zone")
 
 
             } else {
@@ -122,7 +129,7 @@ class GoogleMapActivity : AppCompatActivity(R.layout.activity_google_map), OnMap
         }
     }
 
-    fun multipleMurker(lat: Double, long: Double, title: String) {
+    fun multipleMurkerRed(lat: Double, long: Double, title: String) {
         val latLng = LatLng(lat, long)
         mMap.addMarker(
             MarkerOptions()
@@ -131,6 +138,20 @@ class GoogleMapActivity : AppCompatActivity(R.layout.activity_google_map), OnMap
                 .icon(bitmapDescriptorFromVector(applicationContext, R.drawable.red_signal))
 
         )
+
+
+    }
+    fun multipleMurkerOrange(lat: Double, long: Double, title: String) {
+        val latLng = LatLng(lat, long)
+        mMap.addMarker(
+            MarkerOptions()
+                .position(latLng)
+                .title(title)
+                .icon(bitmapDescriptorFromVector(applicationContext, R.drawable.orange))
+
+        )
+
+
     }
 
     fun gotoSelfRegPage(view: View) {
@@ -175,6 +196,7 @@ class GoogleMapActivity : AppCompatActivity(R.layout.activity_google_map), OnMap
         return fromBitmap(bitmap)
     }
 
+
     private fun isLocationEnabled(): Boolean {
         var locationManager: LocationManager =
             getSystemService(Context.LOCATION_SERVICE) as LocationManager
@@ -190,7 +212,8 @@ class GoogleMapActivity : AppCompatActivity(R.layout.activity_google_map), OnMap
             .setPositiveButton("Yes",
                 DialogInterface.OnClickListener { dialog, id -> startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)) })
             .setNegativeButton("No",
-                DialogInterface.OnClickListener { dialog, id -> dialog.cancel() })
+                DialogInterface.OnClickListener { dialog, id -> dialog.cancel()
+                finish()})
         val alert: AlertDialog = builder.create()
         alert.show()
     }
@@ -221,6 +244,7 @@ class GoogleMapActivity : AppCompatActivity(R.layout.activity_google_map), OnMap
         )
     }
 
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,
@@ -232,4 +256,5 @@ class GoogleMapActivity : AppCompatActivity(R.layout.activity_google_map), OnMap
             }
         }
     }
+
 }
