@@ -1,5 +1,6 @@
 package com.tarmsbd.schoolofthought.codered.app.ui.auth
 
+import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -73,17 +75,18 @@ class RegistrationFragment : Fragment() {
             }
         })
 
-
-
         return fragmentRegistrationBinding.root
     }
 
-    fun registerUser(user: RegisterUser) {
+    private fun registerUser(user: RegisterUser) {
         Logger.getLogger("FirebaseRepo").warning(user.toString())
         val intentExtraText = activity!!.intent.getStringExtra(AuthActivity.EXTRA_TEXT)
 
         if (firebaseUser != null)
             FirebaseAuth.getInstance().signOut()
+
+        val dialog = showProgressDialog()
+        dialog.show()
 
         FirebaseAuth.getInstance()
             .createUserWithEmailAndPassword("u${user.mobile}@red.com", user.password)
@@ -105,14 +108,17 @@ class RegistrationFragment : Fragment() {
                                 activity!!.finish()
                             }
                         }
-
                         toast("Registration Complete")
                     }
-                    task.isCanceled -> toast(
-                        "Registration Canceled: " + task.exception?.message
-                    )
-                    else -> toast("error: ${task.exception?.message}")
+                    task.isCanceled -> {
+                        showDialog("Error: ${task.exception?.message?.replace("email", "mobile")}")
+                    }
+                    else -> {
+                        showDialog("Error: ${task.exception?.message?.replace("email", "mobile")}")
+                    }
                 }
+
+                dialog.dismiss()
             }
     }
 
@@ -156,5 +162,26 @@ class RegistrationFragment : Fragment() {
         }
 
         return valid
+    }
+
+
+    private fun showDialog(msg: String) {
+        val dialog = AlertDialog.Builder(requireContext())
+            .setTitle("Failed to login")
+            .setMessage(msg)
+            .setCancelable(false)
+            .setPositiveButton("Retry!") { dialogInterface, i ->
+                dialogInterface.dismiss()
+            }.create()
+
+        dialog.show()
+    }
+
+    private fun showProgressDialog(): ProgressDialog {
+        val progressDialog = ProgressDialog(requireContext())
+        progressDialog.setMessage("Creating new account. Please Wait!")
+        progressDialog.setCancelable(false)
+
+        return progressDialog
     }
 }

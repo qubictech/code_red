@@ -15,7 +15,16 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".ui.emergency.EmergencyActivity"></activity>
+        <activity
+            android:name=".ui.setup.SplashActivity"
+            android:theme="@style/AppTheme.Splash">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.emergency.EmergencyActivity" />
         <activity android:name=".ui.sos.SOSActivity" />
         <activity android:name=".ui.report.ReportActivity" />
 
@@ -23,13 +32,7 @@
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyA4DJyZubalPQvuVDRZ5Ks2Ivb9esyEYfM" />
 
-        <activity android:name=".ui.main.GoogleMapActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".ui.main.GoogleMapActivity" />
         <activity
             android:name=".ui.auth.AuthActivity"
             android:windowSoftInputMode="adjustPan" />

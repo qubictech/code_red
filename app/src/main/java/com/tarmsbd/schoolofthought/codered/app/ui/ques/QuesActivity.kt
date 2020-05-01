@@ -20,6 +20,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.tarmsbd.schoolofthought.codered.app.R
 import com.tarmsbd.schoolofthought.codered.app.data.models.SelfResult
 import com.tarmsbd.schoolofthought.codered.app.data.repository.FirebaseRepo
@@ -36,12 +37,13 @@ class QuesActivity : AppCompatActivity() {
     private var id: Int = 1
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
-    private val user = FirebaseAuth.getInstance().currentUser!!
+    private lateinit var user: FirebaseUser
 
     private var mLocation: LatLng = LatLng(0.0, 0.0)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        user = FirebaseAuth.getInstance().currentUser!!
 
         quesViewModel = ViewModelProvider(this)[QuesViewModel::class.java]
 

@@ -1,5 +1,6 @@
 package com.tarmsbd.schoolofthought.codered.app.ui.auth
 
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -26,7 +28,7 @@ class LoginFragment : Fragment() {
     private lateinit var fragmentLoginBinding: FragmentLoginBinding
     private lateinit var authViewModel: AuthViewModel
     private lateinit var mainViewModel: MainViewModel
-    
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -62,9 +64,12 @@ class LoginFragment : Fragment() {
         return fragmentLoginBinding.root
     }
 
-    fun loginUser(user: LoginUser) {
+    private fun loginUser(user: LoginUser) {
         Logger.getLogger("FirebaseRepo").warning(user.toString())
         val intentExtraText = activity!!.intent.getStringExtra(AuthActivity.EXTRA_TEXT)
+
+        val dialog = showProgressDialog()
+        dialog.show()
 
         FirebaseAuth.getInstance()
             .signInWithEmailAndPassword("u${user.mobile}@red.com", user.password)
@@ -83,13 +88,35 @@ class LoginFragment : Fragment() {
                             }
                         }
                     }
-                    task.isCanceled -> toast(
-                        "Login Error: " + task.exception?.message,
-                        requireContext()
-                    )
-                    else -> toast("error: ${task.exception?.message}", requireContext())
+                    task.isCanceled -> {
+                        showDialog("Error: ${task.exception?.message}")
+                    }
+                    else -> {
+                        showDialog("Error: ${task.exception?.message}")
+                    }
                 }
+                dialog.dismiss()
             }
+    }
+
+    private fun showDialog(msg: String) {
+        val dialog = AlertDialog.Builder(requireContext())
+            .setTitle("Failed to login")
+            .setMessage(msg)
+            .setCancelable(false)
+            .setPositiveButton("Retry!") { dialogInterface, i ->
+                dialogInterface.dismiss()
+            }.create()
+
+        dialog.show()
+    }
+
+    private fun showProgressDialog(): ProgressDialog {
+        val progressDialog = ProgressDialog(requireContext())
+        progressDialog.setMessage("Please Wait! Logging in..")
+        progressDialog.setCancelable(false)
+
+        return progressDialog
     }
 
     private fun toast(msg: String, context: Context) {
