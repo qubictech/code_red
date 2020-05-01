@@ -6,12 +6,14 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -28,6 +30,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory.fromBitmap
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.tarmsbd.schoolofthought.codered.app.R
@@ -114,6 +117,20 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
                 mMap = googleMap
 
+                try {
+                    // Customise the styling of the base map using a JSON object defined
+                    // in a raw resource file.
+                    val success = googleMap.setMapStyle(
+                        MapStyleOptions.loadRawResourceStyle(
+                            this, R.raw.mapstyle
+                        )
+                    )
+                    if (!success) {
+                        Log.e("Map Failed----", "Style parsing failed.")
+                    }
+                } catch (e: Resources.NotFoundException) {
+                    Log.e(" Map Error---", "Can't find style. Error: ", e)
+                }
                 fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
                 fusedLocationClient.lastLocation
