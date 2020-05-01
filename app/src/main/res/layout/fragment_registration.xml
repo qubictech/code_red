@@ -54,7 +54,7 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:background="@drawable/edit_text_background"
                         android:hint="@string/mobile_number"
                         android:imeOptions="actionNext"
@@ -78,7 +78,7 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:background="@drawable/edit_text_background"
                         android:hint="@string/full_name"
                         android:imeOptions="actionNext"
@@ -141,7 +141,7 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:background="@drawable/edit_text_background"
                         android:hint="@string/password"
                         android:imeOptions="actionNext"
@@ -150,40 +150,13 @@
                         android:text="@={viewModel.password}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-
-                <!--confirm password-->
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
-                    app:boxCornerRadiusBottomEnd="32dp"
-                    app:boxCornerRadiusBottomStart="32dp"
-                    app:boxCornerRadiusTopEnd="32dp"
-                    app:boxCornerRadiusTopStart="32dp"
-                    app:hintEnabled="false"
-                    app:hintTextColor="@color/black"
-                    app:passwordToggleEnabled="true">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/edit_text_background"
-                        android:hint="@string/confirm_password"
-                        android:imeOptions="actionNext"
-                        android:inputType="textPassword"
-                        android:paddingStart="32dp"
-                        android:text="@={viewModel.confirmPassword}" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-
                 <!--task help button-->
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/signup_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
                     android:minWidth="200dp"
-                    android:onClick="@{(v)->viewModel.createUser(v)}"
                     android:text="Continue"
                     android:textAllCaps="false"
                     android:textColor="@color/white"

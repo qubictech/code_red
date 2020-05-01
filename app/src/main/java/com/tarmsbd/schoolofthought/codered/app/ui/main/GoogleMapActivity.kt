@@ -12,8 +12,11 @@ import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -34,7 +37,7 @@ import com.tarmsbd.schoolofthought.codered.app.ui.ques.QuesActivity
 import com.tarmsbd.schoolofthought.codered.app.ui.report.ReportActivity
 
 
-class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
+class GoogleMapActivity : AppCompatActivity(R.layout.activity_google_map), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
 
     companion object {
@@ -44,9 +47,26 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
     private val user = FirebaseAuth.getInstance().currentUser
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.menu_logout) {
+            FirebaseAuth.getInstance().signOut()
+            recreate()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_google_map)
+
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
@@ -59,12 +79,8 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-
-
         if (checkPermissions()) {
             if (isLocationEnabled()) {
-
-
                 mMap = googleMap
 
                 fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
@@ -82,8 +98,7 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
                                     .title("Dhaka")
                             )
                         } else {
-
-                            val mylatlong = LatLng(location!!.latitude, location.longitude)
+                            val mylatlong = LatLng(location.latitude, location.longitude)
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mylatlong, 16f))
                             mMap.addMarker(
                                 MarkerOptions()
@@ -160,7 +175,6 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
         return fromBitmap(bitmap)
     }
 
-
     private fun isLocationEnabled(): Boolean {
         var locationManager: LocationManager =
             getSystemService(Context.LOCATION_SERVICE) as LocationManager
@@ -207,7 +221,6 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
         )
     }
 
-
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,
@@ -219,5 +232,4 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         }
     }
-
 }
