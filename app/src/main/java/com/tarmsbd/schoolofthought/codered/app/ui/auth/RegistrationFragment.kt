@@ -151,6 +151,11 @@ class RegistrationFragment : Fragment() {
             valid = false
         }
 
+        if (user.mobile.isNotEmpty() && user.mobile.length != 11) {
+            valid = false
+            error.add("Enter valid mobile number")
+        }
+
         if (user.password.isEmpty()) {
             error.add("Password")
             valid = false
