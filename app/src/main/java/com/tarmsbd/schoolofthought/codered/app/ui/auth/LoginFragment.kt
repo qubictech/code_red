@@ -39,6 +39,8 @@ class LoginFragment : Fragment() {
             val authActivity: AuthActivity = activity as AuthActivity
             authActivity.switchFragment(RegistrationFragment())
         }
+
+
         return fragmentLoginBinding.root
     }
 }

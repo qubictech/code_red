@@ -14,15 +14,17 @@ import java.util.List;
 
 public class EmergencyAdapter extends RecyclerView.Adapter<EmergencyAdapter.ViewHolder> {
 
-    private List<String> mData;
+    private List<String> Name;
+    private List<String> Phone;
     private LayoutInflater mInflater;
 
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    public EmergencyAdapter(Context context, List<String> data) {
+    public EmergencyAdapter(Context context, List<String> Name, List<String> Phone) {
         this.mInflater = LayoutInflater.from(context);
-        this.mData = data;
+        this.Name = Name;
+        this.Phone = Phone;
     }
 
     // inflates the row layout from xml when needed
@@ -35,24 +37,27 @@ public class EmergencyAdapter extends RecyclerView.Adapter<EmergencyAdapter.View
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        String animal = mData.get(position);
-        holder.myTextView.setText(animal);
+        String animal = Name.get(position);
+        holder.nameTextView.setText(animal);
+        String phone = Phone.get(position);
+        holder.phoneTextView.setText(phone);
     }
 
     // total number of rows
     @Override
     public int getItemCount() {
-        return mData.size();
+        return Name.size();
     }
 
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView myTextView;
-
+        TextView nameTextView;
+        TextView phoneTextView;
         ViewHolder(View itemView) {
             super(itemView);
-            myTextView = itemView.findViewById(R.id.tvAnimalName);
+            nameTextView = itemView.findViewById(R.id.textViewName);
+            phoneTextView = itemView.findViewById(R.id.textViewPhone);
             itemView.setOnClickListener(this);
         }
 
@@ -64,7 +69,7 @@ public class EmergencyAdapter extends RecyclerView.Adapter<EmergencyAdapter.View
 
     // convenience method for getting data at click position
     public String getItem(int id) {
-        return mData.get(id);
+        return Name.get(id);
     }
 
     // allows clicks events to be caught
