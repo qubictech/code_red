@@ -94,7 +94,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
                     android:minWidth="200dp"
-                    android:onClick="@{(v)->viewModel.loginUser(v)}"
+                    android:id="@+id/login_btn"
                     android:text="@string/login"
                     android:textAllCaps="false"
                     app:cornerRadius="18dp" />

@@ -1,19 +1,37 @@
 package com.tarmsbd.schoolofthought.codered.app.ui.report
 
+import android.Manifest
+import android.content.Context
+import android.content.DialogInterface
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationManager
 import android.os.Bundle
+import android.provider.Settings
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.model.LatLng
 import com.tarmsbd.schoolofthought.codered.app.R
 import com.tarmsbd.schoolofthought.codered.app.data.viewmodel.ReportViewModel
 import com.tarmsbd.schoolofthought.codered.app.databinding.ActivityReportBinding
+import com.tarmsbd.schoolofthought.codered.app.ui.main.GoogleMapActivity
 import java.util.logging.Logger
 
 class ReportActivity : AppCompatActivity() {
     private lateinit var activityReportBinding: ActivityReportBinding
     private lateinit var reportViewModel: ReportViewModel
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+
+    private var mLocation: LatLng? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -25,14 +43,26 @@ class ReportActivity : AppCompatActivity() {
             lifecycleOwner = this@ReportActivity
         }
 
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
         reportViewModel.getReportData.observe(this, Observer { report ->
-            if (report.patientName.isNotEmpty() && report.mobile.isNotEmpty() && report.location.isNotEmpty() && report.desc.isNotEmpty()) {
+            if (report.patientName.isNotEmpty() && report.mobile.isNotEmpty() && mLocation != null && report.desc.isNotEmpty()) {
+
                 activityReportBinding.submitReport.isEnabled = true
                 activityReportBinding.submitReport.setOnClickListener {
-                    reportViewModel.submitReportData(report)
-                    showDialog()
-                    // todo: latlng for user location
+                    if (report.desc.length >= 100) {
+                        reportViewModel.submitReportData(report)
+                        showDialog()
+                    } else {
+                        Toast.makeText(
+                            this,
+                            "Report must be at least 100+ chars",
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                    }
                 }
+
             } else {
                 activityReportBinding.submitReport.isEnabled = false
                 activityReportBinding.submitReport.setOnClickListener(null)
@@ -53,4 +83,89 @@ class ReportActivity : AppCompatActivity() {
 
         dialog.show()
     }
+
+    override fun onStart() {
+        super.onStart()
+
+        if (checkPermissions()) {
+            if (isLocationEnabled()) {
+
+                fusedLocationClient.lastLocation
+                    .addOnSuccessListener { location: Location? ->
+                        // Got last known location. In some rare situations this can be null.
+                        mLocation = if (location == null) {
+                            LatLng(23.7536267, 90.376229)
+                        } else {
+                            LatLng(location.latitude, location.longitude)
+                        }
+                    }
+            } else {
+                //location is not enabled!
+                buildAlertMessageNoGps()
+            }
+        } else {
+            requestPermissions()
+        }
+    }
+
+    private fun isLocationEnabled(): Boolean {
+        val locationManager: LocationManager =
+            getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
+            LocationManager.NETWORK_PROVIDER
+        )
+    }
+
+    private fun checkPermissions(): Boolean {
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            return true
+        }
+        return false
+    }
+
+    private fun requestPermissions() {
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ),
+            GoogleMapActivity.PERMISSION_ID
+        )
+    }
+
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == GoogleMapActivity.PERMISSION_ID) {
+            if (!(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                // permission not granted
+                requestPermissions()
+            }
+        }
+    }
+
+    private fun buildAlertMessageNoGps() {
+        val builder: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(this)
+        builder.setMessage("Your GPS seems to be disabled, do you want to enable it?")
+            .setCancelable(false)
+            .setPositiveButton("Yes",
+                DialogInterface.OnClickListener { dialog, id -> startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)) })
+            .setNegativeButton("No",
+                DialogInterface.OnClickListener { dialog, id -> dialog.cancel() })
+        val alert: android.app.AlertDialog = builder.create()
+        alert.show()
+    }
+
 }

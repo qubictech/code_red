@@ -9,11 +9,14 @@ import android.os.Handler
 import android.view.MotionEvent
 import android.view.View
 import android.view.animation.Animation
+import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.tarmsbd.schoolofthought.codered.app.R
 import kotlinx.android.synthetic.main.activity_s_o_s.*
+import java.util.*
+import java.util.logging.Logger
 
 
 class SOSActivity : AppCompatActivity() {
@@ -25,19 +28,27 @@ class SOSActivity : AppCompatActivity() {
     private var down: Long = 0
     private var up: Long = 0
     private lateinit var background: RelativeLayout
+    private lateinit var progress: ProgressBar
+    private lateinit var timer: Timer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_s_o_s)
         background = findViewById(R.id.background)
 
+        progress = findViewById(R.id.progress_circular)
+        progress.progress = 0
+
         sos_button.setOnTouchListener { _, motionEvent ->
             when (motionEvent.action) {
                 MotionEvent.ACTION_UP -> {
+                    progress.progress = 0
                     up = System.currentTimeMillis()
                     if (up - down > 3000) {
-                        blink()
+//                        blink()
+                        showFragment()
                     } else {
+                        timer.cancel()
                         Toast.makeText(
                             this,
                             resources.getString(R.string.press_and_hold_the_sos_button_for_3_seconds),
@@ -45,12 +56,42 @@ class SOSActivity : AppCompatActivity() {
                         ).show()
                     }
                 }
+
                 MotionEvent.ACTION_DOWN -> {
                     down = System.currentTimeMillis()
+                    timer = getTimer(down + (30 * 1000))
                 }
             }
             return@setOnTouchListener true
         }
+    }
+
+    private fun getTimer(milis: Long): Timer {
+        val timer = Timer()
+        var temp = 0
+        timer.scheduleAtFixedRate(object : TimerTask() {
+            override fun run() {
+                try {
+                    val time = System.currentTimeMillis()
+                    if (time < milis) {
+                        runOnUiThread {
+                            progress.progress = temp++
+                        }
+                    } else {
+                        cancel()
+                        progress.progress = 0
+                    }
+
+                    Logger.getLogger("PROGRESS").warning(".....")
+
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+
+        }, 0, 30)
+
+        return timer
     }
 
     private fun blink() {
@@ -64,17 +105,21 @@ class SOSActivity : AppCompatActivity() {
         anim.start()
 
         Handler().postDelayed({
-            background.visibility = View.GONE
-            val result = intent.getStringExtra(EXTRA_RESULT)
-            if (result == RED) {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, ResultRedFragment())
-                    .commit()
-            } else {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, ResultNonRedFragment())
-                    .commit()
-            }
+            showFragment()
         }, 3000)
+    }
+
+    private fun showFragment() {
+        background.visibility = View.GONE
+        val result = intent.getStringExtra(EXTRA_RESULT)
+        if (result == RED) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, ResultRedFragment())
+                .commit()
+        } else {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, ResultNonRedFragment())
+                .commit()
+        }
     }
 }

@@ -81,9 +81,9 @@ class AuthViewModel : ViewModel() {
 
             return
         }
-
-        FirebaseRepo.loginUser(user = user, context = view.context)
     }
+
+    val userCredentialForLogin: LiveData<LoginUser> = mUser
 
     private fun toast(msg: String, context: Context) {
         Toast.makeText(context, msg, Toast.LENGTH_LONG).show()

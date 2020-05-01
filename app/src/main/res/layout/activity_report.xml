@@ -72,16 +72,22 @@
                     android:minHeight="45dp"
                     android:text="@={viewModel.location}" />
 
-                <EditText
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
+
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/edit_text_background"
-                    android:gravity="center|top"
-                    android:hint="@string/report_description"
-                    android:inputType="textCapSentences"
-                    android:minHeight="145dp"
-                    android:text="@={viewModel.desc}" />
+                    app:counterEnabled="true">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/edit_text_background"
+                        android:gravity="center|top"
+                        android:hint="@string/report_description"
+                        android:inputType="textCapSentences"
+                        android:minHeight="145dp"
+                        android:text="@={viewModel.desc}" />
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/submit_report"

@@ -4,10 +4,10 @@ import android.app.DatePickerDialog
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.tarmsbd.schoolofthought.codered.app.data.models.RegisterUser
-import com.tarmsbd.schoolofthought.codered.app.data.repository.FirebaseRepo
 import java.util.*
 import java.util.logging.Logger
 
@@ -139,7 +139,7 @@ class RegistrationViewModel : ViewModel() {
 
             return
         }
-
-        FirebaseRepo.registerUser(user, view.context)
     }
+
+    val userDataObserver: LiveData<RegisterUser> = mUser
 }
