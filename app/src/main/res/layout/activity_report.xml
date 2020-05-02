@@ -18,7 +18,7 @@
         <!--appbar-->
         <include layout="@layout/appbar_layout" />
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
@@ -61,54 +61,53 @@
                     android:minHeight="45dp"
                     android:text="@={viewModel.mobile}" />
                 <!--                gender-->
-<!--                <LinearLayout-->
-<!--                    android:layout_marginTop="10sp"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginBottom="12dp"-->
-<!--                    android:background="@drawable/edit_text_background"-->
-<!--                    android:gravity="center_horizontal"-->
-<!--                    android:minHeight="45dp"-->
-<!--                    android:orientation="horizontal"-->
-<!--                    android:weightSum="3">-->
+                <LinearLayout
+                    android:layout_marginTop="10sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:background="@drawable/edit_text_background"
+                    android:gravity="center_horizontal"
+                    android:minHeight="45dp"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
 
-<!--                    <TextView-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:gravity="center"-->
-<!--                        android:text="@string/male"-->
-<!--                        android:textSize="22sp" />-->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/male"
+                        android:textSize="22sp" />
 
-<!--                    <view-->
-<!--                        android:layout_width="2dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:background="@color/appbar_color" />-->
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/appbar_color" />
 
-<!--                    <TextView-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:gravity="center"-->
-<!--                        android:text="@string/female"-->
-<!--                        android:textSize="22sp" />-->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/female"
+                        android:textSize="22sp" />
 
-<!--                    <view-->
-<!--                        android:layout_width="2dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:background="@color/appbar_color" />-->
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/appbar_color" />
 
-<!--                    <TextView-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:gravity="center"-->
-<!--                        android:text="@string/others"-->
-<!--                        android:textSize="22sp" />-->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/others"
+                        android:textSize="22sp" />
 
 
-<!--                </LinearLayout>-->
-
+                </LinearLayout>
 
                 <EditText
                     android:layout_width="match_parent"
@@ -120,6 +119,27 @@
                     android:inputType="textCapWords"
                     android:minHeight="45dp"
                     android:text="@={viewModel.location}" />
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:layout_marginTop="10sp"
+                    android:background="@drawable/edit_text_background"
+                    android:minHeight="45dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/edit_text_background"
+                        android:gravity="center"
+                        android:hint="@string/date_of_birth"
+                        android:minHeight="45dp"
+                        android:onClick="@{(v)->viewModel.showDatePicker(v)}"
+                        android:paddingStart="32dp"
+                        android:textSize="16sp" />
+                </RelativeLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
@@ -139,18 +159,46 @@
                         android:text="@={viewModel.desc}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/submit_report"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:enabled="false"
-                    android:minWidth="200dp"
-                    android:text="Submit"
-                    app:cornerRadius="18dp" />
 
             </LinearLayout>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@color/colorPrimaryDark"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="Continue"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:textSize="22sp"
+                android:paddingLeft="16dp"
+                android:textColor="@color/white"
+                android:gravity="center_horizontal"
+                android:layout_height="wrap_content"/>
+
+
+
+
+            <ImageButton
+                android:id="@+id/submit_report"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="32dp"
+                android:paddingRight="16dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:src="@drawable/ic_arrow_forward_black_24dp"
+                android:background="@color/colorPrimaryDark"
+                android:layout_alignParentRight="true"/>
+
+        </RelativeLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
+
+
+
