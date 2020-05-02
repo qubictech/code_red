@@ -23,7 +23,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="reg_string"><![CDATA[Register for tentative COVID-19 diagnosis & sending SOS signal]]></string>
     <string name="permission_for_reg">By clicking continue, you agree to our Terms Of Service and our Privacy Policy.</string>
-    <string name="forget_password">Forgot your password?</string>
+    <string name="forget_password"><u>Forgot your password?</u></string>
     <string name="password">Password</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="login">Login</string>
@@ -34,4 +34,8 @@
     <string name="press_and_hold_the_sos_button_for_3_seconds">Press and Hold the SOS button for 3 seconds!</string>
     <string name="return_to_home">Return to Home</string>
     <string name="emergency_contact">Emergency Contact</string>
+    <string name="create_new">
+        <u>Don\'t have an account?</u>
+    </string>
+
 </resources>
