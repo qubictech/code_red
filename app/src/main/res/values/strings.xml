@@ -43,5 +43,6 @@
     <string name="others">Others</string>
     <string name="female">Female</string>
     <string name="male">Male</string>
+    <string name="to_get_assistance_please_answer_these_questions_carefully">To get assistance please answer these questions carefully</string>
 
 </resources>
