@@ -76,14 +76,17 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as? SupportMapFragment
         mapFragment?.getMapAsync(this)
-
-
     }
 
-    override fun onRestart() {
-        super.onRestart()
-        finish()
-        startActivity(intent)
+    override fun onStart() {
+        super.onStart()
+        if (checkPermissions()) {
+            if (!isLocationEnabled()) {
+                buildAlertMessageNoGps()
+            }
+        } else {
+            requestPermissions()
+        }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -214,7 +217,6 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
         startActivity(Intent(this, EmergencyActivity::class.java))
     }
 
-
     private fun bitmapDescriptorFromVector(
         context: Context,
         vectorResId: Int
@@ -235,7 +237,6 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
         vectorDrawable.draw(canvas)
         return fromBitmap(bitmap)
     }
-
 
     private fun isLocationEnabled(): Boolean {
         var locationManager: LocationManager =
@@ -285,7 +286,6 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
             PERMISSION_ID
         )
     }
-
 
     override fun onRequestPermissionsResult(
         requestCode: Int,

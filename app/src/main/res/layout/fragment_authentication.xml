@@ -32,8 +32,8 @@
 
             <EditText
                 android:id="@+id/p1"
-                android:layout_width="55dp"
-                android:layout_height="55dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:background="@drawable/edit_text_background"
                 android:gravity="center"
                 android:hint="0"
@@ -47,8 +47,8 @@
 
             <EditText
                 android:id="@+id/p2"
-                android:layout_width="55dp"
-                android:layout_height="55dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginStart="4dp"
                 android:background="@drawable/edit_text_background"
                 android:gravity="center"
@@ -63,8 +63,8 @@
 
             <EditText
                 android:id="@+id/p3"
-                android:layout_width="55dp"
-                android:layout_height="55dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginStart="4dp"
                 android:background="@drawable/edit_text_background"
                 android:gravity="center"
@@ -79,8 +79,8 @@
 
             <EditText
                 android:id="@+id/p4"
-                android:layout_width="55dp"
-                android:layout_height="55dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginStart="4dp"
                 android:background="@drawable/edit_text_background"
                 android:gravity="center"
@@ -95,8 +95,8 @@
 
             <EditText
                 android:id="@+id/p5"
-                android:layout_width="55dp"
-                android:layout_height="55dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginStart="4dp"
                 android:background="@drawable/edit_text_background"
                 android:gravity="center"
@@ -111,8 +111,8 @@
 
             <EditText
                 android:id="@+id/p6"
-                android:layout_width="55dp"
-                android:layout_height="55dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginStart="4dp"
                 android:background="@drawable/edit_text_background"
                 android:gravity="center"

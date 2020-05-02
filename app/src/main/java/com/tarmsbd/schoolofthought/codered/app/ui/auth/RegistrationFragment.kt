@@ -118,7 +118,13 @@ class RegistrationFragment : Fragment() {
                 if (user.dateOfBirth.isNotEmpty()) {
                     fragmentRegistrationBinding.signupBtn.isEnabled = true
                     fragmentRegistrationBinding.signupBtn.setOnClickListener {
-                        registerUser(user)
+                        if (registrationViewModel.confirmPassword != user.password) {
+                            fragmentRegistrationBinding.confirmPassword.error =
+                                "Password Not Matched!"
+                        } else {
+                            fragmentRegistrationBinding.confirmPassword.error = null
+                            registerUser(user)
+                        }
                     }
                 } else {
 //                    toast("Birth Date is required")

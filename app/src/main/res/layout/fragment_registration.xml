@@ -181,7 +181,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
+                    android:layout_marginBottom="8dp"
                     android:errorPassword="@{viewModel.getUser.password??``}"
                     app:boxCornerRadiusBottomEnd="32dp"
                     app:boxCornerRadiusBottomStart="32dp"
@@ -203,6 +203,36 @@
                         android:inputType="textPassword"
                         android:text="@={viewModel.password}" />
                 </com.google.android.material.textfield.TextInputLayout>
+
+
+                <!--password-->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    app:boxCornerRadiusBottomEnd="32dp"
+                    app:boxCornerRadiusBottomStart="32dp"
+                    app:boxCornerRadiusTopEnd="32dp"
+                    android:id="@+id/confirm_password"
+                    app:boxCornerRadiusTopStart="32dp"
+                    app:errorEnabled="true"
+                    app:hintEnabled="false"
+                    app:hintTextColor="@color/black"
+                    app:passwordToggleEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/edit_text_background"
+                        android:drawableStart="@drawable/ic_lock_outline"
+                        android:drawablePadding="8dp"
+                        android:hint="@string/confirm_password"
+                        android:imeOptions="actionNext"
+                        android:inputType="textPassword"
+                        android:text="@={viewModel.confirmPassword}" />
+                </com.google.android.material.textfield.TextInputLayout>
+
 
                 <!--confirmation string-->
                 <com.google.android.material.button.MaterialButton
