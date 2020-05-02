@@ -135,6 +135,11 @@ class RegistrationFragment : Fragment() {
             }
         })
 
+        fragmentRegistrationBinding.gotoLoginPage.setOnClickListener {
+            val authActivity: AuthActivity = activity as AuthActivity
+            authActivity.switchFragment(LoginFragment())
+        }
+
         return fragmentRegistrationBinding.root
     }
 
