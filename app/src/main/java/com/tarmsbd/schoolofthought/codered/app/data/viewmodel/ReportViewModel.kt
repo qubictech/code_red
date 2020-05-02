@@ -21,6 +21,11 @@ class ReportViewModel : ViewModel() {
     private var mReportData = MutableLiveData<Report>()
     private var report: Report = Report()
 
+    init {
+        report.gender = "M"
+        mReportData.value = report
+    }
+
     var name = ""
         set(value) {
             field = value
@@ -49,6 +54,11 @@ class ReportViewModel : ViewModel() {
             mReportData.value = report
         }
 
+    fun setGender(gender: String) {
+        report.gender = gender
+        mReportData.value = report
+    }
+
     val getReportData: LiveData<Report> = mReportData
 
     fun submitReportData(report: Report) {
@@ -57,13 +67,15 @@ class ReportViewModel : ViewModel() {
 
         mReportData.value = report
     }
+
     fun showDatePicker(view: View) {
         DatePickerDialog(
             view.context,
             DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
                 // do stuff
                 Log.d(TAG, "DatePickerDialog: $year/${monthOfYear + 1}/$dayOfMonth")
-
+                report.dateOfBirth = "$year/${monthOfYear + 1}/$dayOfMonth"
+                mReportData.value = report
             },
             year,
             month,

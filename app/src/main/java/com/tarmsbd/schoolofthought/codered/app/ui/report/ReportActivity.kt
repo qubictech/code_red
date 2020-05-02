@@ -5,13 +5,17 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.PorterDuff
 import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -23,6 +27,7 @@ import com.tarmsbd.schoolofthought.codered.app.R
 import com.tarmsbd.schoolofthought.codered.app.data.viewmodel.ReportViewModel
 import com.tarmsbd.schoolofthought.codered.app.databinding.ActivityReportBinding
 import com.tarmsbd.schoolofthought.codered.app.ui.main.GoogleMapActivity
+import com.tarmsbd.schoolofthought.codered.app.utils.MyPatterns
 import java.util.logging.Logger
 
 class ReportActivity : AppCompatActivity() {
@@ -34,6 +39,10 @@ class ReportActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         reportViewModel = ViewModelProvider(this)[ReportViewModel::class.java]
 
@@ -46,7 +55,10 @@ class ReportActivity : AppCompatActivity() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         reportViewModel.getReportData.observe(this, Observer { report ->
-            if (report.patientName.isNotEmpty() && report.mobile.isNotEmpty() && mLocation != null && report.desc.isNotEmpty()) {
+            if (report.patientName.isNotEmpty() && report.mobile.isNotEmpty() && MyPatterns.NUMBER_PATTERN.matches(
+                    report.mobile
+                ) && mLocation != null && report.desc.isNotEmpty()
+            ) {
 
                 activityReportBinding.submitReport.isEnabled = true
                 activityReportBinding.submitReport.setOnClickListener {
@@ -70,6 +82,69 @@ class ReportActivity : AppCompatActivity() {
 
             Logger.getLogger("Report").warning(report.toString())
         })
+
+        // initially set male clicked!
+        activityReportBinding.genderMale.background.setColorFilter(
+            Color.parseColor("#EE2B60"),
+            PorterDuff.Mode.SRC_ATOP
+        )
+
+        activityReportBinding.genderMale.setOnClickListener {
+            reportViewModel.setGender("M")
+            activityReportBinding.genderMale.background.setColorFilter(
+                Color.parseColor("#EE2B60"),
+                PorterDuff.Mode.SRC_ATOP
+            )
+
+            activityReportBinding.genderFemale.background.setColorFilter(
+                Color.parseColor("#CCCCCC"),
+                PorterDuff.Mode.SRC_ATOP
+            )
+
+            activityReportBinding.genderOthers.background.setColorFilter(
+                Color.parseColor("#CCCCCC"),
+                PorterDuff.Mode.SRC_ATOP
+            )
+
+        }
+
+        activityReportBinding.genderFemale.setOnClickListener {
+            reportViewModel.setGender("F")
+
+            activityReportBinding.genderMale.background.setColorFilter(
+                Color.parseColor("#CCCCCC"),
+                PorterDuff.Mode.SRC_ATOP
+            )
+
+            activityReportBinding.genderFemale.background.setColorFilter(
+                Color.parseColor("#EE2B60"),
+                PorterDuff.Mode.SRC_ATOP
+            )
+
+            activityReportBinding.genderOthers.background.setColorFilter(
+                Color.parseColor("#CCCCCC"),
+                PorterDuff.Mode.SRC_ATOP
+            )
+        }
+
+        activityReportBinding.genderOthers.setOnClickListener {
+            reportViewModel.setGender("O")
+
+            activityReportBinding.genderMale.background.setColorFilter(
+                Color.parseColor("#CCCCCC"),
+                PorterDuff.Mode.SRC_ATOP
+            )
+
+            activityReportBinding.genderFemale.background.setColorFilter(
+                Color.parseColor("#CCCCCC"),
+                PorterDuff.Mode.SRC_ATOP
+            )
+
+            activityReportBinding.genderOthers.background.setColorFilter(
+                Color.parseColor("#EE2B60"),
+                PorterDuff.Mode.SRC_ATOP
+            )
+        }
     }
 
     private fun showDialog() {
@@ -168,4 +243,8 @@ class ReportActivity : AppCompatActivity() {
         alert.show()
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) super.onBackPressed()
+        return super.onOptionsItemSelected(item)
+    }
 }

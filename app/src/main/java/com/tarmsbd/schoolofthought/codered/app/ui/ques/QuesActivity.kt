@@ -10,8 +10,10 @@ import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
+import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -44,6 +46,12 @@ class QuesActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         user = FirebaseAuth.getInstance().currentUser!!
 
         quesViewModel = ViewModelProvider(this)[QuesViewModel::class.java]
@@ -284,5 +292,10 @@ class QuesActivity : AppCompatActivity() {
                 DialogInterface.OnClickListener { dialog, id -> dialog.cancel() })
         val alert: android.app.AlertDialog = builder.create()
         alert.show()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) super.onBackPressed()
+        return super.onOptionsItemSelected(item)
     }
 }
