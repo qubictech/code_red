@@ -61,53 +61,53 @@
                     android:minHeight="45dp"
                     android:text="@={viewModel.mobile}" />
                 <!--                gender-->
-                <LinearLayout
-                    android:layout_marginTop="10sp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
-                    android:background="@drawable/edit_text_background"
-                    android:gravity="center_horizontal"
-                    android:minHeight="45dp"
-                    android:orientation="horizontal"
-                    android:weightSum="3">
+<!--                <LinearLayout-->
+<!--                    android:layout_marginTop="10sp"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginBottom="12dp"-->
+<!--                    android:background="@drawable/edit_text_background"-->
+<!--                    android:gravity="center_horizontal"-->
+<!--                    android:minHeight="45dp"-->
+<!--                    android:orientation="horizontal"-->
+<!--                    android:weightSum="3">-->
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="@string/male"
-                        android:textSize="22sp" />
+<!--                    <TextView-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="@string/male"-->
+<!--                        android:textSize="22sp" />-->
 
-                    <view
-                        android:layout_width="2dp"
-                        android:layout_height="match_parent"
-                        android:background="@color/appbar_color" />
+<!--                    <view-->
+<!--                        android:layout_width="2dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:background="@color/appbar_color" />-->
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="@string/female"
-                        android:textSize="22sp" />
+<!--                    <TextView-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="@string/female"-->
+<!--                        android:textSize="22sp" />-->
 
-                    <view
-                        android:layout_width="2dp"
-                        android:layout_height="match_parent"
-                        android:background="@color/appbar_color" />
+<!--                    <view-->
+<!--                        android:layout_width="2dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:background="@color/appbar_color" />-->
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="@string/others"
-                        android:textSize="22sp" />
+<!--                    <TextView-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="@string/others"-->
+<!--                        android:textSize="22sp" />-->
 
 
-                </LinearLayout>
+<!--                </LinearLayout>-->
 
 
                 <EditText
