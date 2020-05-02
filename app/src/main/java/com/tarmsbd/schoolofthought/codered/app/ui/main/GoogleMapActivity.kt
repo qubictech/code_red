@@ -9,6 +9,8 @@ import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.location.Address
+import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
@@ -17,6 +19,9 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
@@ -39,11 +44,14 @@ import com.tarmsbd.schoolofthought.codered.app.ui.auth.AuthActivity
 import com.tarmsbd.schoolofthought.codered.app.ui.emergency.EmergencyActivity
 import com.tarmsbd.schoolofthought.codered.app.ui.ques.QuesActivity
 import com.tarmsbd.schoolofthought.codered.app.ui.report.ReportActivity
+import java.io.IOException
 import java.util.logging.Logger
 
 
 class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
+
+    lateinit var search: EditText
 
     companion object {
         const val PERMISSION_ID = 42
@@ -56,6 +64,40 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         return super.onCreateOptionsMenu(menu)
+
+
+
+
+    }
+
+    fun locationSearch() {
+
+        var addressList: List<Address>? = null
+        lateinit var location: String
+        search = findViewById(R.id.map_search)
+        location = search.text.toString()
+
+        if (location == null || location == "") {
+            Toast.makeText(applicationContext, "provide location", Toast.LENGTH_SHORT).show()
+        } else {
+            val geoCoder = Geocoder(this)
+            try {
+                addressList = geoCoder.getFromLocationName(location, 5)
+
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+            if (addressList.isNullOrEmpty()){
+                Toast.makeText(this,"Location not found",Toast.LENGTH_LONG).show()
+                return
+            }
+            val address = addressList!![0]
+            val latLng = LatLng(address.latitude, address.longitude)
+            mMap.addMarker(MarkerOptions().position(latLng))
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12f))
+
+
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -297,6 +339,10 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
                 // Granted. Start getting the location information
             }
         }
+    }
+
+    fun clickSearch(view: View) {
+        locationSearch()
     }
 
 }
