@@ -37,5 +37,11 @@
     <string name="create_new">
         <u>Don\'t have an account?</u>
     </string>
+    <string name="already_have_an_account">
+      <u>Already have an account?</u>
+    </string>
+    <string name="others">Others</string>
+    <string name="female">Female</string>
+    <string name="male">Male</string>
 
 </resources>

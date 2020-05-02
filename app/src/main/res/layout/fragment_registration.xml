@@ -35,15 +35,38 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/reg_string"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="24sp" />
+                    android:textColor="@color/text_color"
+                    android:textSize="22sp" />
+
+                <!--full name-->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:layout_marginTop="32dp"
+                    app:boxCornerRadiusBottomEnd="32dp"
+                    app:boxCornerRadiusBottomStart="32dp"
+                    app:boxCornerRadiusTopEnd="32dp"
+                    app:boxCornerRadiusTopStart="32dp"
+                    app:hintEnabled="false"
+                    app:hintTextColor="@color/black">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/edit_text_background"
+                        android:hint="@string/full_name"
+                        android:imeOptions="actionNext"
+                        android:gravity="center"
+                        android:text="@={viewModel.fullName}" />
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <!--mobile number-->
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
                     android:layout_marginBottom="12dp"
                     app:boxCornerRadiusBottomEnd="32dp"
                     app:boxCornerRadiusBottomStart="32dp"
@@ -58,51 +81,70 @@
                         android:background="@drawable/edit_text_background"
                         android:hint="@string/mobile_number"
                         android:imeOptions="actionNext"
+                        android:gravity="center"
                         android:inputType="number"
-                        android:paddingStart="32dp"
                         android:text="@={viewModel.mobile}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <!--full name-->
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
-                    app:boxCornerRadiusBottomEnd="32dp"
-                    app:boxCornerRadiusBottomStart="32dp"
-                    app:boxCornerRadiusTopEnd="32dp"
-                    app:boxCornerRadiusTopStart="32dp"
-                    app:hintEnabled="false"
-                    app:hintTextColor="@color/black">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/edit_text_background"
-                        android:hint="@string/full_name"
-                        android:imeOptions="actionNext"
-                        android:paddingStart="32dp"
-                        android:text="@={viewModel.fullName}" />
-                </com.google.android.material.textfield.TextInputLayout>
 
                 <!--gender-->
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
-                    android:background="@drawable/edit_text_background"
-                    android:minHeight="45dp">
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginBottom="12dp"-->
+<!--                    android:orientation="horizontal"-->
+<!--                    android:weightSum="3"-->
+<!--                    android:background="@drawable/edit_text_background"-->
+<!--                    android:gravity="center_horizontal"-->
+<!--                    android:minHeight="45dp">-->
 
-                    <Spinner
-                        android:id="@+id/gender_spinner"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="24dp"
-                        android:entries="@array/gender_array"
-                        android:minHeight="45dp"
-                        android:paddingStart="28dp" />
-                </RelativeLayout>
+<!--                    <TextView-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:text="@string/male"-->
+<!--                        android:textSize="22sp"-->
+<!--                        android:gravity="center"-->
+<!--                        />-->
+<!--                    <view-->
+<!--                        android:layout_width="2dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:background="@color/appbar_color"/>-->
+<!--                    <TextView-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:text="@string/female"-->
+<!--                        android:textSize="22sp"-->
+<!--                        android:gravity="center"-->
+<!--                        />-->
+<!--                    <view-->
+<!--                        android:layout_width="2dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:background="@color/appbar_color"/>-->
+<!--                    <TextView-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:text="@string/others"-->
+<!--                        android:textSize="22sp"-->
+<!--                        android:gravity="center"-->
+<!--                        />-->
+<!--                  -->
+
+<!--                </LinearLayout>-->
+
+
+
+                <Spinner
+                    android:id="@+id/gender_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="24dp"
+                    android:entries="@array/gender_array"
+                    android:minHeight="45dp"
+                    android:paddingStart="28dp" />
 
                 <!--date of birth-->
                 <RelativeLayout
@@ -116,7 +158,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/edit_text_background"
-                        android:gravity="center_vertical"
+                        android:gravity="center"
                         android:hint="@string/date_of_birth"
                         android:minHeight="45dp"
                         android:onClick="@{(v)->viewModel.showDatePicker(v)}"
@@ -145,22 +187,36 @@
                         android:background="@drawable/edit_text_background"
                         android:hint="@string/password"
                         android:imeOptions="actionNext"
+                        android:gravity="center"
                         android:inputType="textPassword"
-                        android:paddingStart="32dp"
                         android:text="@={viewModel.password}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <!--task help button-->
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/signup_btn"
-                    android:layout_width="wrap_content"
+                <!--Confirm password-->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
-                    android:minWidth="200dp"
-                    android:text="Continue"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    app:cornerRadius="18dp" />
+                    android:layout_marginBottom="12dp"
+                    app:boxCornerRadiusBottomEnd="32dp"
+                    app:boxCornerRadiusBottomStart="32dp"
+                    app:boxCornerRadiusTopEnd="32dp"
+                    app:boxCornerRadiusTopStart="32dp"
+                    app:hintEnabled="false"
+                    app:hintTextColor="@color/black"
+                    app:passwordToggleEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/edit_text_background"
+                        android:hint="@string/confirm_password"
+                        android:imeOptions="actionNext"
+                        android:gravity="center"
+                        android:inputType="textPassword"
+                        android:text="@={viewModel.confirmPassword}" />
+                </com.google.android.material.textfield.TextInputLayout>
+
 
                 <!--confirmation string-->
                 <TextView
@@ -170,20 +226,49 @@
                     android:layout_marginBottom="8dp"
                     android:gravity="center"
                     android:paddingTop="8dp"
+                    android:textColor="@color/text_color"
                     android:paddingBottom="8dp"
-                    android:text="@string/permission_for_reg" />
-
-                <!--reset password-->
-                <com.google.android.material.button.MaterialButton
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/forget_password"
-                    android:textAllCaps="false" />
+                    android:textSize="22sp"
+                    android:text="@string/already_have_an_account" />
 
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@color/colorPrimaryDark"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="Continue"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:textSize="22sp"
+                android:paddingLeft="16dp"
+                android:textColor="@color/white"
+                android:gravity="center_horizontal"
+                android:layout_height="wrap_content"/>
+
+
+
+
+            <ImageButton
+                android:id="@+id/signup_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="32dp"
+                android:paddingRight="16dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:src="@drawable/ic_arrow_forward_black_24dp"
+                android:background="@color/colorPrimaryDark"
+                android:layout_alignParentRight="true"/>
+
+        </RelativeLayout>
+
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
