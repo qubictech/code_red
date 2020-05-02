@@ -1,12 +1,13 @@
 package com.tarmsbd.schoolofthought.codered.app.ui.auth
 
 import android.app.ProgressDialog
-import android.content.Intent
+import android.graphics.Color
+import android.graphics.PorterDuff
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
@@ -17,8 +18,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.tarmsbd.schoolofthought.codered.app.data.models.RegisterUser
 import com.tarmsbd.schoolofthought.codered.app.data.viewmodel.RegistrationViewModel
 import com.tarmsbd.schoolofthought.codered.app.databinding.FragmentRegistrationBinding
-import com.tarmsbd.schoolofthought.codered.app.ui.ques.QuesActivity
-import com.tarmsbd.schoolofthought.codered.app.ui.report.ReportActivity
+import com.tarmsbd.schoolofthought.codered.app.utils.MyPatterns
 import java.util.logging.Logger
 
 /**
@@ -48,27 +48,81 @@ class RegistrationFragment : Fragment() {
                 lifecycleOwner = this@RegistrationFragment
             }
 
-        fragmentRegistrationBinding.genderSpinner.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onNothingSelected(p0: AdapterView<*>?) {
+        // initially set male clicked!
+        fragmentRegistrationBinding.genderMale.background.setColorFilter(
+            Color.parseColor("#EE2B60"),
+            PorterDuff.Mode.SRC_ATOP
+        )
 
-                }
+        fragmentRegistrationBinding.genderMale.setOnClickListener {
+            registrationViewModel.setGender("M")
+            fragmentRegistrationBinding.genderMale.background.setColorFilter(
+                Color.parseColor("#EE2B60"),
+                PorterDuff.Mode.SRC_ATOP
+            )
 
-                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                    when (p2) {
-                        0 -> registrationViewModel.setGender("NONE")
-                        1 -> registrationViewModel.setGender("M")
-                        2 -> registrationViewModel.setGender("F")
-                    }
-                }
+            fragmentRegistrationBinding.genderFemale.background.setColorFilter(
+                Color.parseColor("#CCCCCC"),
+                PorterDuff.Mode.SRC_ATOP
+            )
 
-            }
+            fragmentRegistrationBinding.genderOthers.background.setColorFilter(
+                Color.parseColor("#CCCCCC"),
+                PorterDuff.Mode.SRC_ATOP
+            )
+
+        }
+
+        fragmentRegistrationBinding.genderFemale.setOnClickListener {
+            registrationViewModel.setGender("F")
+
+            fragmentRegistrationBinding.genderMale.background.setColorFilter(
+                Color.parseColor("#CCCCCC"),
+                PorterDuff.Mode.SRC_ATOP
+            )
+
+            fragmentRegistrationBinding.genderFemale.background.setColorFilter(
+                Color.parseColor("#EE2B60"),
+                PorterDuff.Mode.SRC_ATOP
+            )
+
+            fragmentRegistrationBinding.genderOthers.background.setColorFilter(
+                Color.parseColor("#CCCCCC"),
+                PorterDuff.Mode.SRC_ATOP
+            )
+        }
+
+        fragmentRegistrationBinding.genderOthers.setOnClickListener {
+            registrationViewModel.setGender("O")
+
+            fragmentRegistrationBinding.genderMale.background.setColorFilter(
+                Color.parseColor("#CCCCCC"),
+                PorterDuff.Mode.SRC_ATOP
+            )
+
+            fragmentRegistrationBinding.genderFemale.background.setColorFilter(
+                Color.parseColor("#CCCCCC"),
+                PorterDuff.Mode.SRC_ATOP
+            )
+
+            fragmentRegistrationBinding.genderOthers.background.setColorFilter(
+                Color.parseColor("#EE2B60"),
+                PorterDuff.Mode.SRC_ATOP
+            )
+        }
 
         registrationViewModel.userDataObserver.observe(viewLifecycleOwner, Observer { user ->
-            if (validate(user)) {
-                fragmentRegistrationBinding.signupBtn.isEnabled = true
-                fragmentRegistrationBinding.signupBtn.setOnClickListener {
-                    registerUser(user)
+            if (MyPatterns.NUMBER_PATTERN.matches(user.mobile) && user.password.length >= 6 && user.fullName.isNotEmpty() &&
+                user.gender.isNotEmpty()
+            ) {
+                if (user.dateOfBirth.isNotEmpty()) {
+                    fragmentRegistrationBinding.signupBtn.isEnabled = true
+                    fragmentRegistrationBinding.signupBtn.setOnClickListener {
+                        registerUser(user)
+                    }
+                } else {
+//                    toast("Birth Date is required")
+                    Log.d("Registration", "Birthdate missing")
                 }
             } else {
                 fragmentRegistrationBinding.signupBtn.isEnabled = false
@@ -85,88 +139,12 @@ class RegistrationFragment : Fragment() {
         if (firebaseUser != null)
             FirebaseAuth.getInstance().signOut()
 
-        val dialog = showProgressDialog()
-        dialog.show()
-
-        FirebaseAuth.getInstance()
-            .createUserWithEmailAndPassword("u${user.mobile}@red.com", user.password)
-            .addOnCompleteListener { task ->
-                when {
-                    task.isSuccessful -> {
-                        task.result?.user?.let {
-                            val registerRef = ref.child("users").child(it.uid)
-                            registerRef.setValue(user)
-                        }
-
-                        when (intentExtraText) {
-                            QUES_ACTIVITY -> {
-                                startActivity(Intent(context, QuesActivity::class.java))
-                                activity!!.finish()
-                            }
-                            REPORT_ACTIVITY -> {
-                                startActivity(Intent(context, ReportActivity::class.java))
-                                activity!!.finish()
-                            }
-                        }
-                        toast("Registration Complete")
-                    }
-                    task.isCanceled -> {
-                        showDialog("Error: ${task.exception?.message?.replace("email", "mobile")}")
-                    }
-                    else -> {
-                        showDialog("Error: ${task.exception?.message?.replace("email", "mobile")}")
-                    }
-                }
-
-                dialog.dismiss()
-            }
+        val authActivity: AuthActivity = activity as AuthActivity
+        authActivity.switchFragment(AuthenticationFragment.newInstance(user))
     }
 
     private fun toast(msg: String) {
         Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
-    }
-
-    private fun validate(user: RegisterUser): Boolean {
-        Logger.getLogger(TAG).warning(user.toString())
-        val error = mutableListOf<String>()
-
-        var valid = true
-        if (user.gender == "NONE") {
-            error.add("Gender")
-            valid = false
-        }
-
-        if (user.dateOfBirth.isEmpty()) {
-            error.add("Birth Date")
-            valid = false
-        }
-
-        if (user.fullName.isEmpty()) {
-            error.add("Name")
-            valid = false
-        }
-
-        if (user.mobile.isEmpty()) {
-            error.add("Mobile Number")
-            valid = false
-        }
-
-        if (user.mobile.isNotEmpty() && user.mobile.length != 11) {
-            valid = false
-            error.add("Enter valid mobile number")
-        }
-
-        if (user.password.isEmpty()) {
-            error.add("Password")
-            valid = false
-        }
-
-        if (user.password.isNotEmpty() && user.password.length < 6) {
-            error.add("Password should at least 6+ chars")
-            valid = false
-        }
-
-        return valid
     }
 
     private fun showDialog(msg: String) {

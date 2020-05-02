@@ -11,31 +11,32 @@ class QuesViewModel : ViewModel() {
     private val questionList = mutableListOf(
         Question(
             1,
-            "Did you come in contact with a Corona Virus infected person" +
-                    "or any of his/ her family member of that infected person recently?",
+            "Are you suffering from mild or severe fever/ cold or only cough with sore throat?",
+            "(আপনার কি জ্বর বা সর্দি অথবা শুধুমাত্র কাশির সাথে গলা ব্যথা হচ্ছে?)",
             ""
         ),
         Question(
             2,
-            "Are you suffering from only mild or serve Cold/ Fever/ Cough or Frequent Diarrhoea and Vomiting" +
-                    "from 7th to 8th days along with any of these three symptoms?",
+            "Did you develop excessive fatigue or stomach pain or headache with or without diarrhoea and vomiting?",
+            "(আপনি কি অতিরিক্ত দূর্বলতা অথবা পেট বা মাথা ব্যাথা হচ্ছে কিংবা সাথে ডায়রিয়া এবং বমিও হচ্ছে?)",
             ""
         ),
         Question(
             3,
-            "Are you feeling any sudden Alteration or Complete loss of sense of smell and Alteration or" +
-                    "Complete loss of sense of taste",
+            "Do you think your ability for smelling and testing food has been reduced or completely lost? Or Have you noticed any red rashes on your body?",
+            "(আপনার কি ইদানিং গন্ধ কিংবা স্বাদ অনুভব করতে অসুবিধা হচ্ছে? অথবা আপনার শরীরে কি লাল লাল ফুসকুড়ি দেখা যাচ্ছে?)",
             ""
         ),
         Question(
             4,
-            "Are you feeling excessive Weakness/ Fatigue/ Heart Palpitation and extreme difficulties" +
-                    "during Breathing?",
+            "Are you feeling excessive weakness/ palpitation and difficulties during breathing?",
+            "আপনি কি অতিরিক্ত দূর্বলতা, বুক ধরফরানি এবং শ্বাস-প্রশ্বাস নিতে সমস্যা অনুভব করছেন?",
             ""
         ),
         Question(
             5,
             "Are you already suffering from asthma?",
+            "আপনার কি আগে থেকে গুরুতর ওজমা/ হাঁপানি আছে?",
             ""
         )
     )

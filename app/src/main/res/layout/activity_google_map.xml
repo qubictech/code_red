@@ -50,6 +50,7 @@
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -62,10 +63,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
+            android:background="@drawable/black_rounded_corner"
             android:gravity="center"
             android:minWidth="260dp"
             android:padding="24dp"
-            android:background="@drawable/black_rounded_corner"
             android:text="@string/need_assistance_about_covid_19_for"
             android:textColor="@color/white"
             android:textSize="22sp"
@@ -74,68 +75,59 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/materialButton2"
+            style="@style/TextAppearance.AppCompat.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/TextAppearance.AppCompat.Button"
             android:layout_marginTop="32dp"
-            android:background="@drawable/red_rounded_corner"
             android:gravity="center"
-            android:minWidth="70dp"
-            android:paddingLeft="32dp"
-            android:paddingRight="32dp"
             android:minHeight="35dp"
             android:onClick="gotoSelfRegPage"
-            android:textSize="22sp"
-            android:textColor="@color/white"
             android:text="Self"
             android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            app:cornerRadius="18dp"
             app:layout_constraintBottom_toBottomOf="@id/text"
             app:layout_constraintEnd_toStartOf="@+id/materialButton"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@+id/text"
             app:layout_constraintTop_toBottomOf="@+id/text" />
 
-        <TextView
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/materialButton"
+            style="@style/TextAppearance.AppCompat.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:background="@drawable/red_rounded_corner"
             android:gravity="center"
-            android:paddingLeft="32dp"
-            android:paddingRight="32dp"
-            style="@style/TextAppearance.AppCompat.Button"
-            android:minWidth="70dp"
             android:minHeight="35dp"
             android:onClick="gotoOtherHelpPage"
             android:text="Report"
             android:textAllCaps="false"
-            android:textSize="22sp"
             android:textColor="@color/white"
+            android:textSize="22sp"
+            app:cornerRadius="18dp"
             app:layout_constraintBottom_toBottomOf="@id/text"
             app:layout_constraintEnd_toEndOf="@+id/text"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/materialButton2"
             app:layout_constraintTop_toBottomOf="@+id/text" />
 
-        <TextView
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/emergency_contacts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/red_rounded_corner"
+            android:layout_marginTop="24dp"
+            android:onClick="gotoEmergencyPage"
             android:padding="8dp"
             android:text="Emergency Contacts"
-            android:onClick="gotoEmergencyPage"
             android:textColor="@color/white"
-            android:textSize="22sp"
-            android:layout_marginTop="24dp"
+            app:cornerRadius="18dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/materialButton2" />
-
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

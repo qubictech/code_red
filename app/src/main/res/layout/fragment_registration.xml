@@ -20,6 +20,8 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="100dp"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
             <LinearLayout
@@ -36,19 +38,21 @@
                     android:gravity="center"
                     android:text="@string/reg_string"
                     android:textColor="@color/text_color"
-                    android:textSize="22sp" />
+                    android:textSize="16sp" />
 
                 <!--full name-->
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
                     android:layout_marginTop="32dp"
+                    android:layout_marginBottom="8dp"
+                    android:errorInput="@{viewModel.getUser.fullName??``}"
                     app:boxCornerRadiusBottomEnd="32dp"
                     app:boxCornerRadiusBottomStart="32dp"
                     app:boxCornerRadiusTopEnd="32dp"
                     app:boxCornerRadiusTopStart="32dp"
+                    app:errorEnabled="true"
                     app:hintEnabled="false"
                     app:hintTextColor="@color/black">
 
@@ -56,9 +60,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/edit_text_background"
+                        android:drawableStart="@drawable/ic_person_outline"
+                        android:drawablePadding="8dp"
                         android:hint="@string/full_name"
                         android:imeOptions="actionNext"
-                        android:gravity="center"
                         android:text="@={viewModel.fullName}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -67,11 +72,13 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
+                    android:layout_marginBottom="8dp"
+                    android:errorMobile="@{viewModel.getUser.mobile??``}"
                     app:boxCornerRadiusBottomEnd="32dp"
                     app:boxCornerRadiusBottomStart="32dp"
                     app:boxCornerRadiusTopEnd="32dp"
                     app:boxCornerRadiusTopStart="32dp"
+                    app:errorEnabled="true"
                     app:hintEnabled="false"
                     app:hintTextColor="@color/black">
 
@@ -79,93 +86,96 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/edit_text_background"
+                        android:drawableStart="@drawable/ic_phone_call_outline"
+                        android:drawablePadding="8dp"
                         android:hint="@string/mobile_number"
                         android:imeOptions="actionNext"
-                        android:gravity="center"
                         android:inputType="number"
-                        android:text="@={viewModel.mobile}" />
+                        android:text="@={viewModel.mobile}"
+                        app:errorEnabled="true" />
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <!--gender selection-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
 
+                    <TextView
+                        android:id="@+id/gender_male"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/round_corner_left"
+                        android:gravity="center"
+                        android:text="@string/male"
+                        android:textSize="16sp" />
 
-                <!--gender-->
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginBottom="12dp"-->
-<!--                    android:orientation="horizontal"-->
-<!--                    android:weightSum="3"-->
-<!--                    android:background="@drawable/edit_text_background"-->
-<!--                    android:gravity="center_horizontal"-->
-<!--                    android:minHeight="45dp">-->
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/appbar_color" />
 
-<!--                    <TextView-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:text="@string/male"-->
-<!--                        android:textSize="22sp"-->
-<!--                        android:gravity="center"-->
-<!--                        />-->
-<!--                    <view-->
-<!--                        android:layout_width="2dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:background="@color/appbar_color"/>-->
-<!--                    <TextView-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:text="@string/female"-->
-<!--                        android:textSize="22sp"-->
-<!--                        android:gravity="center"-->
-<!--                        />-->
-<!--                    <view-->
-<!--                        android:layout_width="2dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:background="@color/appbar_color"/>-->
-<!--                    <TextView-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:text="@string/others"-->
-<!--                        android:textSize="22sp"-->
-<!--                        android:gravity="center"-->
-<!--                        />-->
-<!--                  -->
+                    <TextView
+                        android:id="@+id/gender_female"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/solid_corner"
+                        android:gravity="center"
+                        android:text="@string/female"
+                        android:textSize="16sp" />
 
-<!--                </LinearLayout>-->
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/appbar_color" />
 
-
-
-                <Spinner
-                    android:id="@+id/gender_spinner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="24dp"
-                    android:entries="@array/gender_array"
-                    android:minHeight="45dp"
-                    android:paddingStart="28dp" />
+                    <TextView
+                        android:id="@+id/gender_others"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/round_corner_right"
+                        android:gravity="center"
+                        android:text="@string/others"
+                        android:textSize="16sp" />
+                </LinearLayout>
 
                 <!--date of birth-->
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
                     android:background="@drawable/edit_text_background"
-                    android:minHeight="45dp">
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="48dp"
                         android:background="@drawable/edit_text_background"
-                        android:gravity="center"
+                        android:drawableStart="@drawable/ic_calendar_outline"
+                        android:drawablePadding="8dp"
+                        android:gravity="center_vertical"
                         android:hint="@string/date_of_birth"
-                        android:minHeight="45dp"
                         android:onClick="@{(v)->viewModel.showDatePicker(v)}"
-                        android:paddingStart="32dp"
+                        android:paddingStart="12dp"
                         android:text="@{viewModel.getUser.dateOfBirth}"
                         android:textSize="16sp" />
-                </RelativeLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="4dp"
+                    android:errorBirthDate="@{viewModel.getUser.dateOfBirth??``}"
+                    android:gravity="center_vertical"
+                    android:paddingStart="12dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="12sp" />
 
                 <!--password-->
                 <com.google.android.material.textfield.TextInputLayout
@@ -173,10 +183,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
+                    android:errorPassword="@{viewModel.getUser.password??``}"
                     app:boxCornerRadiusBottomEnd="32dp"
                     app:boxCornerRadiusBottomStart="32dp"
                     app:boxCornerRadiusTopEnd="32dp"
                     app:boxCornerRadiusTopStart="32dp"
+                    app:errorEnabled="true"
                     app:hintEnabled="false"
                     app:hintTextColor="@color/black"
                     app:passwordToggleEnabled="true">
@@ -185,90 +197,39 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/edit_text_background"
+                        android:drawableStart="@drawable/ic_lock_outline"
+                        android:drawablePadding="8dp"
                         android:hint="@string/password"
                         android:imeOptions="actionNext"
-                        android:gravity="center"
                         android:inputType="textPassword"
                         android:text="@={viewModel.password}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <!--Confirm password-->
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
-                    app:boxCornerRadiusBottomEnd="32dp"
-                    app:boxCornerRadiusBottomStart="32dp"
-                    app:boxCornerRadiusTopEnd="32dp"
-                    app:boxCornerRadiusTopStart="32dp"
-                    app:hintEnabled="false"
-                    app:hintTextColor="@color/black"
-                    app:passwordToggleEnabled="true">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/edit_text_background"
-                        android:hint="@string/confirm_password"
-                        android:imeOptions="actionNext"
-                        android:gravity="center"
-                        android:inputType="textPassword"
-                        android:text="@={viewModel.confirmPassword}" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-
                 <!--confirmation string-->
-                <TextView
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="44dp"
                     android:layout_marginBottom="8dp"
                     android:gravity="center"
-                    android:paddingTop="8dp"
-                    android:textColor="@color/text_color"
-                    android:paddingBottom="8dp"
-                    android:textSize="22sp"
-                    android:text="@string/already_have_an_account" />
+                    android:text="@string/already_have_an_account"
+                    android:textColor="@color/text_color" />
 
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
 
-        <RelativeLayout
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/signup_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:background="@color/colorPrimaryDark"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:text="Continue"
-                android:layout_alignParentLeft="true"
-                android:layout_centerInParent="true"
-                android:textSize="22sp"
-                android:paddingLeft="16dp"
-                android:textColor="@color/white"
-                android:gravity="center_horizontal"
-                android:layout_height="wrap_content"/>
-
-
-
-
-            <ImageButton
-                android:id="@+id/signup_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="32dp"
-                android:paddingRight="16dp"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                android:src="@drawable/ic_arrow_forward_black_24dp"
-                android:background="@color/colorPrimaryDark"
-                android:layout_alignParentRight="true"/>
-
-        </RelativeLayout>
-
+            android:enabled="false"
+            android:insetBottom="0dp"
+            android:text="Continue"
+            app:icon="@drawable/ic_arrow_forward_black_24dp"
+            app:iconGravity="end" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

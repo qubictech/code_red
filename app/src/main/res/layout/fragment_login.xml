@@ -29,21 +29,39 @@
                 android:orientation="vertical"
                 android:padding="20dp">
 
-                <!--registration for help button-->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="70dp"
-                    android:text="Welcome to"
-                    android:textColor="@color/text_color"
-                    android:textSize="18sp" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="CodeRed SOS"
-                    android:textStyle="bold"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="24sp" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/app_logo"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/app_logo_png" />
+                    <!--registration for help button-->
+                    <TextView
+                        android:id="@+id/welcome_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_toEndOf="@+id/app_logo"
+                        android:text="Welcome to"
+                        android:textColor="@color/text_color"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/welcome_txt"
+                        android:layout_marginStart="12dp"
+                        android:layout_toEndOf="@+id/app_logo"
+                        android:text="CodeRed SOS"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+                </RelativeLayout>
 
                 <!--mobile number-->
                 <com.google.android.material.textfield.TextInputLayout
@@ -52,6 +70,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
                     android:layout_marginBottom="12dp"
+                    android:errorMobile="@{viewModel.getUser.mobile??``}"
                     app:boxCornerRadiusBottomEnd="32dp"
                     app:boxCornerRadiusBottomStart="32dp"
                     app:boxCornerRadiusTopEnd="32dp"
@@ -63,8 +82,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/edit_text_background"
+                        android:drawableStart="@drawable/ic_phone_call_outline"
+                        android:drawablePadding="8dp"
                         android:hint="@string/mobile_number"
-                        android:gravity="center"
                         android:imeOptions="actionNext"
                         android:inputType="number"
                         android:text="@={viewModel.mobile}" />
@@ -76,6 +96,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
+                    android:errorPassword="@{viewModel.getUser.password??``}"
                     app:boxCornerRadiusBottomEnd="32dp"
                     app:boxCornerRadiusBottomStart="32dp"
                     app:boxCornerRadiusTopEnd="32dp"
@@ -88,79 +109,48 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/edit_text_background"
+                        android:drawableStart="@drawable/ic_lock_outline"
+                        android:drawablePadding="8dp"
                         android:hint="@string/password"
                         android:imeOptions="actionDone"
                         android:inputType="textPassword"
-                        android:gravity="center"
                         android:text="@={viewModel.password}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <TextView
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/forget_password"
-                    android:textColor="@color/text_color"
-                    android:textSize="22sp"
-                    android:gravity="center"
                     android:layout_marginTop="32dp"
-                    android:textAllCaps="false" />
+                    android:gravity="center"
+                    android:text="@string/forget_password"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_color" />
 
-                <TextView
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/register"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/register"
-                    android:layout_marginTop="24dp"
-                    android:minWidth="200dp"
                     android:gravity="center"
-                    android:textColor="@color/text_color"
-                    android:textSize="22sp"
                     android:text="@string/create_new"
                     android:textAllCaps="false"
-                    />
-
-
-
-
+                    android:textColor="@color/text_color" />
 
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
 
-        <RelativeLayout
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/login_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:background="@color/colorPrimaryDark"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:text="@string/login"
-                android:layout_alignParentLeft="true"
-                android:layout_centerInParent="true"
-                android:textSize="22sp"
-                android:paddingLeft="16dp"
-                android:textColor="@color/white"
-                android:gravity="center_horizontal"
-                android:layout_height="wrap_content"/>
-
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/login_btn"
-                android:paddingLeft="32dp"
-                android:paddingRight="16dp"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                android:src="@drawable/ic_arrow_forward_black_24dp"
-                android:background="@color/colorPrimaryDark"
-                android:layout_alignParentRight="true"
-                android:textAllCaps="false"
-                />
-
-
-        </RelativeLayout>
-
+            android:enabled="false"
+            android:insetBottom="0dp"
+            android:text="Login"
+            app:icon="@drawable/ic_arrow_forward_black_24dp"
+            app:iconGravity="end" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

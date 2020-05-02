@@ -13,7 +13,7 @@ object FirebaseRepo {
     val ref = FirebaseDatabase.getInstance().reference
     val firebaseUser = FirebaseAuth.getInstance().currentUser
 
-    // self report data
+    // self assistant data
     fun submitResultData(selfResult: SelfResult) {
         val resultRef = ref.child("report_result").child(firebaseUser!!.uid)
         resultRef.updateChildren(selfResult.toMap())
