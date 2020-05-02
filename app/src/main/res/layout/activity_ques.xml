@@ -22,60 +22,57 @@
             android:layout_height="match_parent"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:padding="20dp"
+            android:padding="40dp"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:background="@drawable/text_view_background"
-                android:gravity="center"
-                android:hint="Question - x"
-                android:minWidth="200dp"
-                android:padding="8dp"
-                android:text="@{`Question - `+viewModel.getQuestions.id}"
-                android:textSize="20sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:layout_marginBottom="40dp"
-                android:background="@drawable/text_view_background"
-                android:hint="ques"
-                android:padding="16dp"
-                android:text="@{viewModel.getQuestions.ques}"
-                android:textSize="18sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center">
+                android:background="@drawable/text_view_background"
+                android:orientation="vertical">
 
-                <com.google.android.material.button.MaterialButton
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:onClick="@{()->viewModel.btnNoClick(viewModel.getQuestions.id)}"
-                    android:text="No"
-                    android:textColor="@color/black"
-                    app:cornerRadius="18dp"
-                    app:strokeColor="@color/black" />
+                    android:hint="ques"
+                    android:padding="16dp"
+                    android:text="@{viewModel.getQuestions.ques}" />
 
-                <Space
-                    android:layout_width="20dp"
-                    android:layout_height="wrap_content" />
-
-                <com.google.android.material.button.MaterialButton
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:onClick="@{()->viewModel.btnYesClick(viewModel.getQuestions.id)}"
-                    android:text="Yes"
-                    android:textColor="@color/black"
-                    app:cornerRadius="18dp"
-                    app:strokeColor="@color/black" />
+                    android:hint="ques bn"
+                    android:padding="16dp"
+                    android:text="@{viewModel.getQuestions.ques_bn}" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:background="@drawable/ic_sos_btn"
+                        android:gravity="center"
+                        android:onClick="@{()->viewModel.btnNoClick(viewModel.getQuestions.id)}"
+                        android:text="No"
+                        android:textSize="18sp" />
+
+                    <Space
+                        android:layout_width="20dp"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:background="@drawable/ic_sos_btn"
+                        android:gravity="center"
+                        android:onClick="@{()->viewModel.btnYesClick(viewModel.getQuestions.id)}"
+                        android:text="Yes" />
+                </LinearLayout>
+
             </LinearLayout>
 
         </LinearLayout>

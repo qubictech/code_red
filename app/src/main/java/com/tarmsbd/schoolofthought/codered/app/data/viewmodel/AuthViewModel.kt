@@ -3,9 +3,11 @@ package com.tarmsbd.schoolofthought.codered.app.data.viewmodel
 import android.content.Context
 import android.view.View
 import android.widget.Toast
+import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.android.material.textfield.TextInputLayout
 import com.tarmsbd.schoolofthought.codered.app.data.models.LoginUser
 import com.tarmsbd.schoolofthought.codered.app.utils.MyPatterns
 import java.util.logging.Logger
@@ -16,22 +18,12 @@ class AuthViewModel : ViewModel() {
     private var mUser = MutableLiveData<LoginUser>()
     private var user = LoginUser()
 
-    var nameError = MutableLiveData<String>()
-    var numberError = MutableLiveData<String>()
-    var setIntentName = ""
-
-    init {
-        nameError.value = " "
-        numberError.value = " "
-    }
-
     var getUser = mUser
 
     var mobile = ""
         set(value) {
             field = value
             user.mobile = value
-            numberError.value = value
             mUser.value = user
         }
 
@@ -39,50 +31,32 @@ class AuthViewModel : ViewModel() {
         set(value) {
             field = value
             user.password = value
-            nameError.value = value
             mUser.value = user
         }
 
-
-    fun loginUser(view: View) {
-        Logger.getLogger(TAG).warning(user.toString())
-        val error = mutableListOf<String>()
-
-        var valid = true
-
-        if (user.password.isEmpty()) {
-            error.add("Password can't be empty")
-            valid = false
+    companion object {
+        @JvmStatic
+        @BindingAdapter("android:errorMobile")
+        fun errorMobile(textInputLayout: TextInputLayout, string: String) {
+            if (string.isEmpty()) {
+                textInputLayout.error = "Mobile Number is required!"
+            } else {
+                if (!MyPatterns.NUMBER_PATTERN.matches(string))
+                    textInputLayout.error =
+                        "Please enter valid mobile number" else textInputLayout.error = null
+            }
         }
 
-        if (user.password.isNotEmpty() && user.password.length < 6) {
-            error.add("Password should at least 6+ chars")
-            valid = false
-        }
-
-        if (user.mobile.isEmpty()) {
-            error.add("Mobile Number is required")
-            valid = false
-        }
-
-        if (user.mobile.isNotEmpty() && !MyPatterns.NUMBER_PATTERN.matches(user.mobile)) {
-            valid = false
-            error.add("Enter valid mobile number")
-        }
-
-        if (!valid) {
-            var message = ""
-            if (error.size > 1) {
-                for (e in error) {
-                    message += "$e,"
-                }
-
-                message = message.substring(0, message.length - 1)
-            } else message = error[0]
-            Toast.makeText(view.context, message, Toast.LENGTH_LONG)
-                .show()
-
-            return
+        @JvmStatic
+        @BindingAdapter("android:errorPassword")
+        fun errorPassword(textInputLayout: TextInputLayout, string: String) {
+            if (string.isEmpty()) {
+                textInputLayout.error = "Password is required!"
+            } else {
+                if (string.length < 6)
+                    textInputLayout.error =
+                        "Password should be at least 6+ chars" else textInputLayout.error = null
+            }
         }
     }
 

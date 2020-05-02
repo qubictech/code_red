@@ -1,6 +1,8 @@
 package com.tarmsbd.schoolofthought.codered.app.data.models
 
+import android.os.Parcelable
 import com.google.firebase.database.Exclude
+import kotlinx.android.parcel.Parcelize
 
 data class RegistrationForSelf(
     var mobile: String,
@@ -19,13 +21,14 @@ data class LoginUser(var mobile: String, var password: String){
     constructor():this("","")
 }
 
+@Parcelize
 data class RegisterUser(
     var mobile: String,
     var fullName: String,
     var gender: String,
     var dateOfBirth: String,
     var password: String
-) {
+) : Parcelable {
     constructor() : this("", "", "", "", "")
 
     @Exclude

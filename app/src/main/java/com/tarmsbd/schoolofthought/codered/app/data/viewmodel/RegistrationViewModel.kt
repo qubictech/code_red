@@ -3,14 +3,15 @@ package com.tarmsbd.schoolofthought.codered.app.data.viewmodel
 import android.app.DatePickerDialog
 import android.util.Log
 import android.view.View
-import android.widget.Toast
+import android.widget.TextView
+import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.android.material.textfield.TextInputLayout
 import com.tarmsbd.schoolofthought.codered.app.data.models.RegisterUser
 import com.tarmsbd.schoolofthought.codered.app.utils.MyPatterns
 import java.util.*
-import java.util.logging.Logger
 
 class RegistrationViewModel : ViewModel() {
     private val c = Calendar.getInstance()
@@ -22,22 +23,17 @@ class RegistrationViewModel : ViewModel() {
     private var user = RegisterUser()
     private var mConfirmPassword: String = ""
 
-    var nameError = MutableLiveData<String>()
-    var numberError = MutableLiveData<String>()
-    var passwordError = MutableLiveData<String>()
+    val getUser = mUser
 
     init {
-        nameError.value = " "
-        numberError.value = " "
+        user.gender = "M"
+        mUser.value = user
     }
-
-    var getUser = mUser
 
     var mobile = ""
         set(value) {
             field = value
             user.mobile = value
-            numberError.value = value
             mUser.value = user
         }
 
@@ -45,7 +41,6 @@ class RegistrationViewModel : ViewModel() {
         set(value) {
             field = value
             user.fullName = value
-            nameError.value = value
             mUser.value = user
         }
 
@@ -53,14 +48,7 @@ class RegistrationViewModel : ViewModel() {
         set(value) {
             field = value
             user.password = value
-            passwordError.value = value
             mUser.value = user
-        }
-
-    var confirmPassword = ""
-        set(value) {
-            field = value
-            mConfirmPassword = value
         }
 
     fun setGender(gender: String) {
@@ -84,68 +72,52 @@ class RegistrationViewModel : ViewModel() {
         ).show()
     }
 
-    fun createUser(view: View) {
-        Logger.getLogger(TAG).warning(user.toString())
-        val error = mutableListOf<String>()
+    val userDataObserver: LiveData<RegisterUser> = mUser
 
-        var valid = true
-        if (user.gender == "NONE") {
-            error.add("Gender")
-            valid = false
+    companion object {
+
+        @JvmStatic
+        @BindingAdapter("android:errorInput")
+        fun errorInput(textInputLayout: TextInputLayout, string: String) {
+            if (string.isEmpty()) {
+                textInputLayout.error = "This field is required!"
+            } else textInputLayout.error = null
         }
 
-        if (user.dateOfBirth.isEmpty()) {
-            error.add("Birth Date")
-            valid = false
-        }
-
-        if (user.fullName.isEmpty()) {
-            error.add("Name")
-            valid = false
-        }
-
-        if (user.mobile.isEmpty()) {
-            error.add("Mobile Number")
-            valid = false
-        }
-
-        if (user.mobile.isNotEmpty() && !MyPatterns.NUMBER_PATTERN.matches(user.mobile)) {
-            valid = false
-            error.add("Enter valid mobile number")
-        }
-
-        if (user.password.isEmpty()) {
-            error.add("Password")
-            valid = false
-        }
-
-        if (user.password.isNotEmpty()) {
-            if (user.password != mConfirmPassword) {
-                error.add("Password Not Matched")
-                valid = false
+        @JvmStatic
+        @BindingAdapter("android:errorMobile")
+        fun errorMobile(textInputLayout: TextInputLayout, string: String) {
+            if (string.isEmpty()) {
+                textInputLayout.error = "Mobile Number is required!"
+            } else {
+                if (!MyPatterns.NUMBER_PATTERN.matches(string))
+                    textInputLayout.error =
+                        "Please enter valid mobile number" else textInputLayout.error = null
             }
         }
 
-        if (user.password.isNotEmpty() && user.password.length < 6) {
-            error.add("Password should at least 6+ chars")
-            valid = false
+        @JvmStatic
+        @BindingAdapter("android:errorPassword")
+        fun errorPassword(textInputLayout: TextInputLayout, string: String) {
+            if (string.isEmpty()) {
+                textInputLayout.error = "Password is required!"
+            } else {
+                if (string.length < 6)
+                    textInputLayout.error =
+                        "Password should be at least 6+ chars" else textInputLayout.error = null
+            }
         }
 
-        if (!valid) {
-            var message = ""
-            if (error.size > 1) {
-                for (e in error) {
-                    message += "$e,"
-                }
-
-                message = message.substring(0, message.length - 1)
-            } else message = error[0]
-            Toast.makeText(view.context, "Please enter your $message", Toast.LENGTH_LONG)
-                .show()
-
-            return
+        @JvmStatic
+        @BindingAdapter("android:errorBirthDate")
+        fun errorBirthDate(textView: TextView, string: String) {
+            if (string.isEmpty()) {
+                textView.visibility = View.VISIBLE
+                textView.text = "Birth date is required!"
+            } else {
+                textView.visibility = View.INVISIBLE
+            }
         }
     }
 
-    val userDataObserver: LiveData<RegisterUser> = mUser
 }

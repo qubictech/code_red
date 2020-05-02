@@ -98,7 +98,7 @@ class SOSActivity : AppCompatActivity() {
     private fun blink() {
         btnWrapper.visibility = View.GONE
         val anim: ObjectAnimator = ObjectAnimator
-            .ofInt(background, "backgroundColor", R.color.white, R.color.colorPrimary)
+            .ofInt(background, "backgroundColor", R.color.colorPrimary, R.color.white)
 
         anim.duration = 2000
         anim.setEvaluator(ArgbEvaluator())
