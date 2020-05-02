@@ -58,7 +58,7 @@ object FirebaseRepo {
                             val hours = minutes / 60
                             val days = hours / 24
 
-                            if (days.toInt() < 1)
+                            if (days.toInt() <= 1)
                                 resultList.add(result)
                             else Logger.getLogger("SnapshotResult")
                                 .warning("Previous Data: Day diff: $days")
