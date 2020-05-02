@@ -1,11 +1,10 @@
 package com.tarmsbd.schoolofthought.codered.app.data.repository
 
-import android.content.Context
-import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.tarmsbd.schoolofthought.codered.app.data.models.Report
 import com.tarmsbd.schoolofthought.codered.app.data.models.SelfResult
+import java.util.*
 import java.util.logging.Logger
 
 /*all firebase database data will be handled from this object*/
@@ -14,21 +13,20 @@ object FirebaseRepo {
     val ref = FirebaseDatabase.getInstance().reference
     val firebaseUser = FirebaseAuth.getInstance().currentUser
 
-    fun isUserAlreadyExist(): Boolean {
-        return false
-    }
-
+    // self report data
     fun submitResultData(selfResult: SelfResult) {
         val resultRef = ref.child("report_result").child(firebaseUser!!.uid)
         resultRef.updateChildren(selfResult.toMap())
     }
 
+    // other report data
     fun submitReportData(report: Report) {
         val reportRef = ref.child("reports").push()
         reportRef.updateChildren(report.toMap())
         Logger.getLogger("FirebaseRepo").warning("Report: Sent")
     }
 
+    // get report result from storage
     fun getReportResults(onChanged: (Boolean, List<SelfResult>) -> Unit) {
         val query: Query = ref.child("report_result")
 //            .orderByChild("timestamp")
@@ -53,7 +51,17 @@ object FirebaseRepo {
                                     "Result: ${result.result} " +
                                             "\nlatlng: ${result.location}"
                                 )
-                            resultList.add(result)
+
+                            val diff: Long = Date().time - result.timestamp
+                            val seconds = diff / 1000
+                            val minutes = seconds / 60
+                            val hours = minutes / 60
+                            val days = hours / 24
+
+                            if (days.toInt() == 1)
+                                resultList.add(result)
+                            else Logger.getLogger("SnapshotResult")
+                                .warning("Previous Data: Day diff: $days")
                         }
                     }
                     onChanged(false, resultList)
@@ -68,8 +76,4 @@ object FirebaseRepo {
 
     }
 
-
-    private fun toast(msg: String, context: Context) {
-        Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
-    }
 }

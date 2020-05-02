@@ -3,7 +3,6 @@ package com.tarmsbd.schoolofthought.codered.app.ui.sos
 import android.animation.ArgbEvaluator
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
-import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.view.MotionEvent
@@ -99,9 +98,9 @@ class SOSActivity : AppCompatActivity() {
     private fun blink() {
         btnWrapper.visibility = View.GONE
         val anim: ObjectAnimator = ObjectAnimator
-            .ofInt(background, "backgroundColor", Color.RED, Color.GREEN)
+            .ofInt(background, "backgroundColor", R.color.white, R.color.colorPrimary)
 
-        anim.duration = 650
+        anim.duration = 2000
         anim.setEvaluator(ArgbEvaluator())
         anim.repeatMode = ValueAnimator.REVERSE
         anim.repeatCount = Animation.INFINITE

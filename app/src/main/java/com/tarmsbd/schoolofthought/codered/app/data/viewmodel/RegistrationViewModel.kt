@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.tarmsbd.schoolofthought.codered.app.data.models.RegisterUser
+import com.tarmsbd.schoolofthought.codered.app.utils.MyPatterns
 import java.util.*
 import java.util.logging.Logger
 
@@ -108,7 +109,7 @@ class RegistrationViewModel : ViewModel() {
             valid = false
         }
 
-        if (user.mobile.isNotEmpty() && user.mobile.length != 11) {
+        if (user.mobile.isNotEmpty() && !MyPatterns.NUMBER_PATTERN.matches(user.mobile)) {
             valid = false
             error.add("Enter valid mobile number")
         }

@@ -7,9 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.tarmsbd.schoolofthought.codered.app.data.models.LoginUser
-import com.tarmsbd.schoolofthought.codered.app.data.models.RecentStatus
-import com.tarmsbd.schoolofthought.codered.app.data.repository.FirebaseRepo
-import com.tarmsbd.schoolofthought.codered.app.data.repository.MainRepository
+import com.tarmsbd.schoolofthought.codered.app.utils.MyPatterns
 import java.util.logging.Logger
 
 const val TAG = "RegViewModel"
@@ -65,6 +63,11 @@ class AuthViewModel : ViewModel() {
         if (user.mobile.isEmpty()) {
             error.add("Mobile Number is required")
             valid = false
+        }
+
+        if (user.mobile.isNotEmpty() && !MyPatterns.NUMBER_PATTERN.matches(user.mobile)) {
+            valid = false
+            error.add("Enter valid mobile number")
         }
 
         if (!valid) {
