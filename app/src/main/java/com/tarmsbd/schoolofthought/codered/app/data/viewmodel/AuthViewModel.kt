@@ -7,9 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.tarmsbd.schoolofthought.codered.app.data.models.LoginUser
-import com.tarmsbd.schoolofthought.codered.app.data.models.RecentStatus
-import com.tarmsbd.schoolofthought.codered.app.data.repository.FirebaseRepo
-import com.tarmsbd.schoolofthought.codered.app.data.repository.MainRepository
+import com.tarmsbd.schoolofthought.codered.app.utils.MyPatterns
 import java.util.logging.Logger
 
 const val TAG = "RegViewModel"
@@ -67,6 +65,11 @@ class AuthViewModel : ViewModel() {
             valid = false
         }
 
+        if (user.mobile.isNotEmpty() && !MyPatterns.NUMBER_PATTERN.matches(user.mobile)) {
+            valid = false
+            error.add("Enter valid mobile number")
+        }
+
         if (!valid) {
             var message = ""
             if (error.size > 1) {
@@ -88,7 +91,4 @@ class AuthViewModel : ViewModel() {
     private fun toast(msg: String, context: Context) {
         Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
     }
-
-    val getRecentStatus: LiveData<List<RecentStatus>> = MainRepository.recentStatus
-
 }

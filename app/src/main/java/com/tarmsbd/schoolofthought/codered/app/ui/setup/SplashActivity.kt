@@ -18,6 +18,7 @@ class SplashActivity : AppCompatActivity(R.layout.activity_splash) {
         CoroutineScope(Main).launch {
             delay(2000)
             startActivity(Intent(applicationContext, GoogleMapActivity::class.java))
+            finish()
         }
     }
 }

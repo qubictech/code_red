@@ -8,13 +8,14 @@ import com.tarmsbd.schoolofthought.codered.app.data.repository.MainRepository
 import kotlinx.coroutines.Dispatchers
 
 class MainViewModel : ViewModel() {
-    val repo = MainRepository
+    private val repo = MainRepository
 
     fun getResponse(body: HashMap<String, String>): LiveData<CodeRedResponse> =
         liveData(Dispatchers.IO) {
             try {
                 emit(repo.response(body))
             } catch (e: Exception) {
+                emit(CodeRedResponse("Failed"))
                 e.printStackTrace()
             }
         }
