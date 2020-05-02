@@ -51,6 +51,12 @@ class RegistrationViewModel : ViewModel() {
             mUser.value = user
         }
 
+    var confirmPassword = ""
+        set(value) {
+            field = value
+            mConfirmPassword = value
+        }
+
     fun setGender(gender: String) {
         user.gender = gender
         mUser.value = user
