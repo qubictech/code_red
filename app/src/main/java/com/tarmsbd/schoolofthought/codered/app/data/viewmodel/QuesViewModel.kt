@@ -71,6 +71,9 @@ class QuesViewModel : ViewModel() {
         Logger.getLogger("QuesRepo: Update")
             .warning("Ques-${position}: Ans: ${questionList[position - 1].ans}\n")
 
+        if (position == 4 && ans == "No") {
+            return
+        }
 
         if (position == questionList.size) return
         mQuestion.value = questionList[position]
