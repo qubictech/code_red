@@ -29,15 +29,8 @@
                 android:orientation="vertical"
                 android:padding="20dp">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
 
-                    <ImageView
-                        android:id="@+id/app_logo"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:src="@drawable/app_logo_png" />
+
                     <!--registration for help button-->
                     <TextView
                         android:id="@+id/welcome_txt"
@@ -45,7 +38,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
                         android:layout_marginStart="12dp"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="40dp"
                         android:layout_toEndOf="@+id/app_logo"
                         android:text="Welcome to"
                         android:textColor="@color/text_color"
@@ -61,7 +54,7 @@
                         android:textColor="@color/colorPrimary"
                         android:textSize="24sp"
                         android:textStyle="bold" />
-                </RelativeLayout>
+
 
                 <!--mobile number-->
                 <com.google.android.material.textfield.TextInputLayout
@@ -82,8 +75,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/edit_text_background"
-                        android:drawableStart="@drawable/ic_phone_call_outline"
                         android:drawablePadding="8dp"
+                        android:gravity="center"
                         android:hint="@string/mobile_number"
                         android:imeOptions="actionNext"
                         android:inputType="number"
@@ -109,8 +102,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/edit_text_background"
-                        android:drawableStart="@drawable/ic_lock_outline"
                         android:drawablePadding="8dp"
+                        android:gravity="center"
                         android:hint="@string/password"
                         android:imeOptions="actionDone"
                         android:inputType="textPassword"

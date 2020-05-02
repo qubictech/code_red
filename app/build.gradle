@@ -86,4 +86,7 @@ dependencies {
     api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version"
     api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version"
     api "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:$coroutine_version"
+
+    //step View
+    implementation 'com.githang:stepview:0.1'
 }

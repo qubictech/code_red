@@ -16,6 +16,7 @@ import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.githang.stepview.StepView
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.LatLng
@@ -29,6 +30,7 @@ import com.tarmsbd.schoolofthought.codered.app.data.viewmodel.QuesViewModel
 import com.tarmsbd.schoolofthought.codered.app.databinding.ActivityQuesBinding
 import com.tarmsbd.schoolofthought.codered.app.ui.main.GoogleMapActivity
 import com.tarmsbd.schoolofthought.codered.app.ui.sos.SOSActivity
+import java.util.*
 import java.util.logging.Logger
 
 class QuesActivity : AppCompatActivity() {
@@ -49,6 +51,11 @@ class QuesActivity : AppCompatActivity() {
 
         val activityQuesBinding: ActivityQuesBinding = DataBindingUtil
             .setContentView(this, R.layout.activity_ques)
+
+        val mStepView:StepView
+        mStepView = findViewById(R.id.step_view) as StepView
+        val steps: List<String> = Arrays.asList("one", "two", "three", "four")
+        mStepView.setSteps(steps)
 
         activityQuesBinding.apply {
             viewModel = quesViewModel
