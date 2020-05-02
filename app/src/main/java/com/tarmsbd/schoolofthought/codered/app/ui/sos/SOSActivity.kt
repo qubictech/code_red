@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.os.Bundle
 import android.os.Handler
+import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
 import android.view.animation.Animation
@@ -12,6 +13,7 @@ import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.tarmsbd.schoolofthought.codered.app.R
 import kotlinx.android.synthetic.main.activity_s_o_s.*
@@ -35,35 +37,45 @@ class SOSActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_s_o_s)
+
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         background = findViewById(R.id.background)
         btnWrapper = findViewById(R.id.sos_btn_layout)
         progress = findViewById(R.id.progress_circular)
         progress.progress = 0
 
-        sos_button.setOnTouchListener { _, motionEvent ->
-            when (motionEvent.action) {
-                MotionEvent.ACTION_UP -> {
-                    progress.progress = 0
-                    up = System.currentTimeMillis()
-                    if (up - down > 3000) {
-                        blink()
+        if (intent.getStringExtra(EXTRA_RESULT) == RED) {
+            sos_button.setOnTouchListener { _, motionEvent ->
+                when (motionEvent.action) {
+                    MotionEvent.ACTION_UP -> {
+                        progress.progress = 0
+                        up = System.currentTimeMillis()
+                        if (up - down > 3000) {
+                            blink()
 //                        showFragment()
-                    } else {
-                        timer.cancel()
-                        Toast.makeText(
-                            this,
-                            resources.getString(R.string.press_and_hold_the_sos_button_for_3_seconds),
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        } else {
+                            timer.cancel()
+                            Toast.makeText(
+                                this,
+                                resources.getString(R.string.press_and_hold_the_sos_button_for_3_seconds),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+
+                    MotionEvent.ACTION_DOWN -> {
+                        down = System.currentTimeMillis()
+                        timer = getTimer(down + (30 * 1000))
                     }
                 }
-
-                MotionEvent.ACTION_DOWN -> {
-                    down = System.currentTimeMillis()
-                    timer = getTimer(down + (30 * 1000))
-                }
+                return@setOnTouchListener true
             }
-            return@setOnTouchListener true
+        } else {
+            showFragment()
         }
     }
 
@@ -113,15 +125,27 @@ class SOSActivity : AppCompatActivity() {
 
     private fun showFragment() {
         background.visibility = View.GONE
-        val result = intent.getStringExtra(EXTRA_RESULT)
-        if (result == RED) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, ResultRedFragment())
-                .commit()
-        } else {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, ResultNonRedFragment())
-                .commit()
+        when (intent.getStringExtra(EXTRA_RESULT)) {
+            RED -> {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, ResultRedFragment())
+                    .commit()
+            }
+            "Green" -> {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, ResultGreen())
+                    .commit()
+            }
+            else -> {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, ResultNonRedFragment())
+                    .commit()
+            }
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) super.onBackPressed()
+        return super.onOptionsItemSelected(item)
     }
 }

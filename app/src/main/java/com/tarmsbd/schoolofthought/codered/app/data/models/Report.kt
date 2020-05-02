@@ -8,9 +8,11 @@ data class Report(
     var patientName: String,
     var mobile: String,
     var location: String,
+    var gender: String,
+    var dateOfBirth: String,
     var desc: String
 ) {
-    constructor() : this("", "", "", "")
+    constructor() : this("", "", "","","", "")
 
     @Exclude
     fun toMap(): Map<String, String> {
@@ -18,6 +20,8 @@ data class Report(
             "patientName" to patientName,
             "mobile" to mobile,
             "location" to location,
+            "gender" to gender,
+            "dateOfBirth" to dateOfBirth,
             "desc" to desc
         )
 

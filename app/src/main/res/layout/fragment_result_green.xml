@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -15,7 +15,7 @@
         android:background="@drawable/text_view_background"
         android:gravity="center"
         android:padding="20dp"
-        android:text="An emergency SOS signal has been sent and will beacon on the map for next 24 hours"
+        android:text="You are in safe zone!\n\nIf you ever feel any of the symptom in the exhibited questions you passed through, please come back for further assessments!"
         android:textColor="@color/black" />
 
     <com.google.android.material.button.MaterialButton
@@ -25,9 +25,9 @@
         android:layout_marginTop="16dp"
         android:onClick="gotoEmergencyPage"
         android:padding="8dp"
-        app:cornerRadius="18dp"
         android:text="Emergency Contacts"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white"
+        app:cornerRadius="18dp" />
 
 
 </LinearLayout>
