@@ -17,11 +17,10 @@
         android:text="Our evaluation matrix(based on Machine Larning Algorithm) suggested, you are not in a life-threatening condition to initiate an emergency distress signal! Please relax and ask for detail clinical advice from Medical Helth Care Professionals in our Contacts Directoris"
         android:textColor="@color/black" />
 
-    <TextView
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/emergency_contacts"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/red_rounded_corner"
         android:padding="8dp"
         android:text="Emergency Contacts"
         android:onClick="gotoEmergencyPage"

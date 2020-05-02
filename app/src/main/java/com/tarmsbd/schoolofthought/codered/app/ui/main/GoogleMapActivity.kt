@@ -77,29 +77,7 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
             .findFragmentById(R.id.map) as? SupportMapFragment
         mapFragment?.getMapAsync(this)
 
-        // list of report result.
-        FirebaseRepo.getReportResults { error, list ->
-            Logger.getLogger("MapActivity")
-                .warning("Response: Error: $error \nResult Count: ${list.size}")
 
-            if (!error) {
-                for (result in list) {
-                    if (result.result == "Red") {
-                        multipleMarkerRed(
-                            result.location.latitude,
-                            result.location.longitude,
-                            result.result
-                        )
-                    } else if (result.result == "Orange") {
-                        multipleMarkerOrange(
-                            result.location.latitude,
-                            result.location.longitude,
-                            result.result
-                        )
-                    }
-                }
-            }
-        }
     }
 
     override fun onRestart() {
@@ -113,6 +91,30 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
         if (checkPermissions()) {
             if (isLocationEnabled()) {
+
+                // list of report result.
+                FirebaseRepo.getReportResults { error, list ->
+                    Logger.getLogger("MapActivity")
+                        .warning("Response: Error: $error \nResult Count: ${list.size}")
+
+                    if (!error) {
+                        for (result in list) {
+                            if (result.result == "Red") {
+                                multipleMarkerRed(
+                                    result.location.latitude,
+                                    result.location.longitude,
+                                    result.result
+                                )
+                            } else if (result.result == "Orange") {
+                                multipleMarkerOrange(
+                                    result.location.latitude,
+                                    result.location.longitude,
+                                    result.result
+                                )
+                            }
+                        }
+                    }
+                }
 
 
                 mMap = googleMap
