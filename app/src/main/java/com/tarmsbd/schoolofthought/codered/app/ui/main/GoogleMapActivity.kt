@@ -64,10 +64,6 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         return super.onCreateOptionsMenu(menu)
-
-
-
-
     }
 
     fun locationSearch() {
@@ -118,6 +114,7 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as? SupportMapFragment
         mapFragment?.getMapAsync(this)
+
     }
 
     override fun onStart() {

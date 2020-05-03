@@ -11,12 +11,13 @@ import java.util.logging.Logger
 object FirebaseRepo {
 
     val ref = FirebaseDatabase.getInstance().reference
-    val firebaseUser = FirebaseAuth.getInstance().currentUser
 
     // self assistant data
     fun submitResultData(selfResult: SelfResult) {
-        val resultRef = ref.child("report_result").child(firebaseUser!!.uid)
-        resultRef.updateChildren(selfResult.toMap())
+        FirebaseAuth.getInstance().currentUser?.let { firebaseUser ->
+            val resultRef = ref.child("report_result").child(firebaseUser.uid)
+            resultRef.updateChildren(selfResult.toMap())
+        }
     }
 
     // other report data
@@ -58,7 +59,7 @@ object FirebaseRepo {
                             val hours = minutes / 60
                             val days = hours / 24
 
-                            if (days.toInt() == 1)
+                            if (days.toInt() <= 1)
                                 resultList.add(result)
                             else Logger.getLogger("SnapshotResult")
                                 .warning("Previous Data: Day diff: $days")

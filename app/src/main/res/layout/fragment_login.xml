@@ -110,21 +110,22 @@
                         android:text="@={viewModel.password}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.button.MaterialButton
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
-                    android:gravity="center"
-                    android:text="@string/forget_password"
-                    android:textAllCaps="false"
-                    android:textColor="@color/text_color" />
+<!--                <com.google.android.material.button.MaterialButton-->
+<!--                    style="@style/Widget.MaterialComponents.Button.TextButton"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="32dp"-->
+<!--                    android:gravity="center"-->
+<!--                    android:text="@string/forget_password"-->
+<!--                    android:textAllCaps="false"-->
+<!--                    android:textColor="@color/text_color" />-->
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/register"
                     style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="42dp"
                     android:gravity="center"
                     android:text="@string/create_new"
                     android:textAllCaps="false"

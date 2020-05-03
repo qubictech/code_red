@@ -1,6 +1,7 @@
 package com.tarmsbd.schoolofthought.codered.app.ui.ques
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.DialogInterface
@@ -44,6 +45,7 @@ class QuesActivity : AppCompatActivity() {
 
     private var mLocation: LatLng = LatLng(0.0, 0.0)
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -80,6 +82,7 @@ class QuesActivity : AppCompatActivity() {
                 activityQuesBinding.helperText.text =
                     "Please answer this question for final assessment"
             } else {
+                mStepView.setSteps(steps)
                 mStepView.selectedStep(id)
                 activityQuesBinding.helperText.text =
                     resources.getString(R.string.to_get_assistance_please_answer_these_questions_carefully)

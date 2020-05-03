@@ -197,8 +197,8 @@
                         android:layout_height="match_parent"
                         android:background="@drawable/edit_text_background"
                         android:drawablePadding="8dp"
-                        android:hint="@string/password"
                         android:gravity="center"
+                        android:hint="@string/password"
                         android:imeOptions="actionNext"
                         android:inputType="textPassword"
                         android:text="@={viewModel.password}" />
@@ -207,6 +207,7 @@
 
                 <!--password-->
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/confirm_password"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -214,7 +215,6 @@
                     app:boxCornerRadiusBottomEnd="32dp"
                     app:boxCornerRadiusBottomStart="32dp"
                     app:boxCornerRadiusTopEnd="32dp"
-                    android:id="@+id/confirm_password"
                     app:boxCornerRadiusTopStart="32dp"
                     app:errorEnabled="true"
                     app:hintEnabled="false"
@@ -225,8 +225,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/edit_text_background"
-                        android:drawableStart="@drawable/ic_lock_outline"
-                        android:drawablePadding="8dp"
+                        android:gravity="center"
                         android:hint="@string/confirm_password"
                         android:imeOptions="actionNext"
                         android:inputType="textPassword"
@@ -236,6 +235,7 @@
 
                 <!--confirmation string-->
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/goto_login_page"
                     style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
