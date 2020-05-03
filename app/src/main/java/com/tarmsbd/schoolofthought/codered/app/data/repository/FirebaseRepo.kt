@@ -10,13 +10,14 @@ import java.util.logging.Logger
 /*all firebase database data will be handled from this object*/
 object FirebaseRepo {
 
-    val ref = FirebaseDatabase.getInstance().reference
-    val firebaseUser = FirebaseAuth.getInstance().currentUser
+    val ref = FirebaseDatabase.getInstance().reference   
 
     // self assistant data
     fun submitResultData(selfResult: SelfResult) {
-        val resultRef = ref.child("report_result").child(firebaseUser!!.uid)
-        resultRef.updateChildren(selfResult.toMap())
+        FirebaseAuth.getInstance().currentUser?.let{firebaseUser->
+                 val resultRef = ref.child("report_result").child(firebaseUser.uid)
+                 resultRef.updateChildren(selfResult.toMap())
+        }
     }
 
     // other report data
