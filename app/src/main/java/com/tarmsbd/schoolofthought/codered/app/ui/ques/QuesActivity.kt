@@ -4,7 +4,6 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
@@ -57,6 +56,7 @@ class QuesActivity : AppCompatActivity() {
         user = FirebaseAuth.getInstance().currentUser!!
 
         quesViewModel = ViewModelProvider(this)[QuesViewModel::class.java]
+        mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
         val activityQuesBinding: ActivityQuesBinding = DataBindingUtil
             .setContentView(this, R.layout.activity_ques)
@@ -110,8 +110,6 @@ class QuesActivity : AppCompatActivity() {
 
                         val dialog = showProgressDialog()
                         dialog.show()
-
-                        mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
                         mainViewModel.getResponse(map).observe(this, Observer {
 
@@ -193,9 +191,9 @@ class QuesActivity : AppCompatActivity() {
         val dialog = AlertDialog.Builder(this)
             .setMessage("Want to exit from this page?")
             .setCancelable(false)
-            .setPositiveButton("Cancel!") { dialogInterface, i ->
+            .setPositiveButton("Cancel!") { dialogInterface, _ ->
                 dialogInterface.dismiss()
-            }.setNeutralButton("Exit!") { dialogInterface, i ->
+            }.setNeutralButton("Exit!") { dialogInterface, _ ->
                 dialogInterface.dismiss()
                 finish()
             }.create()
@@ -207,7 +205,7 @@ class QuesActivity : AppCompatActivity() {
         val dialog = AlertDialog.Builder(this)
             .setMessage("Failed to get result! Try again later.")
             .setCancelable(false)
-            .setPositiveButton("Okay!") { dialogInterface, i ->
+            .setPositiveButton("Okay!") { dialogInterface, _ ->
                 dialogInterface.dismiss()
             }.create()
 
@@ -289,10 +287,12 @@ class QuesActivity : AppCompatActivity() {
         val builder: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(this)
         builder.setMessage("Your GPS seems to be disabled, do you want to enable it?")
             .setCancelable(false)
-            .setPositiveButton("Yes",
-                DialogInterface.OnClickListener { dialog, id -> startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)) })
-            .setNegativeButton("No",
-                DialogInterface.OnClickListener { dialog, id -> dialog.cancel() })
+            .setPositiveButton(
+                "Yes"
+            ) { _, _ -> startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)) }
+            .setNegativeButton(
+                "No"
+            ) { dialog, _ -> dialog.cancel() }
         val alert: android.app.AlertDialog = builder.create()
         alert.show()
     }
