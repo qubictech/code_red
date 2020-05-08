@@ -69,6 +69,7 @@
                     android:layout_marginTop="7dp"
                     android:layout_marginBottom="7dp"
                     android:text="Android Version"
+                    android:autoLink="phone"
                     android:textAppearance="?android:attr/textAppearanceMedium"/>
             </LinearLayout>
         </LinearLayout>
