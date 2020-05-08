@@ -3,12 +3,12 @@ package com.tarmsbd.schoolofthought.codered.app.ui.main
 import android.Manifest
 import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
@@ -20,7 +20,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -32,11 +31,8 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptor
+import com.google.android.gms.maps.model.*
 import com.google.android.gms.maps.model.BitmapDescriptorFactory.fromBitmap
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MapStyleOptions
-import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.tarmsbd.schoolofthought.codered.app.R
 import com.tarmsbd.schoolofthought.codered.app.data.repository.FirebaseRepo
@@ -51,7 +47,7 @@ import java.util.logging.Logger
 class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
 
-    lateinit var search: EditText
+    private lateinit var search: EditText
 
     companion object {
         const val PERMISSION_ID = 42
@@ -66,14 +62,13 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
         return super.onCreateOptionsMenu(menu)
     }
 
-    fun locationSearch() {
+    private fun locationSearch() {
 
         var addressList: List<Address>? = null
-        lateinit var location: String
         search = findViewById(R.id.map_search)
-        location = search.text.toString()
+        val location: String = search.text.toString()
 
-        if (location == null || location == "") {
+        if (location == "") {
             Toast.makeText(applicationContext, "provide location", Toast.LENGTH_SHORT).show()
         } else {
             val geoCoder = Geocoder(this)
@@ -83,16 +78,14 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
             } catch (e: IOException) {
                 e.printStackTrace()
             }
-            if (addressList.isNullOrEmpty()){
-                Toast.makeText(this,"Location not found",Toast.LENGTH_LONG).show()
+            if (addressList.isNullOrEmpty()) {
+                Toast.makeText(this, "Location not found", Toast.LENGTH_LONG).show()
                 return
             }
-            val address = addressList!![0]
+            val address = addressList[0]
             val latLng = LatLng(address.latitude, address.longitude)
             mMap.addMarker(MarkerOptions().position(latLng))
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12f))
-
-
         }
     }
 
@@ -129,7 +122,20 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-
+        try {
+            // Customise the styling of the base map using a JSON object defined
+            // in a raw resource file.
+            val success = googleMap.setMapStyle(
+                MapStyleOptions.loadRawResourceStyle(
+                    this, R.raw.mapstyle
+                )
+            )
+            if (!success) {
+                Log.e("Map Failed----", "Style parsing failed.")
+            }
+        } catch (e: Resources.NotFoundException) {
+            Log.e(" Map Error---", "Can't find style. Error: ", e)
+        }
 
         if (checkPermissions()) {
             if (isLocationEnabled()) {
@@ -160,53 +166,41 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
                 mMap = googleMap
-
-                try {
-                    // Customise the styling of the base map using a JSON object defined
-                    // in a raw resource file.
-                    val success = googleMap.setMapStyle(
-                        MapStyleOptions.loadRawResourceStyle(
-                            this, R.raw.mapstyle
-                        )
-                    )
-                    if (!success) {
-                        Log.e("Map Failed----", "Style parsing failed.")
-                    }
-                } catch (e: Resources.NotFoundException) {
-                    Log.e(" Map Error---", "Can't find style. Error: ", e)
-                }
                 fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+                mMap.isMyLocationEnabled = true
 
                 fusedLocationClient.lastLocation
                     .addOnSuccessListener { location: Location? ->
-
-                        // Got last known location. In some rare situations this can be null.
-                        if (location == null) {
-                            val mylatlong = LatLng(23.7536267, 90.376229)
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mylatlong, 16f))
-                            mMap.addMarker(
-                                MarkerOptions()
-                                    .position(mylatlong)
-                                    .title("Dhaka")
-                            )
-                        } else {
-
-                            val mylatlong = LatLng(location.latitude, location.longitude)
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mylatlong, 16f))
-                            mMap.addMarker(
-                                MarkerOptions()
-                                    .position(mylatlong)
-                                    .title("My Location")
+                        location?.let {
+                            mMap.moveCamera(
+                                CameraUpdateFactory.newLatLngZoom(
+                                    LatLng(
+                                        location.latitude,
+                                        location.longitude
+                                    ), 16f
+                                )
                             )
                         }
                     }
             } else {
                 //location enable
-
                 buildAlertMessageNoGps()
             }
         } else {
             requestPermissions()
+        }
+    }
+
+    private fun addCircleInLocation(map: GoogleMap, latLng: LatLng) {
+        if (FirebaseAuth.getInstance().currentUser != null) {
+            map.addCircle(
+                CircleOptions()
+                    .center(latLng)
+                    .radius(30.0)
+                    .strokeWidth(3f)
+                    .strokeColor(Color.RED)
+                    .fillColor(Color.argb(90, 150, 50, 50))
+            )
         }
     }
 
@@ -216,10 +210,15 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
             MarkerOptions()
                 .position(latLng)
                 .title(title)
-                .icon(bitmapDescriptorFromVector(applicationContext, R.drawable.red_signal))
-
+                .icon(
+                    bitmapDescriptorFromVector(
+                        applicationContext,
+                        R.drawable.ic_pin_outline_red
+                    )
+                )
         )
 
+        addCircleInLocation(mMap, LatLng(lat, long))
 
     }
 
@@ -229,10 +228,15 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
             MarkerOptions()
                 .position(latLng)
                 .title(title)
-                .icon(bitmapDescriptorFromVector(applicationContext, R.drawable.orange))
-
+                .icon(
+                    bitmapDescriptorFromVector(
+                        applicationContext,
+                        R.drawable.ic_pin_outline_orange
+                    )
+                )
         )
 
+        addCircleInLocation(mMap, LatLng(lat, long))
 
     }
 
@@ -278,7 +282,7 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun isLocationEnabled(): Boolean {
-        var locationManager: LocationManager =
+        val locationManager: LocationManager =
             getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
             LocationManager.NETWORK_PROVIDER
@@ -289,13 +293,15 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
         builder.setMessage("Your GPS seems to be disabled, do you want to enable it?")
             .setCancelable(false)
-            .setPositiveButton("Yes",
-                DialogInterface.OnClickListener { dialog, id -> startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)) })
-            .setNegativeButton("No",
-                DialogInterface.OnClickListener { dialog, id ->
-                    dialog.cancel()
-                    finish()
-                })
+            .setPositiveButton(
+                "Yes"
+            ) { _, _ -> startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)) }
+            .setNegativeButton(
+                "No"
+            ) { dialog, _ ->
+                dialog.cancel()
+                finish()
+            }
         val alert: AlertDialog = builder.create()
         alert.show()
     }
