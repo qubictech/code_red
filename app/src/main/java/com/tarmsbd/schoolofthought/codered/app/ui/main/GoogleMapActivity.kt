@@ -53,8 +53,6 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
         const val PERMISSION_ID = 42
     }
 
-    private val user = FirebaseAuth.getInstance().currentUser
-
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -125,11 +123,7 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
         try {
             // Customise the styling of the base map using a JSON object defined
             // in a raw resource file.
-            val success = googleMap.setMapStyle(
-                MapStyleOptions.loadRawResourceStyle(
-                    this, R.raw.mapstyle
-                )
-            )
+            val success = googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle))
             if (!success) {
                 Log.e("Map Failed----", "Style parsing failed.")
             }
@@ -142,8 +136,9 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
                 // list of report result.
                 FirebaseRepo.getReportResults { error, list ->
-                    Logger.getLogger("MapActivity")
-                        .warning("Response: Error: $error \nResult Count: ${list.size}")
+                    Logger.getLogger("MapActivity").warning("Response: Error: $error \nResult Count: ${list.size}")
+
+                    mMap.clear() // clear all existing marker
 
                     if (!error) {
                         for (result in list) {
@@ -173,12 +168,7 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
                     .addOnSuccessListener { location: Location? ->
                         location?.let {
                             mMap.moveCamera(
-                                CameraUpdateFactory.newLatLngZoom(
-                                    LatLng(
-                                        location.latitude,
-                                        location.longitude
-                                    ), 13f
-                                )
+                                CameraUpdateFactory.newLatLngZoom(LatLng(location.latitude, location.longitude), 13f)
                             )
                         }
                     }
@@ -239,6 +229,8 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     fun gotoSelfRegPage(view: View) {
+        val user = FirebaseAuth.getInstance().currentUser
+
         if (user == null) {
             val intent = Intent(this, AuthActivity::class.java)
             intent.putExtra(AuthActivity.EXTRA_TEXT, "QuesActivity")
@@ -247,6 +239,8 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     fun gotoOtherHelpPage(view: View) {
+        val user = FirebaseAuth.getInstance().currentUser
+
         if (user == null) {
             val intent = Intent(this, AuthActivity::class.java)
             intent.putExtra(AuthActivity.EXTRA_TEXT, "ReportActivity")
