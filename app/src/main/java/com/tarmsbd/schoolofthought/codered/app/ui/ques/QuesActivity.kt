@@ -90,6 +90,7 @@ class QuesActivity : AppCompatActivity() {
         })
 
         quesViewModel.answeredList.observe(this, Observer { answers ->
+            Logger.getLogger("QuesActivity:").warning("Ques Id: $id")
 
             if (
                 answers[0].ans.isNotEmpty() &&

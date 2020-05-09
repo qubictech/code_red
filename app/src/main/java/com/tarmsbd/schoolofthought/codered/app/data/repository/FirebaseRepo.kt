@@ -29,7 +29,10 @@ object FirebaseRepo {
 
     // get report result from storage
     fun getReportResults(onChanged: (Boolean, List<SelfResult>) -> Unit) {
+        if (FirebaseAuth.getInstance().currentUser == null) return
+
         val query: Query = ref.child("report_result")
+            .child(FirebaseAuth.getInstance().uid.toString())
 //            .orderByChild("timestamp")
 //            .equalTo("Red", "result")
 
@@ -41,30 +44,31 @@ object FirebaseRepo {
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.hasChildren()) {
+                if (snapshot.hasChild("result")) {
                     Logger.getLogger("Snapshot").warning("${snapshot.childrenCount}")
                     resultList.clear()
 
-                    snapshot.children.forEach { dataSnapshot ->
-                        dataSnapshot.getValue(SelfResult::class.java)?.let { result ->
-                            Logger.getLogger("SnapshotResult")
-                                .warning(
-                                    "Result: ${result.result} " +
-                                            "\nlatlng: ${result.location}"
-                                )
+                    snapshot.getValue(SelfResult::class.java)?.let { result ->
+                        Logger.getLogger("SnapshotResult")
+                            .warning(
+                                "\nResult: ${result.result} " +
+                                        "\nlatlng: ${result.location}"
+                            )
 
-                            val diff: Long = Date().time - result.timestamp
-                            val seconds = diff / 1000
-                            val minutes = seconds / 60
-                            val hours = minutes / 60
-                            val days = hours / 24
+                        val diff: Long = Date().time - result.timestamp
+                        val seconds = diff / 1000
+                        val minutes = seconds / 60
+                        val hours = minutes / 60
+                        val days = hours / 24
 
-                            if (days.toInt() <= 15)
-                                resultList.add(result)
-                            else Logger.getLogger("SnapshotResult")
-                                .warning("Previous Data: Day diff: $days")
-                        }
+                        if (days.toInt() <= 15)
+                            resultList.add(result)
+                        else Logger.getLogger("SnapshotResult")
+                            .warning("Previous Data: Day diff: $days")
                     }
+
+                    Logger.getLogger("Snapshot").warning("$snapshot")
+
                     onChanged(false, resultList)
                 } else {
                     Logger.getLogger("Snapshot").warning("Nothing Found!")
