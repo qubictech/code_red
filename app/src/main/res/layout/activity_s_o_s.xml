@@ -25,31 +25,29 @@
             <ProgressBar
                 android:id="@+id/progress_circular"
                 style="?android:progressBarStyleHorizontal"
-                android:progressDrawable="@drawable/progress_bar_background"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:progress="0"
-                android:indeterminate="false"
-                android:layout_marginBottom="6dp"
                 android:layout_gravity="center"
+                android:layout_marginBottom="6dp"
+                android:indeterminate="false"
                 android:minWidth="180dp"
-                android:minHeight="180dp" />
+                android:minHeight="180dp"
+                android:progress="0"
+                android:progressDrawable="@drawable/progress_bar_background" />
 
             <ImageButton
                 android:id="@+id/sos_button"
                 style="@style/Widget.AppCompat.ActionButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_sos_btn" />
+                android:layout_gravity="center" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="SOS"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="32sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

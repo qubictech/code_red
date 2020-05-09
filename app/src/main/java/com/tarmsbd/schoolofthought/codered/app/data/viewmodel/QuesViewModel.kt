@@ -1,5 +1,9 @@
 package com.tarmsbd.schoolofthought.codered.app.data.viewmodel
 
+import android.graphics.Color
+import android.graphics.PorterDuff
+import android.widget.TextView
+import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -72,6 +76,7 @@ class QuesViewModel : ViewModel() {
         questionList[position - 1] = question
         Logger.getLogger("QuesRepo: Update")
             .warning("Ques-${position}: Ans: ${questionList[position - 1].ans}\n")
+        mQuestion.value = question
     }
 
     fun loadNextQuestion(position: Int) {
@@ -86,9 +91,49 @@ class QuesViewModel : ViewModel() {
         mQuestion.value = questionList[position]
     }
 
-
     init {
         mQuestion.value = questionList.first()
         mAnsweredList.value = questionList
+    }
+
+    companion object {
+        @JvmStatic
+        @BindingAdapter("yesButtonClicked")
+        fun setBackgroundColorYes(view: TextView, ans: String) {
+            if (ans == "Yes") {
+                view.background.setColorFilter(
+                    Color.parseColor("#EE2B60"),
+                    PorterDuff.Mode.SRC_ATOP
+                )
+                view.setTextColor(Color.WHITE)
+
+            } else {
+                view.background.setColorFilter(
+                    Color.parseColor("#CCCCCC"),
+                    PorterDuff.Mode.SRC_ATOP
+                )
+                view.setTextColor(Color.BLACK)
+            }
+
+        }
+
+        @JvmStatic
+        @BindingAdapter("noButtonClicked")
+        fun setBackgroundColorNo(view: TextView, ans: String) {
+            if (ans == "No") {
+                view.background.setColorFilter(
+                    Color.parseColor("#EE2B60"),
+                    PorterDuff.Mode.SRC_ATOP
+                )
+                view.setTextColor(Color.WHITE)
+            } else {
+                view.background.setColorFilter(
+                    Color.parseColor("#CCCCCC"),
+                    PorterDuff.Mode.SRC_ATOP
+                )
+                view.setTextColor(Color.BLACK)
+            }
+
+        }
     }
 }
