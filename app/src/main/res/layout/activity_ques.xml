@@ -119,6 +119,23 @@
             </ScrollView>
         </RelativeLayout>
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_gravity="bottom|start"
+            android:layout_marginStart="6dp"
+            android:text="Previous" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="6dp"
+            android:text="Next" />
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>

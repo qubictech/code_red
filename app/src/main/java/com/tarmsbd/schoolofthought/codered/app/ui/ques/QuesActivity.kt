@@ -11,6 +11,7 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -87,91 +88,79 @@ class QuesActivity : AppCompatActivity() {
                 activityQuesBinding.helperText.text =
                     resources.getString(R.string.to_get_assistance_please_answer_these_questions_carefully)
             }
+
+            if (id >= 2) activityQuesBinding.btnBack.visibility =
+                View.VISIBLE else activityQuesBinding.btnBack.visibility = View.GONE
         })
 
         quesViewModel.answeredList.observe(this, Observer { answers ->
-            Logger.getLogger("QuesActivity:").warning("Ques Id: $id")
 
-            if (
-                answers[0].ans.isNotEmpty() &&
-                answers[1].ans.isNotEmpty() &&
-                answers[2].ans.isNotEmpty() &&
-                answers[3].ans.isNotEmpty()
-            ) {
+            activityQuesBinding.btnBack.setOnClickListener {
+                if (id < 2) showDialog()
+                else quesViewModel.setPreviousQues(id)
+            }
+
+            activityQuesBinding.btnNext.setOnClickListener {
+                quesViewModel.loadNextQuestion(id)
+
                 val map = hashMapOf<String, String>()
-                map["Question1_answer"] = answers[0].ans
-                map["Question2_answer"] = answers[1].ans
-                map["Question3_answer"] = answers[2].ans
-                map["Question4_answer"] = answers[3].ans
+                if (
+                    answers[0].ans.isNotEmpty() &&
+                    answers[1].ans.isNotEmpty() &&
+                    answers[2].ans.isNotEmpty() &&
+                    answers[3].ans.isNotEmpty()
+                ) {
+                    map["Question1_answer"] = answers[0].ans
+                    map["Question2_answer"] = answers[1].ans
+                    map["Question3_answer"] = answers[2].ans
+                    map["Question4_answer"] = answers[3].ans
 
-                if (answers[3].ans == "Yes") {
-                    if (answers[4].ans.isNotEmpty()) {
-                        map["Question5_answer"] = answers[4].ans
-                        Logger.getLogger("QuesActivity:").warning("Requesting................")
-
-                        val dialog = showProgressDialog()
-                        dialog.show()
-
-                        mainViewModel.getResponse(map).observe(this, Observer {
-
-                            if (it.response != "Failed") {
-                                FirebaseRepo.submitResultData(
-                                    SelfResult(
-                                        user.email?.substring(1, 12).toString(),
-                                        com.tarmsbd.schoolofthought.codered.app.data.models.Location(
-                                            mLocation.latitude,
-                                            mLocation.longitude
-                                        ),
-                                        it.response, 0, map
-                                    )
-                                )
-
-                                val intent = Intent(this, SOSActivity::class.java)
-                                intent.putExtra(SOSActivity.EXTRA_RESULT, it.response)
-                                startActivity(intent)
-                                finish()
-                            } else {
-                                showFailedDialog()
-                            }
-
-                            dialog.cancel()
-                        })
-                    }
-                } else {
-                    Logger.getLogger("QuesActivity:").warning("Requesting................")
-
-                    val dialog = showProgressDialog()
-                    dialog.show()
-
-                    mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
-
-                    mainViewModel.getResponse(map).observe(this, Observer {
-
-                        if (it.response != "Failed") {
-                            FirebaseRepo.submitResultData(
-                                SelfResult(
-                                    user.email?.substring(1, 12).toString(),
-                                    com.tarmsbd.schoolofthought.codered.app.data.models.Location(
-                                        mLocation.latitude,
-                                        mLocation.longitude
-                                    ),
-                                    it.response, 0, map
-                                )
-                            )
-
-                            val intent = Intent(this, SOSActivity::class.java)
-                            intent.putExtra(SOSActivity.EXTRA_RESULT, it.response)
-                            startActivity(intent)
-                            finish()
-                        } else {
-                            showFailedDialog()
+                    if (answers[3].ans == "Yes") {
+                        if (answers[4].ans.isNotEmpty()) {
+                            map["Question5_answer"] = answers[4].ans
+                            Logger.getLogger("QuesActivity:").warning("Requesting................")
+                            getResultResponse(map)
                         }
-
-                        dialog.cancel()
-                    })
+                    } else {
+                        getResultResponse(map)
+                    }
                 }
             }
 
+        })
+    }
+
+    private fun getResultResponse(request: HashMap<String, String>) {
+        Logger.getLogger("QuesActivity:").warning("Requesting................")
+
+        val dialog = showProgressDialog()
+        dialog.show()
+
+        mainViewModel.getResponse(request).observe(this, Observer {
+
+            if (it.response != "Failed") {
+                FirebaseRepo.submitResultData(
+                    SelfResult(
+                        user.email?.substring(1, 12).toString(),
+                        com.tarmsbd.schoolofthought.codered.app.data.models.Location(
+                            mLocation.latitude,
+                            mLocation.longitude
+                        ),
+                        it.response,
+                        0,
+                        request
+                    )
+                )
+
+                val intent = Intent(this, SOSActivity::class.java)
+                intent.putExtra(SOSActivity.EXTRA_RESULT, it.response)
+                startActivity(intent)
+                finish()
+            } else {
+                showFailedDialog()
+            }
+
+            dialog.cancel()
         })
     }
 

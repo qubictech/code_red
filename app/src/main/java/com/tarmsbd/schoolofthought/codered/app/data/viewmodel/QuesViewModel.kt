@@ -56,6 +56,10 @@ class QuesViewModel : ViewModel() {
     }
 
     fun setPreviousQues(position: Int) {
+        // position is decreasing on updateQuesAns function body.
+        updateQuesAns(position, "")
+
+        // position is starts from 1. and index starts from 0.
         mQuestion.value = questionList[position - 2]
     }
 
@@ -66,18 +70,22 @@ class QuesViewModel : ViewModel() {
         val question = questionList[position - 1]
         question.ans = ans
         questionList[position - 1] = question
-        mAnsweredList.value = questionList
-
         Logger.getLogger("QuesRepo: Update")
             .warning("Ques-${position}: Ans: ${questionList[position - 1].ans}\n")
+    }
 
-        if (position == 4 && ans == "No") {
+    fun loadNextQuestion(position: Int) {
+        if (questionList[position - 1].ans.isEmpty()) return
+
+        mAnsweredList.value = questionList
+        if (position == 4 && questionList[position - 1].ans == "No") {
             return
         }
 
         if (position == questionList.size) return
         mQuestion.value = questionList[position]
     }
+
 
     init {
         mQuestion.value = questionList.first()

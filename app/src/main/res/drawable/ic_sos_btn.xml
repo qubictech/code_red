@@ -1,17 +1,24 @@
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="166dp"
-    android:height="166dp"
-    android:viewportWidth="166"
-    android:viewportHeight="166">
-  <path
-      android:pathData="M83,80m-74,0a74,74 0,1 1,148 0a74,74 0,1 1,-148 0"
-      android:strokeAlpha="0.04"
-      android:fillColor="#4BFABDBD"/>
-  <path
-      android:pathData="M83,80m-69,0a69,69 0,1 1,138 0a69,69 0,1 1,-138 0"
-      android:strokeAlpha="0.62"
-      android:fillColor="#ffdfdf"/>
-  <path
-      android:pathData="M83,80m-63,0a63,63 0,1 1,126 0a63,63 0,1 1,-126 0"
-      android:fillColor="#fff"/>
-</vector>
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <shape android:shape="oval">
+            <solid android:width="1dip" android:color="@color/colorPrimary" />
+            <stroke android:width="1dp" android:color="@color/edit_text_bg" />
+            <corners android:bottomLeftRadius="16dp" android:topLeftRadius="16dp" />
+        </shape>
+    </item>
+    <item android:state_focused="true">
+        <shape android:shape="oval">
+            <corners android:bottomLeftRadius="16dp" android:topLeftRadius="16dp" />
+            <solid android:color="@color/colorPrimary" />
+            <stroke android:width="1dp" android:color="@color/edit_text_bg" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="oval">
+            <corners android:bottomLeftRadius="16dp" android:topLeftRadius="16dp" />
+            <solid android:color="@color/edit_text_bg" />
+            <stroke android:width="1dp" android:color="@color/colorPrimaryDark" />
+        </shape>
+    </item>
+</selector>

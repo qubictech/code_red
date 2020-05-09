@@ -177,7 +177,7 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
                                     LatLng(
                                         location.latitude,
                                         location.longitude
-                                    ), 16f
+                                    ), 13f
                                 )
                             )
                         }
