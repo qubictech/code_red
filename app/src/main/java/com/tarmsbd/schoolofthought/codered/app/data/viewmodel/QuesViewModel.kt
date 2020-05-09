@@ -1,6 +1,7 @@
 package com.tarmsbd.schoolofthought.codered.app.data.viewmodel
 
 import android.graphics.Color
+import android.graphics.ColorFilter
 import android.graphics.PorterDuff
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -131,6 +132,7 @@ class QuesViewModel : ViewModel() {
                     Color.parseColor("#CCCCCC"),
                     PorterDuff.Mode.SRC_ATOP
                 )
+
                 view.setTextColor(Color.BLACK)
             }
 

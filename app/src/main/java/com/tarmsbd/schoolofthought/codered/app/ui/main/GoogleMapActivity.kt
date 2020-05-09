@@ -192,16 +192,14 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun addCircleInLocation(map: GoogleMap, latLng: LatLng) {
-        if (FirebaseAuth.getInstance().currentUser != null) {
-            map.addCircle(
-                CircleOptions()
-                    .center(latLng)
-                    .radius(30.0)
-                    .strokeWidth(3f)
-                    .strokeColor(Color.RED)
-                    .fillColor(Color.argb(90, 150, 50, 50))
-            )
-        }
+        map.addCircle(
+            CircleOptions()
+                .center(latLng)
+                .radius(300.0)/*in meter*/
+                .strokeWidth(3f)
+                .strokeColor(Color.RED)
+                .fillColor(Color.argb(90, 150, 50, 50))
+        )
     }
 
     private fun multipleMarkerRed(lat: Double, long: Double, title: String) {
